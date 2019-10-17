@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D519D9C-139B-4DD1-B2D3-474574D111B8}</ProjectGuid>
+    <ProjectGuid>{3416CAFA-9413-4D63-9A89-F97EA1E64FAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Biblioteka</RootNamespace>
-    <AssemblyName>Biblioteka</AssemblyName>
+    <RootNamespace>Library</RootNamespace>
+    <AssemblyName>Library</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Katalog.cs" />
-    <Compile Include="Wykaz.cs" />
+    <Compile Include="Catalog.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="DataRepository.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
