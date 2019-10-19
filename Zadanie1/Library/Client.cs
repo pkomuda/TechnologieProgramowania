@@ -4,16 +4,10 @@ namespace Library
 {
     public class Client
     {
-        public string ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string ID { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
 
-        public Client()
-        {
-            ID = Guid.NewGuid().ToString();
-            FirstName = "First name not specified";
-            LastName = "Last name not specified";
-        }
 
         public Client(string firstName, string lastName)
         {

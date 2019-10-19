@@ -8,8 +8,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             DataRepository dataRepository = new DataRepository();
-            dataRepository.fillData = new ConstansFill();
-            dataRepository.Fill();
+            dataRepository.FillData = new ConstansFill();
             Console.WriteLine("START");
             foreach (Client c in dataRepository.GetAllClients())
             {

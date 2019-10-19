@@ -4,16 +4,9 @@ namespace Library
 {
     public class Catalog
     {
-        public string ID { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-
-        public Catalog()
-        {
-            ID = Guid.NewGuid().ToString();
-            Title = "Title not specified";
-            Author = "Author not specified";
-        }
+        public string ID { get; private set; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
 
         public Catalog(string title, string author)
         {

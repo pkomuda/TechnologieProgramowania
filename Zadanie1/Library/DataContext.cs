@@ -5,10 +5,10 @@ namespace Library
 {
     public class DataContext
     {
-        public List<Client> Clients { get; set; }
-        public Dictionary<string, Catalog> Books { get; set; }
-        public ObservableCollection<Event> Events { get; set; }
-        public List<Inventory> Inventories { get; set; }
+        public List<Client> Clients { get; private set; }
+        public Dictionary<string, Catalog> Books { get; private set; }
+        public ObservableCollection<Event> Events { get; private set; }
+        public List<Inventory> Inventories { get; private set; }
 
         public DataContext()
         {
