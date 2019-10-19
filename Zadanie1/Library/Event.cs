@@ -2,7 +2,7 @@
 
 namespace Library
 {
-    class Event
+    public class Event
     {
         public Client Client { get; set; }
         public Inventory Inventory { get; set; }

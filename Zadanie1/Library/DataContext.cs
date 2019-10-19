@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Library
 {
-    class DataContext
+    public class DataContext
     {
         public List<Client> Clients { get; set; }
         public Dictionary<string, Catalog> Books { get; set; }

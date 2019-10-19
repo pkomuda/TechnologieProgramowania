@@ -2,7 +2,7 @@
 
 namespace Library
 {
-    class Catalog
+    public class Catalog
     {
         public string ID { get; set; }
         public string Title { get; set; }

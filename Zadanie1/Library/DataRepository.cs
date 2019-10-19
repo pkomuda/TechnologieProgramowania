@@ -2,10 +2,10 @@
 
 namespace Library
 {
-    class DataRepository
+    public class DataRepository
     {
         public DataContext DataContext { get; set; }
-        public DataFill fillData { private get; set; }
+        public DataFill fillData { get; set; }
 
         public DataRepository()
         {

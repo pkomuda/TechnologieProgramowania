@@ -1,6 +1,6 @@
 ﻿namespace Library
 {
-    class ConstansFill : DataFill
+    public class ConstansFill : DataFill
     {
         public ConstansFill() {}
         public void Fill(DataContext context)

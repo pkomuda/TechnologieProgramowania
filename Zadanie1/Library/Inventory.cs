@@ -1,6 +1,6 @@
 ﻿namespace Library
 {
-    class Inventory
+    public class Inventory
     {
         public Catalog Catalog { get; set; }
         public int Amount { get; set; }
