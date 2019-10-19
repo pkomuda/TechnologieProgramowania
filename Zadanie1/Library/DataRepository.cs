@@ -36,7 +36,7 @@ namespace Library
         public void UpdateCatalog(string id, Catalog catalog)
         {
             Catalog catalog1 = new Catalog(id, catalog.Title, catalog.Author);
-            DeleteCatalog(catalog);
+            DeleteCatalog(GetCatalog(id));
             AddCatalog(catalog1);
 
         }
@@ -64,7 +64,7 @@ namespace Library
         public void UpdateClient(string id, Client client)
         {
             Client client1 = new Client(id, client.FirstName, client.LastName);
-            DeleteClient(client);
+            DeleteClient(GetClient(id));
             AddClient(client1);
         }
 
@@ -95,7 +95,7 @@ namespace Library
         public void UpdateEvent(string id, Event ev)
         {
             Event newEvent = new Event(id, ev.Client, ev.Inventory, ev.BorrowDate, ev.ReturnDate);
-            DeleteEvent(newEvent);
+            DeleteEvent(GetEvent(id));
             AddEvent(newEvent);
         }
         public bool DeleteEvent(Event ev)
