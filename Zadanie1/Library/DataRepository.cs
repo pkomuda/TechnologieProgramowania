@@ -5,6 +5,7 @@ namespace Library
     class DataRepository
     {
         public DataContext DataContext { get; set; }
+        public DataFill fillData { private get; set; }
 
         public DataRepository()
         {
