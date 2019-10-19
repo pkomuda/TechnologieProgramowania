@@ -9,7 +9,8 @@ namespace ConsoleApp1
         {
             DataRepository dataRepository = new DataRepository();
             dataRepository.fillData = new ConstansFill();
-            dataRepository.fillData.Fill(new DataContext());
+            dataRepository.Fill();
+            Console.WriteLine("START");
             foreach (Client c in dataRepository.GetAllClients())
             {
                 Console.WriteLine(c.FirstName);

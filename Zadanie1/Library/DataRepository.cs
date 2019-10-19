@@ -11,7 +11,10 @@ namespace Library
         {
             DataContext = new DataContext();
         }
-
+        public void Fill()
+        {
+            fillData.Fill(DataContext);
+        }
         public void AddCatalog(Catalog catalog)
         {
             DataContext.Books.Add(catalog.ID, catalog);
