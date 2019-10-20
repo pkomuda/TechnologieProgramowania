@@ -9,11 +9,29 @@ namespace ConsoleApp1
         {
             DataRepository dataRepository = new DataRepository();
             dataRepository.FillData = new ConstansFill();
-            Console.WriteLine("START");
-            foreach (Client c in dataRepository.GetAllClients())
+            
+            Catalog ca = new Catalog("Ślepnąc od świateł", "Jakub Żulczyk");
+            Inventory i = new Inventory(ca, 99);
+            Client c = new Client("Przemek", "Komuda");
+            Event e = new Event(c, i, DateTime.Now, DateTime.Now.AddDays(1));
+
+            foreach(Event ev in dataRepository.GetAllEvents())
             {
-                Console.WriteLine(c.FirstName);
+                Console.WriteLine(ev.ToString());
             }
+            dataRepository.AddEvent(e);
+            Console.WriteLine();
+            foreach (Event ev in dataRepository.GetAllEvents())
+            {
+                Console.WriteLine(ev.ToString());
+            }
+            dataRepository.UpdateEvent("test", e);
+            Console.WriteLine();
+            foreach (Event ev in dataRepository.GetAllEvents())
+            {
+                Console.WriteLine(ev.ToString());
+            }
+            dataRepository.GetEvent("a").GetType();
             Console.ReadKey();
         }
     }

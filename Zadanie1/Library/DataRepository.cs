@@ -25,7 +25,12 @@ namespace Library
 
         public Catalog GetCatalog(string id)
         {
-            return DataContext.Books[id];
+            foreach (Catalog catalog in GetAllCatalog())
+            {
+                if (id == catalog.ID)
+                    return catalog;
+            }
+            throw new System.InvalidOperationException("No catalog with ID: "+id+" found.");
         }
 
         public IEnumerable<Catalog> GetAllCatalog()
@@ -36,7 +41,7 @@ namespace Library
         public void UpdateCatalog(string id, Catalog catalog)
         {
             Catalog catalog1 = new Catalog(id, catalog.Title, catalog.Author);
-            DeleteCatalog(GetCatalog(id));
+            DeleteCatalog(GetCatalog(catalog.ID));
             AddCatalog(catalog1);
 
         }
@@ -54,17 +59,17 @@ namespace Library
 
         public Client GetClient(string id)
         {
-            foreach (Client client in DataContext.Clients)
+            foreach (Client client in GetAllClients())
             {
                 if (id == client.ID)
                     return client;
             }
-            return null;
+            throw new System.InvalidOperationException("No client with ID: " + id + " found.");
         }
         public void UpdateClient(string id, Client client)
         {
             Client client1 = new Client(id, client.FirstName, client.LastName);
-            DeleteClient(GetClient(id));
+            DeleteClient(GetClient(client.ID));
             AddClient(client1);
         }
 
@@ -85,17 +90,17 @@ namespace Library
         }
         public Event GetEvent(string id)
         {
-            foreach (Event ev in DataContext.Events)
+            foreach (Event ev in GetAllEvents())
             {
                 if (id == ev.ID)
                     return ev;
             }
-            return null;
+            throw new System.InvalidOperationException("No event with ID: " + id + " found.");
         }
         public void UpdateEvent(string id, Event ev)
         {
             Event newEvent = new Event(id, ev.Client, ev.Inventory, ev.BorrowDate, ev.ReturnDate);
-            DeleteEvent(GetEvent(id));
+            DeleteEvent(GetEvent(ev.ID));
             AddEvent(newEvent);
         }
         public bool DeleteEvent(Event ev)
@@ -111,22 +116,22 @@ namespace Library
         #region everything with Inventory
         public void AddInventory(Inventory inventory)
         {
+            if (!DataContext.Books.ContainsKey(inventory.Catalog.ID))
+                DataContext.Books.Add(inventory.Catalog.ID, inventory.Catalog);
             DataContext.Inventories.Add(inventory);
         }
         public Inventory GetInventory(string catalogId)
         {
-            foreach (Inventory inventory in DataContext.Inventories)
+            foreach (Inventory inventory in GetAllInventories())
             {
                 if (catalogId == inventory.Catalog.ID)
                     return inventory;
             }
-            return null;
+            throw new System.InvalidOperationException("No inventory with ID: " + catalogId + " found.");
         }
         public void UpdateInventory(string catalogID, int amount)
         {
-            Inventory newInventory = new Inventory(GetCatalog(catalogID), amount);
-            DeleteInventory(GetInventory(catalogID));
-            AddInventory(newInventory);
+            GetInventory(catalogID).Amount = amount;
         }
         public bool DeleteInventory(Inventory inventory)
         {

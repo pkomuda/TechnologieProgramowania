@@ -26,5 +26,10 @@ namespace Library
             ReturnDate = returnDate;
             ID = id;
         }
+
+        public override string ToString()
+        {
+            return "Event{" + ID + "; Client(" + Client.FirstName + ", " + Client.LastName + "); Inventory(" + Inventory.Amount + ", " + Inventory.Catalog.Title + "); " + BorrowDate.ToString() + "; " + ReturnDate.ToString() + "}";
+        }
     }
 }
