@@ -31,7 +31,6 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(ev.ToString());
             }
-            dataRepository.GetEvent("a").GetType();
             Console.ReadKey();
         }
     }
