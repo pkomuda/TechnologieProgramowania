@@ -5,8 +5,8 @@ namespace Library
     public class Client
     {
         public string ID { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
 
         public Client(string firstName, string lastName)

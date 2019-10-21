@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LibTest
+namespace LibraryTest
 {
     [TestClass]
     public class ConstansFillTest

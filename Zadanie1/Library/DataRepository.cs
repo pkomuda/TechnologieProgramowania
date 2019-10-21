@@ -4,7 +4,7 @@ namespace Library
 {
     public class DataRepository
     {
-        public DataContext DataContext { get; private set;  }
+        private DataContext DataContext { get; set;  }
         private DataFill _FillData;
         public DataFill FillData { get { return _FillData; }
                                    set
@@ -25,30 +25,25 @@ namespace Library
 
         public Catalog GetCatalog(string id)
         {
-            foreach (Catalog catalog in GetAllCatalog())
-            {
-                if (id == catalog.ID)
-                    return catalog;
-            }
-            throw new System.InvalidOperationException("No catalog with ID: "+id+" found.");
+            return DataContext.Books[id];
         }
 
-        public IEnumerable<Catalog> GetAllCatalog()
+        public IEnumerable<Catalog> GetAllCatalogs()
         {
             return DataContext.Books.Values;
         }
 
-        public void UpdateCatalog(string id, Catalog catalog)
+        public void UpdateCatalogTitle(string id, string newTitle)
         {
-            Catalog catalog1 = new Catalog(id, catalog.Title, catalog.Author);
-            DeleteCatalog(GetCatalog(catalog.ID));
-            AddCatalog(catalog1);
-
+            DataContext.Books[id].Title = newTitle;
         }
-
-        public bool DeleteCatalog(Catalog catalog)
+        public void UpdateCatalogAuthor(string id, string newAuthor)
         {
-            return DataContext.Books.Remove(catalog.ID);
+            DataContext.Books[id].Author = newAuthor;
+        }
+        public bool DeleteCatalog(string catalogID)
+        {
+            return DataContext.Books.Remove(catalogID);
         }
         #endregion
         #region everything with Client
@@ -66,16 +61,32 @@ namespace Library
             }
             throw new System.InvalidOperationException("No client with ID: " + id + " found.");
         }
-        public void UpdateClient(string id, Client client)
+        public void UpdateClientFirstName(string id, string newFirstName)
         {
-            Client client1 = new Client(id, client.FirstName, client.LastName);
-            DeleteClient(GetClient(client.ID));
-            AddClient(client1);
+            foreach(Client c in DataContext.Clients)
+            {
+                if(id == c.ID)
+                {
+                    c.FirstName = newFirstName;
+                    break;
+                }
+            }
+        }
+        public void UpdateClientLastName(string id, string newLastName)
+        {
+            foreach (Client c in DataContext.Clients)
+            {
+                if (id == c.ID)
+                {
+                    c.LastName = newLastName;
+                    break;
+                }
+            }
         }
 
-        public bool DeleteClient(Client client)
+        public bool DeleteClient(string id)
         {
-            return DataContext.Clients.Remove(client);
+            return DataContext.Clients.Remove(GetClient(id));
         }
 
         public IEnumerable<Client> GetAllClients()
@@ -97,11 +108,16 @@ namespace Library
             }
             throw new System.InvalidOperationException("No event with ID: " + id + " found.");
         }
-        public void UpdateEvent(string id, Event ev)
+        public void UpdateEventReturnDate(string id, System.DateTime newReturnDate)
         {
-            Event newEvent = new Event(id, ev.Client, ev.Inventory, ev.BorrowDate, ev.ReturnDate);
-            DeleteEvent(GetEvent(ev.ID));
-            AddEvent(newEvent);
+            foreach (Event ev in GetAllEvents())
+            {
+                if (id == ev.ID)
+                {
+                    ev.ReturnDate = newReturnDate;
+                    break;
+                }
+            }
         }
         public bool DeleteEvent(Event ev)
         {
@@ -131,7 +147,14 @@ namespace Library
         }
         public void UpdateInventory(string catalogID, int amount)
         {
-            GetInventory(catalogID).Amount = amount;
+            foreach (Inventory inventory in GetAllInventories())
+            {
+                if (catalogID == inventory.Catalog.ID)
+                {
+                    inventory.Amount = amount;
+                    break;
+                }
+            }
         }
         public bool DeleteInventory(Inventory inventory)
         {

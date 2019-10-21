@@ -7,7 +7,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            DataRepository dataRepository = new DataRepository();
+         /*  DataRepository dataRepository = new DataRepository();
             dataRepository.FillData = new ConstansFill();
             
             Catalog ca = new Catalog("Ślepnąc od świateł", "Jakub Żulczyk");
@@ -30,7 +30,10 @@ namespace ConsoleApp1
             foreach (Event ev in dataRepository.GetAllEvents())
             {
                 Console.WriteLine(ev.ToString());
-            }
+            }*/
+
+
+           
             Console.ReadKey();
         }
     }

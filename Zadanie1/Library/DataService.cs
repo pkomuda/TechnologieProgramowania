@@ -15,7 +15,7 @@ namespace Library
 
         public IEnumerable<Catalog> AllCatalogs()
         {
-            return dataRepository.GetAllCatalog();
+            return dataRepository.GetAllCatalogs();
         }
 
         public ObservableCollection<Event> EventsForClient(Client client)
@@ -51,7 +51,7 @@ namespace Library
         // W tych dwóch metodach nie jestem pewien czy o to chodzi
         public IEnumerable<Catalog> GetAllCatalog()
         {
-            return dataRepository.GetAllCatalog();
+            return dataRepository.GetAllCatalogs();
         }
 
         public IEnumerable<Event> GetAllEvents()
