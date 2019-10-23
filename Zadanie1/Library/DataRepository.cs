@@ -25,7 +25,14 @@ namespace Library
 
         public Catalog GetCatalog(string id)
         {
-            return DataContext.Books[id];
+            foreach (Catalog catalog in GetAllCatalogs())
+            {
+                if (id == catalog.ID)
+                    return catalog;
+            }
+            throw new System.InvalidOperationException("No book with ID: " + id + " found.");
+            // Wydaje mi się że lepsze jest rzucanie własnego wyjątku chociażby ze względu na wyświetlany komunikat - wtedy łatwiej jest znaleźć jego przyczynę
+            // return DataContext.Books[id];
         }
 
         public IEnumerable<Catalog> GetAllCatalogs()
