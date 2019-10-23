@@ -352,3 +352,6 @@ MigrationBackup/
 ./packages
 ./Biblioteka
 .idea/
+./Trash
+./Trash/*
+./Trash/
