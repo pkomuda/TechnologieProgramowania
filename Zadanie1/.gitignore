@@ -351,3 +351,6 @@ MigrationBackup/
 ./UnitTestProject*
 ./packages
 ./Biblioteka
+./Trash
+./Trash/*
+./Trash/
