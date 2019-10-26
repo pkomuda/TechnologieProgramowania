@@ -51,7 +51,13 @@ namespace Library
             context.Books.Add(id[2], new Catalog(books[index].Item1, books[index].Item2));
             context.Inventories.Add(new Inventory(context.Books[id[0]], rand.Next(0, 50)));
             context.Inventories.Add(new Inventory(context.Books[id[1]], rand.Next(0, 50)));
-            context.Inventories.Add(new Inventory(context.Books[id[2]], rand.Next(0, 50))); 
+            context.Inventories.Add(new Inventory(context.Books[id[2]], rand.Next(0, 50)));
+            #endregion
+            #region Events
+            context.Events.Add(new Rent(context.Clients[1], context.Inventories[1], new System.DateTime(), new System.DateTime(2020, 1, 1)));
+            context.Events.Add(new Purchase(context.Inventories[2], new System.DateTime(), 5));
+            context.Events.Add(new Return(context.Clients[1], context.Inventories[1], new System.DateTime(2022, 2, 2)));
+            context.Events.Add(new Discard(context.Inventories[2], new System.DateTime()));
             #endregion
         }
     }

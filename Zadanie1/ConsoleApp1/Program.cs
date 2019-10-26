@@ -24,6 +24,11 @@ namespace ConsoleApp1
                 System.Console.WriteLine(i.ToString());
             }
             System.Console.WriteLine("/n");
+            foreach (Event e  in dataRepository.GetAllEvents())
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            System.Console.WriteLine("/n");
             /*
             System.Console.WriteLine(dataRepository.GetAllEvents().ToString());
             Catalog ca = new Catalog("Ślepnąc od świateł", "Jakub Żulczyk");
