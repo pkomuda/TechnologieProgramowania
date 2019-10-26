@@ -46,6 +46,8 @@ namespace ConsoleApp1
                 Console.WriteLine(ev.ToString());
             }*/
 
+            Event r = new Rent(c, i, DateTime.Now, DateTime.Now.AddDays(3));
+            Console.WriteLine(r);
 
 
             Console.ReadKey();

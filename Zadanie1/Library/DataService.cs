@@ -13,7 +13,7 @@ namespace Library
             dataRepository = new DataRepository();
         }
 
-        public string GetCatalog(String catalogId)
+        public string GetCatalog(string catalogId)
         {
             return dataRepository.GetCatalog(catalogId).ToString();
         }
@@ -23,7 +23,7 @@ namespace Library
             return dataRepository.GetAllCatalogs().ToString();
         }
 
-        public string GetClient(String clientId)
+        public string GetClient(string clientId)
         {
             return dataRepository.GetClient(clientId).ToString();
         }
@@ -33,7 +33,7 @@ namespace Library
             return dataRepository.GetAllClients().ToString();
         }
 
-        public string GetEvent(String eventId)
+        public string GetEvent(string eventId)
         {
             return dataRepository.GetEvent(eventId).ToString();
         }
@@ -43,7 +43,7 @@ namespace Library
             return dataRepository.GetAllEvents().ToString();
         }
 
-        public string GetInventory(String inventoryId)
+        public string GetInventory(string inventoryId)
         {
             return dataRepository.GetInventory(inventoryId).ToString();
         }
@@ -53,23 +53,12 @@ namespace Library
             return dataRepository.GetAllInventories();
         }
 
-        public ObservableCollection<Event> EventsForClient(Client client)
+        public ObservableCollection<Event> EventsForClient(string clientId)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
             foreach (Event ev in dataRepository.GetAllEvents())
             {
-                if (ev.Client == client)
-                    events.Add(ev);
-            }
-            return events;
-        }
-        
-        public ObservableCollection<Event> EventsForClientById(String id)
-        {
-            ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in dataRepository.GetAllEvents())
-            {
-                if (ev.Client.ID == id)
+                if (ev is Rent rent && rent.Client.ID == clientId || ev is Return @return && @return.Client.ID == clientId)
                     events.Add(ev);
             }
             return events;
@@ -80,7 +69,7 @@ namespace Library
             ObservableCollection<Event> events = new ObservableCollection<Event>();
             foreach (Event ev in dataRepository.GetAllEvents())
             {
-                if (ev.BorrowDate.CompareTo(from)>=0 && ev.ReturnDate.CompareTo(to)<=0)
+                if (ev.Date >= from && ev.Date <= to)
                     events.Add(ev);
             }
             return events;
@@ -91,7 +80,7 @@ namespace Library
             ObservableCollection<Event> events = new ObservableCollection<Event>();
             foreach (Event ev in dataRepository.GetAllEvents())
             {
-                if (ev.ReturnDate.CompareTo(date)<=0)
+                if (ev.Date <= date)
                     events.Add(ev);
             }
             return events;
@@ -102,13 +91,13 @@ namespace Library
             ObservableCollection<Event> events = new ObservableCollection<Event>();
             foreach (Event ev in dataRepository.GetAllEvents())
             {
-                if (ev.ReturnDate.CompareTo(date)>=0)
+                if (ev.Date >= date)
                     events.Add(ev);
             }
             return events;
         }
 
-        public Event Borrow(String clientId, String inventoryId)
+        public Event RentBook(string clientId, string inventoryId)
         {
             if (dataRepository.GetInventory(inventoryId).Amount == 0)
                 throw new InvalidOperationException("Book: "+ dataRepository.GetInventory(inventoryId).Catalog.Title+" not available.");
@@ -117,38 +106,60 @@ namespace Library
             if (dataRepository.GetClient(clientId).Penalty >= 10)
                 throw new InvalidOperationException("Client: " + dataRepository.GetClient(clientId).FirstName + " " + dataRepository.GetClient(clientId).LastName + " has exceeded the maximum penalty amount, they have to pay it to rent more books");
             // Ustawienie daty zwrotu na tydzień od wypożyczenia
-            Event ev = new Event(dataRepository.GetClient(clientId), dataRepository.GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
+            Event ev = new Rent(dataRepository.GetClient(clientId), dataRepository.GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
             dataRepository.AddEvent(ev);
             dataRepository.GetInventory(inventoryId).reduceAmount(1);
             dataRepository.GetClient(clientId).RentedCatalogs.Add(dataRepository.GetInventory(inventoryId).Catalog);
             return ev;
         }
 
-        public bool Return(String clientId, String catalogId)
+        public Event ReturnBook(string clientId, string catalogId)
         {
             if (!dataRepository.GetClient(clientId).RentedCatalogs.Contains(dataRepository.GetCatalog(catalogId)))
-                return false;
+                throw new InvalidOperationException("Client: "+ dataRepository.GetClient(clientId).FirstName+" "+ dataRepository.GetClient(clientId).LastName+" has already rented the book: "+ dataRepository.GetInventory(catalogId).Catalog.Title+".");
+            Event ev = new Return(dataRepository.GetClient(clientId), dataRepository.GetInventory(catalogId), DateTime.Today);
+            dataRepository.AddEvent(ev);
             dataRepository.GetInventory(catalogId).increaseAmount(1);
-            return true;
-        }
-
-        public void ProlongRent(String eventId, int days)
-        {
-            dataRepository.GetEvent(eventId).ReturnDate.AddDays(days);
-        }
-
-        public void PenalizeClients()
-        {
-            foreach (Client c in dataRepository.GetAllClients())
+            Rent last = new Rent(null, null, DateTime.MinValue, DateTime.MaxValue);
+            foreach (Event e in EventsForClient(clientId))
             {
-               foreach (Event ev in EventsForClient(c))
+                if (e is Rent rent && rent.Inventory.Catalog.ID == catalogId && rent.Date > last.Date)
                 {
-                    if (ev.ReturnDate.CompareTo(DateTime.Today) > 0)
-                        c.Penalty += (int)(ev.ReturnDate - DateTime.Today).TotalDays;
+                    last.Date = rent.Date;
+                    last.ReturnDate = rent.ReturnDate;
                 }
             }
+            if (DateTime.Today > last.ReturnDate)
+                dataRepository.GetClient(clientId).Penalty += (int)(DateTime.Today - last.ReturnDate).TotalDays;
+            return ev;
         }
-        
+
+        public Event PurchaseBook(string catalogId, int amount)
+        {
+            //czy tutaj powinniśmy tworzyć new inventory?
+            Event ev = new Purchase(new Inventory(dataRepository.GetCatalog(catalogId), amount), DateTime.Today);
+            dataRepository.AddEvent(ev);
+            dataRepository.GetInventory(catalogId).increaseAmount(amount);
+            return ev;
+        }
+
+        public Event DiscardBook(string catalogId, int amount)
+        {
+            if (dataRepository.GetInventory(catalogId).Amount < amount)
+                throw new InvalidOperationException("Cannot discard " + amount + " catalogs, inventory only contains " + dataRepository.GetInventory(catalogId).Amount + ".");
+            Event ev = new Discard(new Inventory(dataRepository.GetCatalog(catalogId), amount), DateTime.Today);
+            dataRepository.AddEvent(ev);
+            dataRepository.GetInventory(catalogId).reduceAmount(amount);
+            return ev;
+        }
+
+        public void ProlongRent(string eventId, int days)
+        {
+            if (!(dataRepository.GetEvent(eventId) is Rent rent))
+                throw new InvalidOperationException("Event with ID: " + eventId + " is not of type Rent.");
+            rent.ReturnDate.AddDays(days);
+        }
+
         public int PenaltySumForAllClients()
         {
             int sum = 0;

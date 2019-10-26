@@ -52,11 +52,11 @@
             context.Inventories.Add(new Inventory(context.Books[c10.ID], 4));
             #endregion
             #region Events
-            context.Events.Add(new Event(context.Clients[0], context.Inventories[4], new System.DateTime(2019, 10, 20), new System.DateTime(2020, 1, 20)));
-            context.Events.Add(new Event(context.Clients[1], context.Inventories[3], new System.DateTime(2019, 12, 2), new System.DateTime(2020, 3, 2)));
-            context.Events.Add(new Event(context.Clients[2], context.Inventories[2], new System.DateTime(2019, 11, 13), new System.DateTime(2020, 2, 13)));
-            context.Events.Add(new Event(context.Clients[3], context.Inventories[1], new System.DateTime(2019, 9, 11), new System.DateTime(2019, 12, 11)));
-            context.Events.Add(new Event(context.Clients[4], context.Inventories[0], new System.DateTime(2019, 8, 22), new System.DateTime(2019, 11, 22))); 
+            context.Events.Add(new Rent(context.Clients[0], context.Inventories[4], new System.DateTime(2019, 10, 20), new System.DateTime(2020, 1, 20)));
+            context.Events.Add(new Rent(context.Clients[1], context.Inventories[3], new System.DateTime(2019, 12, 2), new System.DateTime(2020, 3, 2)));
+            context.Events.Add(new Rent(context.Clients[2], context.Inventories[2], new System.DateTime(2019, 11, 13), new System.DateTime(2020, 2, 13)));
+            context.Events.Add(new Rent(context.Clients[3], context.Inventories[1], new System.DateTime(2019, 9, 11), new System.DateTime(2019, 12, 11)));
+            context.Events.Add(new Rent(context.Clients[4], context.Inventories[0], new System.DateTime(2019, 8, 22), new System.DateTime(2019, 11, 22))); 
             #endregion
         }
     }

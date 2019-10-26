@@ -115,17 +115,7 @@ namespace Library
             }
             throw new System.InvalidOperationException("No event with ID: " + id + " found.");
         }
-        public void UpdateEventReturnDate(string id, System.DateTime newReturnDate)
-        {
-            foreach (Event ev in GetAllEvents())
-            {
-                if (id == ev.ID)
-                {
-                    ev.ReturnDate = newReturnDate;
-                    break;
-                }
-            }
-        }
+        
         public bool DeleteEvent(Event ev)
         {
             return DataContext.Events.Remove(ev);

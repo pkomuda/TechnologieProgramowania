@@ -50,9 +50,13 @@
     <Compile Include="DataFill.cs" />
     <Compile Include="DataRepository.cs" />
     <Compile Include="DataService.cs" />
+    <Compile Include="Discard.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchase.cs" />
+    <Compile Include="Rent.cs" />
+    <Compile Include="Return.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
