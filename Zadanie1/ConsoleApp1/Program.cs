@@ -7,14 +7,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            /*DataRepository dataRepository = new DataRepository();
-            dataRepository.FillData = new ConstansFill();
+            DataRepository dataRepository = new DataRepository();
+            dataRepository.FillData = new RandomFill();
+            foreach(Client c in dataRepository.GetAllClients())
+            {
+                System.Console.WriteLine(c.ToString());
+            }
+            System.Console.WriteLine("/n");
+            foreach (Catalog c in dataRepository.GetAllCatalogs())
+            {
+                System.Console.WriteLine(c.ToString());
+            }
+            System.Console.WriteLine("/n");
+            foreach (Inventory i in dataRepository.GetAllInventories())
+            {
+                System.Console.WriteLine(i.ToString());
+            }
+            System.Console.WriteLine("/n");
+            /*
             System.Console.WriteLine(dataRepository.GetAllEvents().ToString());
             Catalog ca = new Catalog("Ślepnąc od świateł", "Jakub Żulczyk");
             Inventory i = new Inventory(ca, 99);
             Client c = new Client("Przemek", "Komuda");
-            Event e = new Event(c, i, DateTime.Now, DateTime.Now.AddDays(1));
-
             foreach(Event ev in dataRepository.GetAllEvents())
             {
                 Console.WriteLine(ev.ToString());
@@ -33,7 +47,7 @@ namespace ConsoleApp1
             }*/
 
 
-           
+
             Console.ReadKey();
         }
     }
