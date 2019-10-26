@@ -8,7 +8,7 @@ namespace Library
         public Inventory Inventory { get; set; }
         
         public Return(Client client, Inventory inventory, DateTime returnDate)
-        {
+        {       
             Client = client;
             Inventory = inventory;
             Date = returnDate;

@@ -101,7 +101,7 @@ namespace Library
             return DataContext.Clients;
         }
         #endregion
-        #region everything with Event
+        #region everything with Event and
         public void AddEvent(Event ev) 
         {
             DataContext.Events.Add(ev);
@@ -124,6 +124,22 @@ namespace Library
         public IEnumerable<Event> GetAllEvents()
         {
             return DataContext.Events;
+        }
+        public Rent CreateRent(Client client, Inventory inventory, System.DateTime borrowDate, System.DateTime returnDate)
+        {
+           return new Rent(client, inventory, borrowDate, returnDate);
+        }
+        public Return CreateReturn(Client client, Inventory inventory, System.DateTime returnDate)
+        {
+            return new Return(client, inventory, returnDate);
+        }
+        public Discard CreateDiscard(Inventory inventory, System.DateTime discardDate)
+        {
+           return new Discard(inventory, discardDate);
+        }
+        public Purchase CreatePurchase(Inventory inventory, System.DateTime purchaseDate, int amount)
+        {
+           return new Purchase(inventory, purchaseDate, amount);
         }
         #endregion
         #region everything with Inventory

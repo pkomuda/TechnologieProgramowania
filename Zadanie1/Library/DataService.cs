@@ -106,7 +106,7 @@ namespace Library
             if (dataRepository.GetClient(clientId).Penalty >= 10)
                 throw new InvalidOperationException("Client: " + dataRepository.GetClient(clientId).FirstName + " " + dataRepository.GetClient(clientId).LastName + " has exceeded the maximum penalty amount, they have to pay it to rent more books");
             // Ustawienie daty zwrotu na tydzień od wypożyczenia
-            Event ev = new Rent(dataRepository.GetClient(clientId), dataRepository.GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
+            Event ev = dataRepository.CreateRent(dataRepository.GetClient(clientId), dataRepository.GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
             dataRepository.AddEvent(ev);
             dataRepository.GetInventory(inventoryId).reduceAmount(1);
             dataRepository.GetClient(clientId).RentedCatalogs.Add(dataRepository.GetInventory(inventoryId).Catalog);
@@ -117,10 +117,10 @@ namespace Library
         {
             if (!dataRepository.GetClient(clientId).RentedCatalogs.Contains(dataRepository.GetCatalog(catalogId)))
                 throw new InvalidOperationException("Client: "+ dataRepository.GetClient(clientId).FirstName+" "+ dataRepository.GetClient(clientId).LastName+" has already rented the book: "+ dataRepository.GetInventory(catalogId).Catalog.Title+".");
-            Event ev = new Return(dataRepository.GetClient(clientId), dataRepository.GetInventory(catalogId), DateTime.Today);
+            Event ev = dataRepository.CreateReturn(dataRepository.GetClient(clientId), dataRepository.GetInventory(catalogId), DateTime.Today);
             dataRepository.AddEvent(ev);
             dataRepository.GetInventory(catalogId).increaseAmount(1);
-            Rent last = new Rent(null, null, DateTime.MinValue, DateTime.MaxValue);
+            Rent last = dataRepository.CreateRent(null, null, DateTime.MinValue, DateTime.MaxValue);
             foreach (Event e in EventsForClient(clientId))
             {
                 if (e is Rent rent && rent.Inventory.Catalog.ID == catalogId && rent.Date > last.Date)
@@ -136,8 +136,7 @@ namespace Library
 
         public Event PurchaseBook(string catalogId, int amount)
         {
-            //czy tutaj powinniśmy tworzyć new inventory?
-            Event ev = new Purchase(new Inventory(dataRepository.GetCatalog(catalogId), amount), DateTime.Today);
+            Event ev = dataRepository.CreatePurchase(dataRepository.GetInventory(catalogId), DateTime.Today, amount);
             dataRepository.AddEvent(ev);
             dataRepository.GetInventory(catalogId).increaseAmount(amount);
             return ev;
@@ -147,7 +146,7 @@ namespace Library
         {
             if (dataRepository.GetInventory(catalogId).Amount < amount)
                 throw new InvalidOperationException("Cannot discard " + amount + " catalogs, inventory only contains " + dataRepository.GetInventory(catalogId).Amount + ".");
-            Event ev = new Discard(new Inventory(dataRepository.GetCatalog(catalogId), amount), DateTime.Today);
+            Event ev = dataRepository.CreateDiscard(new Inventory(dataRepository.GetCatalog(catalogId), amount), DateTime.Today);
             dataRepository.AddEvent(ev);
             dataRepository.GetInventory(catalogId).reduceAmount(amount);
             return ev;
