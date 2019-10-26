@@ -31,5 +31,9 @@ namespace Library
         {
             Penalty = 0;
         }
+        public override string ToString()
+        {
+            return "Client: " + ID + " " + FirstName + " " + LastName + " penalty: " + Penalty; 
+        }
     }
 }

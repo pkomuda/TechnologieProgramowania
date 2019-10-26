@@ -158,14 +158,15 @@ namespace Library
             {
                 if (catalogID == inventory.Catalog.ID)
                 {
-                    inventory.Amount = amount;
+                    inventory.reduceAmount(inventory.Amount);
+                    inventory.increaseAmount(amount);
                     break;
                 }
             }
         }
-        public bool DeleteInventory(Inventory inventory)
+        public bool DeleteInventory(string catalogID)
         {
-            return DataContext.Inventories.Remove(inventory);
+            return DataContext.Inventories.Remove(GetInventory(catalogID));
         }
 
         public IEnumerable<Inventory> GetAllInventories()

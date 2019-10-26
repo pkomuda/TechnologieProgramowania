@@ -7,9 +7,9 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-         /*  DataRepository dataRepository = new DataRepository();
+            /*DataRepository dataRepository = new DataRepository();
             dataRepository.FillData = new ConstansFill();
-            
+            System.Console.WriteLine(dataRepository.GetAllEvents().ToString());
             Catalog ca = new Catalog("Ślepnąc od świateł", "Jakub Żulczyk");
             Inventory i = new Inventory(ca, 99);
             Client c = new Client("Przemek", "Komuda");

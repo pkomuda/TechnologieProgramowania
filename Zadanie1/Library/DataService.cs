@@ -13,39 +13,39 @@ namespace Library
             dataRepository = new DataRepository();
         }
 
-        public Catalog GetCatalog(String catalogId)
+        public string GetCatalog(String catalogId)
         {
-            return dataRepository.GetCatalog(catalogId);
+            return dataRepository.GetCatalog(catalogId).ToString();
         }
         
-        public IEnumerable<Catalog> AllCatalogs()
+        public string AllCatalogs()
         {
-            return dataRepository.GetAllCatalogs();
+            return dataRepository.GetAllCatalogs().ToString();
         }
 
-        public Client GetClient(String clientId)
+        public string GetClient(String clientId)
         {
-            return dataRepository.GetClient(clientId);
+            return dataRepository.GetClient(clientId).ToString();
         }
         
-        public IEnumerable<Client> AllClients()
+        public string AllClients()
         {
-            return dataRepository.GetAllClients();
+            return dataRepository.GetAllClients().ToString();
         }
 
-        public Event GetEvent(String eventId)
+        public string GetEvent(String eventId)
         {
-            return dataRepository.GetEvent(eventId);
+            return dataRepository.GetEvent(eventId).ToString();
         }
         
-        public IEnumerable<Event> AllEvents()
+        public string AllEvents()
         {
-            return dataRepository.GetAllEvents();
+            return dataRepository.GetAllEvents().ToString();
         }
 
-        public Inventory GetInventory(String inventoryId)
+        public string GetInventory(String inventoryId)
         {
-            return dataRepository.GetInventory(inventoryId);
+            return dataRepository.GetInventory(inventoryId).ToString();
         }
         
         public IEnumerable<Inventory> AllInventories()
@@ -56,7 +56,7 @@ namespace Library
         public ObservableCollection<Event> EventsForClient(Client client)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in AllEvents())
+            foreach (Event ev in dataRepository.GetAllEvents())
             {
                 if (ev.Client == client)
                     events.Add(ev);
@@ -67,7 +67,7 @@ namespace Library
         public ObservableCollection<Event> EventsForClientById(String id)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in AllEvents())
+            foreach (Event ev in dataRepository.GetAllEvents())
             {
                 if (ev.Client.ID == id)
                     events.Add(ev);
@@ -78,7 +78,7 @@ namespace Library
         public ObservableCollection<Event> EventsBetweenDates(DateTime from, DateTime to)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in AllEvents())
+            foreach (Event ev in dataRepository.GetAllEvents())
             {
                 if (ev.BorrowDate.CompareTo(from)>=0 && ev.ReturnDate.CompareTo(to)<=0)
                     events.Add(ev);
@@ -89,7 +89,7 @@ namespace Library
         public ObservableCollection<Event> EventsBeforeDate(DateTime date)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in AllEvents())
+            foreach (Event ev in dataRepository.GetAllEvents())
             {
                 if (ev.ReturnDate.CompareTo(date)<=0)
                     events.Add(ev);
@@ -100,7 +100,7 @@ namespace Library
         public ObservableCollection<Event> EventsAfterDate(DateTime date)
         {
             ObservableCollection<Event> events = new ObservableCollection<Event>();
-            foreach (Event ev in AllEvents())
+            foreach (Event ev in dataRepository.GetAllEvents())
             {
                 if (ev.ReturnDate.CompareTo(date)>=0)
                     events.Add(ev);
@@ -110,38 +110,38 @@ namespace Library
 
         public Event Borrow(String clientId, String inventoryId)
         {
-            if (GetInventory(inventoryId).Amount == 0)
-                throw new InvalidOperationException("Book: "+GetInventory(inventoryId).Catalog.Title+" not available.");
-            if (GetClient(clientId).RentedCatalogs.Contains(GetInventory(inventoryId).Catalog))
-                throw new InvalidOperationException("Client: "+GetClient(clientId).FirstName+" "+GetClient(clientId).LastName+" has already rented the book: "+GetInventory(inventoryId).Catalog.Title+".");
-            if (GetClient(clientId).Penalty >= 10)
-                throw new InvalidOperationException("Client: " + GetClient(clientId).FirstName + " " + GetClient(clientId).LastName + " has exceeded the maximum penalty amount, they have to pay it to rent more books");
+            if (dataRepository.GetInventory(inventoryId).Amount == 0)
+                throw new InvalidOperationException("Book: "+ dataRepository.GetInventory(inventoryId).Catalog.Title+" not available.");
+            if (dataRepository.GetClient(clientId).RentedCatalogs.Contains(dataRepository.GetInventory(inventoryId).Catalog))
+                throw new InvalidOperationException("Client: "+ dataRepository.GetClient(clientId).FirstName+" "+ dataRepository.GetClient(clientId).LastName+" has already rented the book: "+ dataRepository.GetInventory(inventoryId).Catalog.Title+".");
+            if (dataRepository.GetClient(clientId).Penalty >= 10)
+                throw new InvalidOperationException("Client: " + dataRepository.GetClient(clientId).FirstName + " " + dataRepository.GetClient(clientId).LastName + " has exceeded the maximum penalty amount, they have to pay it to rent more books");
             // Ustawienie daty zwrotu na tydzień od wypożyczenia
-            Event ev = new Event(GetClient(clientId), GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
+            Event ev = new Event(dataRepository.GetClient(clientId), dataRepository.GetInventory(inventoryId), DateTime.Today, DateTime.Today.AddDays(7));
             dataRepository.AddEvent(ev);
-            GetInventory(inventoryId).Amount--;
-            GetClient(clientId).RentedCatalogs.Add(GetInventory(inventoryId).Catalog);
+            dataRepository.GetInventory(inventoryId).reduceAmount(1);
+            dataRepository.GetClient(clientId).RentedCatalogs.Add(dataRepository.GetInventory(inventoryId).Catalog);
             return ev;
         }
 
         public bool Return(String clientId, String catalogId)
         {
-            if (!GetClient(clientId).RentedCatalogs.Contains(GetCatalog(catalogId)))
+            if (!dataRepository.GetClient(clientId).RentedCatalogs.Contains(dataRepository.GetCatalog(catalogId)))
                 return false;
-            GetInventory(catalogId).Amount++;
+            dataRepository.GetInventory(catalogId).increaseAmount(1);
             return true;
         }
 
         public void ProlongRent(String eventId, int days)
         {
-            GetEvent(eventId).ReturnDate.AddDays(days);
+            dataRepository.GetEvent(eventId).ReturnDate.AddDays(days);
         }
 
         public void PenalizeClients()
         {
-            foreach (Client c in AllClients())
+            foreach (Client c in dataRepository.GetAllClients())
             {
-                foreach (Event ev in EventsForClient(c))
+               foreach (Event ev in EventsForClient(c))
                 {
                     if (ev.ReturnDate.CompareTo(DateTime.Today) > 0)
                         c.Penalty += (int)(ev.ReturnDate - DateTime.Today).TotalDays;
@@ -152,7 +152,7 @@ namespace Library
         public int PenaltySumForAllClients()
         {
             int sum = 0;
-            foreach (Client c in AllClients())
+            foreach (Client c in dataRepository.GetAllClients())
                 sum += c.Penalty;
             return sum;
         }

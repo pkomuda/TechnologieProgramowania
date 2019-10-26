@@ -21,5 +21,9 @@ namespace Library
             Title = title;
             Author = author;
         }
+        public override string ToString()
+        {
+            return "Catalog: " + ID + " title: " + Title + " Author: " + Author;
+        }
     }
 }

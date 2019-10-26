@@ -50,11 +50,7 @@ namespace LibraryTest
             Dictionary<string, Catalog> catalogs = new Dictionary<string, Catalog>();
             catalogs.Add(c1.ID, c1);
             catalogs.Add(c2.ID, c2);
-            // Assert.AreEqual(((Dictionary<string, Catalog>) repo.GetAllCatalogs())[c1.ID], catalogs[c1.ID]);
-            // Assert.AreEqual(((Dictionary<string, Catalog>) repo.GetAllCatalogs())[c2.ID], catalogs[c2.ID]);
-            /////////////////Jak to sprawdzić?
             repo.DeleteCatalog(c2.ID);
-            // Assert.AreEqual(false, ((Dictionary<string, Catalog>)repo.GetAllCatalogs()).ContainsKey(c2.ID));
 
             Assert.AreEqual(c1, repo.GetCatalog(c1.ID));
 
@@ -72,7 +68,27 @@ namespace LibraryTest
         [TestMethod]
         public void Inventories()
         {
+            Catalog c1 = new Catalog("1", "Basnie braci Grimm", "Bracia Grimm");
+            Catalog c2 = new Catalog("2", "Harry Potter", "J. K. Rowling");
+            Catalog c3 = new Catalog("3", "Ojciec Chrzestny", "Mario Putzo");
+            DataRepository repo = new DataRepository();
+            repo.AddCatalog(c1);
+            repo.AddCatalog(c2);
+            repo.AddCatalog(c3);
 
+            Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
+            Inventory i2 = new Inventory(repo.GetCatalog(c2.ID), 25);
+            Inventory i3 = new Inventory(repo.GetCatalog(c3.ID), 15);
+            repo.AddInventory(i1);
+            repo.AddInventory(i2);
+            repo.AddInventory(i3);
+
+            Assert.AreEqual(repo.GetInventory(c1.ID), i1);
+            Assert.AreEqual(repo.GetInventory(c2.ID).Amount, 25);
+            repo.UpdateInventory(c2.ID, 12);
+            Assert.AreEqual(repo.GetInventory(c2.ID).Amount, 12);
+            repo.DeleteInventory(c3.ID);
+            Assert.AreEqual(false, (((List<Inventory>) repo.GetAllInventories()).Contains(i3)));
         }
     }
 }
