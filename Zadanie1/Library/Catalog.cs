@@ -23,7 +23,7 @@ namespace Library
         }
         public override string ToString()
         {
-            return "Catalog: " + ID + " title: " + Title + " Author: " + Author;
+            return "Catalog: " + ID + " Title: " + Title + " Author: " + Author;
         }
     }
 }
