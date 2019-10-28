@@ -209,7 +209,6 @@ namespace Library
             if (!(dataRepository.GetEvent(eventId) is Rent rent))
                 throw new InvalidOperationException("Event with ID: " + eventId + " is not of type Rent.");
             rent.ReturnDate = rent.ReturnDate.AddDays(days);
-            Console.WriteLine(rent);
         }
 
         public int PenaltySumForAllClients()
