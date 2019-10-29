@@ -6,7 +6,7 @@
         public void Fill(DataContext context)
         {
             #region Clients
-            context.Clients.Add(new Client("Jan", "Kowalski"));
+            context.Clients.Add(new Client("1", "Jan", "Kowalski"));
             context.Clients.Add(new Client("Jakub", "Nowak"));
             context.Clients.Add(new Client("Krzesimir", "Mniejszy"));
             context.Clients.Add(new Client("Kazimierz", "Wielki"));
@@ -18,7 +18,7 @@
             context.Clients.Add(new Client("Wladyslaw", "Warnenczyk"));
             #endregion
             #region Books (Catalog)
-            Catalog c1 = new Catalog("Krzyzacy", "Henryk Sienkiewicz");
+            Catalog c1 = new Catalog("1", "Krzyzacy", "Henryk Sienkiewicz");
             Catalog c2 = new Catalog("Kroniki Czarnej Kompanii", "Glen Cook");
             Catalog c3 = new Catalog("Pan Tadeusz", "Adam Mickiewicz");
             Catalog c4 = new Catalog("Zbrodnia i Kara", "Fiodor Dostojewski");

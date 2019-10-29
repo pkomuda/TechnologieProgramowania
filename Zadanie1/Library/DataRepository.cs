@@ -2,7 +2,7 @@
 
 namespace Library
 {
-    public class DataRepository
+    public class DataRepository 
     {
         private DataContext DataContext { get; set;  }
         private DataFill _FillData;
@@ -22,7 +22,10 @@ namespace Library
         {
             DataContext.Books.Add(catalog.ID, catalog);
         }
-
+        public void AddCatalog(string id, string title, string author)
+        {
+            DataContext.Books.Add(id, new Catalog(id, title, author));
+        }
         public Catalog GetCatalog(string id)
         {
             foreach (Catalog catalog in GetAllCatalogs())
@@ -58,7 +61,14 @@ namespace Library
         {
             DataContext.Clients.Add(client);
         }
-
+        public void AddClient(string firstName, string lastName)
+        {
+            DataContext.Clients.Add(new Client(firstName, lastName));
+        }
+        public void AddClient(string id, string firstName, string lastName)
+        {
+            DataContext.Clients.Add(new Client(id, firstName, lastName));
+        }
         public Client GetClient(string id)
         {
             foreach (Client client in GetAllClients())
@@ -148,6 +158,13 @@ namespace Library
             if (!DataContext.Books.ContainsKey(inventory.Catalog.ID))
                 DataContext.Books.Add(inventory.Catalog.ID, inventory.Catalog);
             DataContext.Inventories.Add(inventory);
+        }
+        public void AddInventory(string catalogID, int amount)
+        {
+            if (DataContext.Books.ContainsKey(catalogID))
+                DataContext.Inventories.Add(new Inventory(GetCatalog(catalogID), amount));
+            else
+                throw new System.InvalidOperationException("No catalog with ID: " + catalogID + " found.");
         }
         public Inventory GetInventory(string catalogId)
         {

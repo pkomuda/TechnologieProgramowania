@@ -63,6 +63,30 @@ namespace LibraryTest
         [TestMethod]
         public void Events()
         {
+            DataRepository repo = new DataRepository();
+            Client client = new Client("1", "Jan", "Kowalski");
+            repo.AddClient(client);
+            Catalog c1 = new Catalog("1", "Basnie braci Grimm", "Bracia Grimm");
+            repo.AddCatalog(c1);
+
+            Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
+            repo.AddInventory(i1);
+
+            Event e1 = new Rent(client, i1, new System.DateTime(), new System.DateTime(2020, 1, 1));
+            Event e2 = new Purchase(i1, new System.DateTime(), 5);
+            Event e3 = new Return(client, i1, new System.DateTime(2022, 2, 2));
+            Event e4 = new Discard(i1, new System.DateTime());
+            repo.AddEvent(e1);
+            repo.AddEvent(e2);
+            repo.AddEvent(e3);
+            repo.AddEvent(e4);
+
+            Assert.AreEqual(e1, repo.GetEvent(e1.ID));
+            Assert.AreEqual(e2, repo.GetEvent(e2.ID));
+            Assert.AreEqual(e3, repo.GetEvent(e3.ID));
+            Assert.AreEqual(e4, repo.GetEvent(e4.ID));
+            repo.DeleteEvent(e4);
+            System.InvalidOperationException e = Assert.ThrowsException<System.InvalidOperationException>(() => repo.GetEvent(e4.ID));
 
         }
         [TestMethod]

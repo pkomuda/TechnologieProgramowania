@@ -12,16 +12,22 @@ namespace Library
             dataRepository = new DataRepository();
         }
 
-        public void AddClient(Client client)
+        public void AddClient(string id, string firstName, string lastName)
         {
-            dataRepository.AddClient(client);
+            dataRepository.AddClient(id, firstName, lastName);
         }
-
-        public void AddInventory(Inventory inventory)
+        public void AddClient(string firstName, string lastName)
         {
-            dataRepository.AddInventory(inventory);
+            dataRepository.AddClient(firstName, lastName);
         }
-        
+        public void AddInventory(string catalogID, int amount)
+        {
+            dataRepository.AddInventory(catalogID, amount);
+        }
+        public void AddCatalog(string id, string title, string author)
+        {
+            dataRepository.AddCatalog(id, title, author);
+        }
         public string GetCatalog(string catalogId)
         {
             return dataRepository.GetCatalog(catalogId).ToString();
