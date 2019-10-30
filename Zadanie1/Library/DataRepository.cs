@@ -111,7 +111,7 @@ namespace Library
             return DataContext.Clients;
         }
         #endregion
-        #region everything with Event and
+        #region everything with Event
         public void AddEvent(Event ev) 
         {
             DataContext.Events.Add(ev);
@@ -126,9 +126,9 @@ namespace Library
             throw new System.InvalidOperationException("No event with ID: " + id + " found.");
         }
         
-        public bool DeleteEvent(Event ev)
+        public bool DeleteEvent(string eventID)
         {
-            return DataContext.Events.Remove(ev);
+            return DataContext.Events.Remove(GetEvent(eventID));
         }
 
         public IEnumerable<Event> GetAllEvents()
