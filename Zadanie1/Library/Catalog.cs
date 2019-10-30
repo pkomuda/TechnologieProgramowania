@@ -4,7 +4,7 @@ namespace Library
 {
     public class Catalog
     {
-        public string ID { get; private set; }
+        public string ID { get; }
         public string Title { get; set; }
         public string Author { get; set; }
 

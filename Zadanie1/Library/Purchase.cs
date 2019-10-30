@@ -4,8 +4,8 @@ namespace Library
 {
     public class Purchase : Event
     {
-        public Inventory Inventory { get; private set; }
-        public int Amount { get; private set; }
+        public Inventory Inventory { get; }
+        public int Amount { get; }
 
         public Purchase(Inventory inventory, DateTime purchaseDate, int amount)
         {

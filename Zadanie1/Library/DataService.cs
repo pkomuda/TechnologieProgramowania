@@ -224,5 +224,13 @@ namespace Library
                 sum += c.Penalty;
             return sum;
         }
+
+        public string AllNotifications()
+        {
+            string notifications = "";
+            foreach (string s in dataRepository.GetNotifications())
+                notifications += s + "\n";
+            return notifications;
+        }
     }
 }

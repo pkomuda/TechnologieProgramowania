@@ -2,7 +2,7 @@
 {
     public class Inventory
     {
-        public Catalog Catalog { get; private set; }
+        public Catalog Catalog { get; }
         public int Amount { get; private set; }
 
         public Inventory(Catalog catalog, int amount)

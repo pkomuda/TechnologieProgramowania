@@ -4,8 +4,8 @@ namespace Library
 {
     public class Return : Event
     {
-        public Client Client { get; set; }
-        public Inventory Inventory { get; set; }
+        public Client Client { get; }
+        public Inventory Inventory { get; }
         
         public Return(Client client, Inventory inventory, DateTime returnDate)
         {       

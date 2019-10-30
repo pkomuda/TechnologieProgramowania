@@ -4,7 +4,7 @@ namespace Library
 {
     public abstract class Event
     {
-        public string ID { get; private set; }
+        public string ID { get; }
         public DateTime Date { get; set; }
 
         public Event()

@@ -5,11 +5,11 @@ namespace Library
 {
     public class Client
     {
-        public string ID { get; private set; }
+        public string ID { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Penalty { get; set; }
-        public List<Catalog> RentedCatalogs { get; private set; }
+        public List<Catalog> RentedCatalogs { get; }
 
         public Client(string firstName, string lastName)
         {

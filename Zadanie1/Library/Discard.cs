@@ -4,7 +4,7 @@ namespace Library
 {
     public class Discard : Event
     {
-        public Inventory Inventory { get; set; }
+        public Inventory Inventory { get; }
 
         public Discard(Inventory inventory, DateTime discardDate)
         {

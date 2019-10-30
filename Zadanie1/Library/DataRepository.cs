@@ -4,7 +4,7 @@ namespace Library
 {
     public class DataRepository 
     {
-        private DataContext DataContext { get; set;  }
+        private DataContext DataContext { get; }
         private DataFill _FillData;
         public DataFill FillData { get { return _FillData; }
                                    set
@@ -34,8 +34,6 @@ namespace Library
                     return catalog;
             }
             throw new System.InvalidOperationException("No book with ID: " + id + " found.");
-            // Wydaje mi się że lepsze jest rzucanie własnego wyjątku chociażby ze względu na wyświetlany komunikat - wtedy łatwiej jest znaleźć jego przyczynę
-            // return DataContext.Books[id];
         }
 
         public IEnumerable<Catalog> GetAllCatalogs()
@@ -150,6 +148,11 @@ namespace Library
         public Purchase CreatePurchase(Inventory inventory, System.DateTime purchaseDate, int amount)
         {
            return new Purchase(inventory, purchaseDate, amount);
+        }
+
+        public List<string> GetNotifications()
+        {
+            return DataContext.Notifications;
         }
         #endregion
         #region everything with Inventory

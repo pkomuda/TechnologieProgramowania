@@ -4,8 +4,8 @@ namespace Library
 {
     public class Rent : Event
     {
-        public Client Client { get; set; }
-        public Inventory Inventory { get; set; }
+        public Client Client { get; }
+        public Inventory Inventory { get; }
         public DateTime ReturnDate { get; set; }
 
         public Rent(Client client, Inventory inventory, DateTime borrowDate, DateTime returnDate)
