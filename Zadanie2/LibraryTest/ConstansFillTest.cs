@@ -10,7 +10,7 @@ namespace LibraryTest
         public void DI()
         {
             DataRepository dataRepository = new DataRepository();
-            dataRepository.FillData = new ConstansFill();
+//            dataRepository.FillData = new ConstansFill();
 
             Assert.AreEqual("Jan", dataRepository.GetClient("1").FirstName);
             Assert.AreEqual("Kowalski", dataRepository.GetClient("1").LastName);

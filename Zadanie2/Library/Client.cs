@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Library
 {
@@ -19,6 +20,7 @@ namespace Library
             RentedCatalogs = new List<Catalog>();
         }
 
+        [JsonConstructor]
         public Client(string id, string firstName, string lastName)
         {
             ID = id;

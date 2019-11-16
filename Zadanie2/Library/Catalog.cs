@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Library
 {
@@ -15,6 +16,7 @@ namespace Library
             Author = author;
         }
 
+        [JsonConstructor]
         public Catalog(string id, string title, string author)
         {
             ID = id;

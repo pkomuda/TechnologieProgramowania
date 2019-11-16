@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Library
 {
     public class DataRepository 
     {
+        [JsonProperty]
         private DataContext DataContext { get; }
-        private DataFill _FillData;
-        public DataFill FillData { get { return _FillData; }
-                                   set
-                                   {
-                                        _FillData = value;
-                                        _FillData.Fill(DataContext);
-                                   } }
+//        private DataFill _FillData;
+//        public DataFill FillData { get { return _FillData; }
+//                                   set
+//                                   {
+//                                        _FillData = value;
+//                                        _FillData.Fill(DataContext);
+//                                   } }
 
         public DataRepository()
         {

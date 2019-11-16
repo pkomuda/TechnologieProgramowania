@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace Library
 {
     public class DataService
     {
+        [JsonProperty]
         private DataRepository dataRepository;
 
         public DataService()
