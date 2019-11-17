@@ -72,5 +72,25 @@ namespace LibraryTest
             //Console.WriteLine(result);
             Assert.AreEqual("TestNotifications1\n"+"TestNotifications2\n"+"TestNotifications3\n", result);
         }
+        [TestMethod]
+        public void SerializeEventsTest()
+        {
+            Catalog c1 = new Catalog("1", "Krzyzacy", "Henryk Sienkiewicz");
+            Catalog c2 = new Catalog("2", "Kroniki Czarnej Kompanii", "Glen Cook");
+            Catalog c3 = new Catalog("3", "Pan Tadeusz", "Adam Mickiewicz");
+            Inventory i1 = new Inventory(c1, 10);
+            Inventory i2 = new Inventory(c2, 7);
+            Inventory i3 = new Inventory(c3, 33);
+            List<Event> events = new List<Event>();
+            events.Add(new Rent("event1", new Client("1", "Jakub", "Nowak"), i1, new System.DateTime(), new System.DateTime(2020, 1, 1)));
+            events.Add(new Purchase("event2", i2, new DateTime(), 5));
+            events.Add(new Return("event3", new Client("2", "Krzesimir", "Mniejszy"), i1, new System.DateTime(2022, 2, 2)));
+            events.Add(new Discard("event4", i3, new DateTime()));
+            CSV csv = new CSV();
+            csv.serialize(events, "events.csv");
+            string result = File.ReadAllText("events.csv");
+            Console.WriteLine(result);
+            Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
+        }
     }
 }

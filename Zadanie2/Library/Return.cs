@@ -13,10 +13,16 @@ namespace Library
             Inventory = inventory;
             Date = returnDate;
         }
-        
+        public Return(string id, Client client, Inventory inventory, DateTime returnDate) : base(id)
+        {
+            Client = client;
+            Inventory = inventory;
+            Date = returnDate;
+        }
+
         public override string ToString()
         {
-            return "Return{ID: " + base.ToString() + "; Client(" + Client.FirstName + ", " + Client.LastName + "); Inventory(" + Inventory.Catalog.Title + "); " + Date + "}";
+            return "Return;" + base.ToString() + ";" + Client.ID + ";" + Inventory.Catalog.ID + ";" + Date;
         }
     }
 }

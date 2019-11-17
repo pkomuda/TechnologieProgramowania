@@ -15,10 +15,17 @@ namespace Library
             Date = borrowDate;
             ReturnDate = returnDate;
         }
+        public Rent(string id, Client client, Inventory inventory, DateTime borrowDate, DateTime returnDate) : base(id)
+        {
+            Client = client;
+            Inventory = inventory;
+            Date = borrowDate;
+            ReturnDate = returnDate;
+        }
 
         public override string ToString()
         {
-            return "Rent{ID: " + base.ToString() + "; Client(" + Client.FirstName + ", " + Client.LastName + "); Inventory(" + Inventory.Catalog.Title + "); " + Date + "; " + ReturnDate + "}";
+            return "Rent;" + base.ToString() + ";" + Client.ID + ";" + Inventory.Catalog.ID + ";" + Date + ";" + ReturnDate;
         }
     }
 }

@@ -13,10 +13,16 @@ namespace Library
             Date = purchaseDate;
             Amount = amount;
         }
-        
+        public Purchase(string id, Inventory inventory, DateTime purchaseDate, int amount) : base(id)
+        {
+            Inventory = inventory;
+            Date = purchaseDate;
+            Amount = amount;
+        }
+
         public override string ToString()
         {
-            return "Purchase{ID: " + base.ToString() + "; Inventory(" + Inventory.Amount + ", " + Inventory.Catalog.Title + "); " + Date + "}";
+            return "Purchase;" + base.ToString() + ";" + Inventory.Catalog.ID + ";" + Date;
         }
     }
 }

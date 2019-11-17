@@ -11,7 +11,10 @@ namespace Library
         {
             ID = Guid.NewGuid().ToString();
         }
-
+        public Event(string id)
+        {
+            ID = id;
+        }
         public override string ToString()
         {
             return ID;

@@ -11,10 +11,15 @@ namespace Library
             Inventory = inventory;
             Date = discardDate;
         }
-        
+        public Discard(string id, Inventory inventory, DateTime discardDate) : base(id)
+        {
+            Inventory = inventory;
+            Date = discardDate;
+        }
+
         public override string ToString()
         {
-            return "Discard{ID: " + base.ToString() + "; Inventory(" + Inventory.Amount + ", " + Inventory.Catalog.Title + "); " + Date + "}";
+            return "Discard;" + base.ToString() + ";" + Inventory.Catalog.ID + ";" + Date;
         }
     }
 }

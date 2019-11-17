@@ -45,7 +45,17 @@ namespace Library
         }
         public void serialize(IEnumerable<Event> data, string path2file)
         {
-
+            string line = "";
+            foreach (Event e in data)
+            {
+                line += e.ToString() + "\n";
+            }
+            File.Delete(path2file);
+            using (Stream _stream = File.Open(path2file, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
         }
         public void serialize(IEnumerable<Inventory> data, string path2file)
         {
