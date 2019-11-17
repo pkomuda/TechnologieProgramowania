@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 
 namespace Library
 {
-    public class DataContext : ISerializeCollection
+    public class DataContext
     {
         public List<Client> Clients { get; }
         public Dictionary<string, Catalog> Books { get; }
@@ -24,46 +24,6 @@ namespace Library
                     Notifications.Add("Added event: " + e.NewItems[0]);
             };
             Inventories = new List<Inventory>();
-        }
-
-        public void saveClients()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void loadClients()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void saveCatalogs()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void loadCatalogs()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void saveInventories()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void loadInventories()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void saveEvents()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void loadEvents()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

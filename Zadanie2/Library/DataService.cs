@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Library
 {
-    public class DataService : ISerializeCollection
+    public class DataService
     {
         [JsonProperty]
         private DataRepository dataRepository;
@@ -234,47 +234,5 @@ namespace Library
                 notifications += s + "\n";
             return notifications;
         }
-
-        #region SerializeCollection
-        public void saveClients()
-        {
-            dataRepository.saveClients();
-        }
-
-        public void loadClients()
-        {
-            dataRepository.loadClients();
-        }
-
-        public void saveCatalogs()
-        {
-            dataRepository.saveCatalogs();
-        }
-
-        public void loadCatalogs()
-        {
-            dataRepository.loadCatalogs();
-        }
-
-        public void saveInventories()
-        {
-            dataRepository.saveInventories();
-        }
-
-        public void loadInventories()
-        {
-            dataRepository.loadInventories();
-        }
-
-        public void saveEvents()
-        {
-            dataRepository.saveEvents();
-        }
-
-        public void loadEvents()
-        {
-            dataRepository.loadEvents();
-        } 
-        #endregion
     }
 }

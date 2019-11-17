@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Library
 {
-    public class DataRepository : ISerializeCollection
+    public class DataRepository 
     {
         [JsonProperty]
         private DataContext DataContext { get; }
@@ -200,47 +200,6 @@ namespace Library
         public IEnumerable<Inventory> GetAllInventories()
         {
             return DataContext.Inventories;
-        }
-        #endregion
-        #region SerializeCollection
-        public void saveClients()
-        {
-            DataContext.saveClients();
-        }
-
-        public void loadClients()
-        {
-            DataContext.loadClients();
-        }
-
-        public void saveCatalogs()
-        {
-            DataContext.saveCatalogs();
-        }
-
-        public void loadCatalogs()
-        {
-             DataContext.loadCatalogs();
-        }
-
-        public void saveInventories()
-        {
-             DataContext.saveInventories();
-        }
-
-        public void loadInventories()
-        {
-            DataContext.loadInventories();
-        }
-
-        public void saveEvents()
-        {
-            DataContext.saveEvents();
-        }
-
-        public void loadEvents()
-        {
-            DataContext.loadEvents();
         }
         #endregion
     }
