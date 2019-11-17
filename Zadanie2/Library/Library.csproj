@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog.cs" />
+    <Compile Include="CSV.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataFill.cs" />
