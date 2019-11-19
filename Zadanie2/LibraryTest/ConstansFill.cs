@@ -1,4 +1,5 @@
 ﻿using Library;
+using System.Collections.Generic;
 
 namespace LibraryTest
 {
@@ -7,18 +8,7 @@ namespace LibraryTest
         public ConstansFill() {}
         public void Fill(DataContext context)
         {
-            #region Clients
-            context.Clients.Add(new Client("1", "Jan", "Kowalski"));
-            context.Clients.Add(new Client("Jakub", "Nowak"));
-            context.Clients.Add(new Client("Krzesimir", "Mniejszy"));
-            context.Clients.Add(new Client("Kazimierz", "Wielki"));
-            context.Clients.Add(new Client("Boleslaw", "Chrobry"));
-            context.Clients.Add(new Client("Wladyslaw", "Lokietek"));
-            context.Clients.Add(new Client("Wladyslaw", "Jagiello"));
-            context.Clients.Add(new Client("Zygmunt", "August"));
-            context.Clients.Add(new Client("Zygmunt", "Stary"));
-            context.Clients.Add(new Client("Wladyslaw", "Warnenczyk"));
-            #endregion
+           
             #region Books (Catalog)
             Catalog c1 = new Catalog("1", "Krzyzacy", "Henryk Sienkiewicz");
             Catalog c2 = new Catalog("Kroniki Czarnej Kompanii", "Glen Cook");
@@ -40,6 +30,21 @@ namespace LibraryTest
             context.Books.Add(c8.ID, c8);
             context.Books.Add(c9.ID, c9);
             context.Books.Add(c10.ID, c10);
+            #endregion
+            #region Clients
+            List<Catalog> rented = new List<Catalog>();
+            rented.Add(c1);
+            rented.Add(c3);
+            context.Clients.Add(new Client("1", "Jan", "Kowalski", rented));
+            context.Clients.Add(new Client("Jakub", "Nowak"));
+            context.Clients.Add(new Client("Krzesimir", "Mniejszy"));
+            context.Clients.Add(new Client("Kazimierz", "Wielki"));
+            context.Clients.Add(new Client("Boleslaw", "Chrobry"));
+            context.Clients.Add(new Client("Wladyslaw", "Lokietek"));
+            context.Clients.Add(new Client("Wladyslaw", "Jagiello"));
+            context.Clients.Add(new Client("Zygmunt", "August"));
+            context.Clients.Add(new Client("Zygmunt", "Stary"));
+            context.Clients.Add(new Client("Wladyslaw", "Warnenczyk"));
             #endregion
             #region Inventories
             context.Inventories.Add(new Inventory(context.Books[c1.ID], 10));

@@ -98,7 +98,7 @@ namespace Library
                     {
                         string[] words = line.Split(';');
                         catalogs.Add(words[0], new Catalog(words[1], words[2], words[3]));
-                        streamReader.ReadLine();
+                        line = streamReader.ReadLine();
                     }
                 }
             }
@@ -112,12 +112,15 @@ namespace Library
                     {
                         string[] words = line.Split(';');
                         List<Catalog> rentedCatalgos = new List<Catalog>();
-                        for(int i = 0; i < words.Length; i++)
+                        for(int i = 3; i < words.Length; i++)
                         {
-                            rentedCatalgos.Add(catalogs[words[i]]);
+                            if (catalogs.ContainsKey(words[i]))
+                            {
+                                rentedCatalgos.Add(catalogs[words[i]]);
+                            }
                         }
                         clients.Add(new Client(words[0], words[1], words[2], rentedCatalgos));
-                        streamReader.ReadLine();
+                        line = streamReader.ReadLine();
                     }
                 }
             }
@@ -130,7 +133,7 @@ namespace Library
                     while (null != line)
                     {
                         notifications.Add(line);
-                        streamReader.ReadLine();
+                        line = streamReader.ReadLine();
                     }
                 }
             }
@@ -144,7 +147,7 @@ namespace Library
                     {
                         string[] words = line.Split(';');
                         inventories.Add(new Inventory(catalogs[words[0]], Int32.Parse(words[1])));
-                        streamReader.ReadLine();
+                        line = streamReader.ReadLine();
                     }
                 }
             }
@@ -223,8 +226,8 @@ namespace Library
                                 }
                             }
                             events.Add(new Discard(words[1], i1, DateTime.Parse(words[3])));
-                        } 
-                        streamReader.ReadLine();
+                        }
+                        line = streamReader.ReadLine();
                     }
                 }
             }

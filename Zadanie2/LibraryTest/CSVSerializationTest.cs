@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text;
 using Library;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -90,15 +91,137 @@ namespace LibraryTest
             CSV csv = new CSV();
             csv.Serialize(events, "events.csv");
             string result = File.ReadAllText("events.csv");
-            Console.WriteLine(result);
+           // Console.WriteLine(result);
             Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00;5\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
         }
         [TestMethod]
         public void DeserializeTest()
         {
             CSV csv = new CSV();
-            DataContext dc = csv.Deserialize("clients.csv", "catalogs.csv", "events.csv", "inventories.csv", "notifications.csv");
-            
+            DataContext dc = new DataContext();
+            ConstansFill fill1 = new ConstansFill();
+            fill1.Fill(dc);
+            #region clients
+            string line = "";
+            string catalogs = "";
+            foreach (Client c in dc.Clients)
+            {
+                foreach (Catalog cat in c.RentedCatalogs)
+                {
+                    catalogs += cat.ID + ';';
+                }
+                line += c.ID + ';' + c.FirstName + ';' + c.LastName + ';' + c.Penalty + ';' + catalogs + "\n";
+                catalogs = "";
+            }
+            File.Delete("clients.csv");
+            using (Stream _stream = File.Open("clients.csv", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
+            #endregion
+            #region catalogs
+            line = "";
+            foreach (string key in dc.Books.Keys)
+            {
+                line += key + ";" + dc.Books[key].ID + ';' + dc.Books[key].Title + ';' + dc.Books[key].Author + "\n";
+            }
+            File.Delete("catalogs.csv");
+            using (Stream _stream = File.Open("catalogs.csv", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
+            #endregion
+            #region events
+            line = "";
+            foreach (Event e in dc.Events)
+            {
+                line += e.ToString() + "\n";
+            }
+            File.Delete("events.csv");
+            using (Stream _stream = File.Open("events.csv", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
+            #endregion
+            #region inventories
+            line = "";
+            foreach (Inventory i in dc.Inventories)
+            {
+                line += i.Catalog.ID + ';' + i.Amount + "\n";
+            }
+            File.Delete("inventories.csv");
+            using (Stream _stream = File.Open("inventories.csv", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
+            #endregion
+            #region notifications
+            line = "";
+            foreach (string e in dc.Notifications)
+            {
+                line += e + "\n";
+            }
+            File.Delete("notifications.csv");
+            using (Stream _stream = File.Open("notifications.csv", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] _content = Encoding.ASCII.GetBytes(line);
+                _stream.Write(_content, 0, _content.Length);
+            }
+            #endregion
+            DataContext deserialized = csv.Deserialize("clients.csv", "catalogs.csv", "events.csv", "inventories.csv", "notifications.csv");
+            Assert.AreEqual(dc.Clients.Count, deserialized.Clients.Count);
+            Assert.AreEqual(dc.Books.Count, deserialized.Books.Count);
+            Assert.AreEqual(dc.Events.Count, deserialized.Events.Count);
+            Assert.AreEqual(dc.Notifications.Count, deserialized.Notifications.Count);
+            Assert.AreEqual(dc.Inventories.Count, deserialized.Inventories.Count);
+            #region deserialized clients
+            for (int i = 0; i < dc.Clients.Count; i++)
+            {
+                Assert.AreEqual(dc.Clients[i].ID, deserialized.Clients[i].ID);
+                Assert.AreEqual(dc.Clients[i].FirstName, deserialized.Clients[i].FirstName);
+                Assert.AreEqual(dc.Clients[i].LastName, deserialized.Clients[i].LastName);
+                Assert.AreEqual(dc.Clients[i].Penalty, deserialized.Clients[i].Penalty);
+                for (int j = 0; j < dc.Clients[i].RentedCatalogs.Count; j++)
+                {
+                    Assert.AreEqual(dc.Clients[i].RentedCatalogs[j].ID, deserialized.Clients[i].RentedCatalogs[j].ID);
+                    Assert.AreEqual(dc.Clients[i].RentedCatalogs[j].Title, deserialized.Clients[i].RentedCatalogs[j].Title);
+                    Assert.AreEqual(dc.Clients[i].RentedCatalogs[j].Author, deserialized.Clients[i].RentedCatalogs[j].Author);
+                }
+            }
+            #endregion
+            #region deserialized Books
+            foreach(string key in dc.Books.Keys)
+            {
+                Assert.AreEqual(dc.Books[key].ID, deserialized.Books[key].ID);
+                Assert.AreEqual(dc.Books[key].Title, deserialized.Books[key].Title);
+                Assert.AreEqual(dc.Books[key].Author, deserialized.Books[key].Author);
+            }
+            #endregion
+            #region deserialized Events
+            for (int i = 0; i < dc.Events.Count; i++)
+            {
+                Assert.AreEqual(dc.Events[i].ToString(), deserialized.Events[i].ToString());
+            }
+            #endregion
+            #region deserialized Notifications
+            for (int i = 0; i < dc.Notifications.Count; i++)
+            {
+                Assert.AreEqual(dc.Notifications[i], deserialized.Notifications[i]);
+            }
+            #endregion
+            #region deserialized Inventories
+            for (int i = 0; i < dc.Inventories.Count; i++)
+            {
+                Assert.AreEqual(dc.Inventories[i].Amount, deserialized.Inventories[i].Amount);
+                Assert.AreEqual(dc.Inventories[i].Catalog.ID, deserialized.Inventories[i].Catalog.ID);
+                Assert.AreEqual(dc.Inventories[i].Catalog.Title, deserialized.Inventories[i].Catalog.Title);
+                Assert.AreEqual(dc.Inventories[i].Catalog.Author, deserialized.Inventories[i].Catalog.Author);
+            }
+            #endregion
         }
     }
 }
