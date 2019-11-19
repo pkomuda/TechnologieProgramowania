@@ -81,16 +81,16 @@ namespace Library
             dataContext.Clients = clientsList;
             
             string catalogsJson = File.ReadAllText(catalogs);
-            IEnumerable<Catalog> catalogsEnumerable = JsonConvert.DeserializeObject<IEnumerable<Catalog>>(catalogsJson,
+            Dictionary<string, Catalog> catalogsEnumerable = JsonConvert.DeserializeObject<Dictionary<string, Catalog>>(catalogsJson,
                                                                                                           new JsonSerializerSettings
                                                                                                           {
                                                                                                               PreserveReferencesHandling = PreserveReferencesHandling.All, 
                                                                                                               TypeNameHandling = TypeNameHandling.All
                                                                                                           });
-            Dictionary<string, Catalog> catalogsDictionary = new Dictionary<string, Catalog>();
-            foreach (Catalog catalog in catalogsEnumerable)
-                catalogsDictionary.Add(catalog.ID, catalog);
-            dataContext.Books = catalogsDictionary;
+//            Dictionary<string, Catalog> catalogsDictionary = new Dictionary<string, Catalog>();
+//            foreach (Catalog catalog in catalogsEnumerable)
+//                catalogsDictionary.Add(catalog.ID, catalog);
+            dataContext.Books = catalogsEnumerable;
             
             string eventsJson = File.ReadAllText(events);
             ObservableCollection<Event> eventsCollection = JsonConvert.DeserializeObject<ObservableCollection<Event>>(eventsJson,

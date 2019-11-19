@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Library
 {
@@ -15,6 +16,7 @@ namespace Library
             Date = borrowDate;
             ReturnDate = returnDate;
         }
+        [JsonConstructor]
         public Rent(string id, Client client, Inventory inventory, DateTime borrowDate, DateTime returnDate) : base(id)
         {
             Client = client;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Library
 {
@@ -11,6 +12,7 @@ namespace Library
             Inventory = inventory;
             Date = discardDate;
         }
+        [JsonConstructor]
         public Discard(string id, Inventory inventory, DateTime discardDate) : base(id)
         {
             Inventory = inventory;

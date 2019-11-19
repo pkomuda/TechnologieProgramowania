@@ -7,17 +7,21 @@ namespace Library
     {
         [JsonProperty]
         private DataContext DataContext { get; }
-//        private DataFill _FillData;
-//        public DataFill FillData { get { return _FillData; }
-//                                   set
-//                                   {
-//                                        _FillData = value;
-//                                        _FillData.Fill(DataContext);
-//                                   } }
+        private DataFill _FillData;
+        public DataFill FillData { get { return _FillData; }
+                                   set
+                                   {
+                                        _FillData = value;
+                                        _FillData.Fill(DataContext);
+                                   } }
 
         public DataRepository()
         {
             DataContext = new DataContext();
+        }
+        public DataRepository(DataContext dataContext)
+        {
+            DataContext = dataContext;
         }
         #region everything with Catalog
         public void AddCatalog(Catalog catalog)
@@ -202,5 +206,25 @@ namespace Library
             return DataContext.Inventories;
         }
         #endregion
+
+        public override string ToString()
+        {
+            string str = "Clients:\n";
+            foreach (Client c in GetAllClients())
+                str += c + "\n";
+            str += "\nCatalogs:\n";
+            foreach (Catalog c in GetAllCatalogs())
+                str += c + "\n";
+            str += "\nEvents:\n";
+            foreach (Event e in GetAllEvents())
+                str += e + "\n";
+            str += "\nInventories:\n";
+            foreach (Inventory i in GetAllInventories())
+                str += i + "\n";
+            str += "\nNotifications:\n";
+            foreach (string s in GetNotifications())
+                str += s + "\n";
+            return str;
+        }
     }
 }
