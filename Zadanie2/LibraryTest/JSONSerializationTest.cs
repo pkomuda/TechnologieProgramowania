@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Library;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,9 +35,9 @@ namespace LibraryTest
             books.Add(c3.ID, c3);
 
             JSON json = new JSON();
-            json.Serialize(books.Values, "books.json");
+            json.Serialize(books, "books.json");
             string result = File.ReadAllText("books.json");
-            //Console.WriteLine(result);
+            Console.WriteLine(result);
             Assert.AreEqual("1;Krzyzacy;Henryk Sienkiewicz\n2;Kroniki Czarnej Kompanii;Glen Cook\n3;Pan Tadeusz;Adam Mickiewicz\n", result);
         }
         [TestMethod]
@@ -81,7 +82,7 @@ namespace LibraryTest
             Inventory i1 = new Inventory(c1, 10);
             Inventory i2 = new Inventory(c2, 7);
             Inventory i3 = new Inventory(c3, 33);
-            List<Event> events = new List<Event>();
+            ObservableCollection<Event> events = new ObservableCollection<Event>();
             events.Add(new Rent("event1", new Client("1", "Jakub", "Nowak"), i1, new System.DateTime(), new System.DateTime(2020, 1, 1)));
             events.Add(new Purchase("event2", i2, new DateTime(), 5));
             events.Add(new Return("event3", new Client("2", "Krzesimir", "Mniejszy"), i1, new System.DateTime(2022, 2, 2)));

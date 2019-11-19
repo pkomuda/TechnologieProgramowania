@@ -10,7 +10,7 @@ namespace Library
 {
     public class CSV : ISerialization
     {
-        public void Serialize(IEnumerable<Client> data, string path2File)
+        public void Serialize(List<Client> data, string path2File)
         {
             string line = "";
             string catalogs = "";
@@ -30,12 +30,12 @@ namespace Library
                 _stream.Write(_content, 0, _content.Length);
             }
         }
-        public void Serialize(IEnumerable<Catalog> data, string path2File)
+        public void Serialize(Dictionary<string, Catalog> data, string path2File)
         {
             string line = "";
-            foreach (Catalog c in data)
+            foreach (string key in data.Keys)
             {
-                line += c.ID + ';' + c.Title + ';' + c.Author + "\n";
+                line += key + ";" + data[key].ID + ';' + data[key].Title + ';' + data[key].Author + "\n";
             }
             File.Delete(path2File);
             using (Stream _stream = File.Open(path2File, FileMode.OpenOrCreate, FileAccess.Write))
@@ -44,7 +44,7 @@ namespace Library
                 _stream.Write(_content, 0, _content.Length);
             }
         }
-        public void Serialize(IEnumerable<Event> data, string path2File)
+        public void Serialize(ObservableCollection<Event> data, string path2File)
         {
             string line = "";
             foreach (Event e in data)
@@ -58,7 +58,7 @@ namespace Library
                 _stream.Write(_content, 0, _content.Length);
             }
         }
-        public void Serialize(IEnumerable<Inventory> data, string path2File)
+        public void Serialize(List<Inventory> data, string path2File)
         {
             string line = "";
             foreach (Inventory i in data)
@@ -72,7 +72,7 @@ namespace Library
                 _stream.Write(_content, 0, _content.Length);
             }
         }
-        public void Serialize(IEnumerable<string> data, string path2File)
+        public void Serialize(List<string> data, string path2File)
         {
             string line = "";
             foreach (string e in data)
@@ -86,7 +86,7 @@ namespace Library
                 _stream.Write(_content, 0, _content.Length);
             }
         }
-        public DataContext deserialize(string path2catalogs, string path2clients, string path2notifications, string path2inventories, string path2events)
+        public DataContext Deserialize(string path2clients, string path2catalogs, string path2events, string path2inventories, string path2notifications)
         {
             Dictionary<string, Catalog> catalogs = new Dictionary<string, Catalog>();
             using (FileStream fileStream = new FileStream(path2catalogs, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -97,7 +97,7 @@ namespace Library
                     while (null != line)
                     {
                         string[] words = line.Split(';');
-                        catalogs.Add(words[0], new Catalog(words[0], words[1], words[2]));
+                        catalogs.Add(words[0], new Catalog(words[1], words[2], words[3]));
                         streamReader.ReadLine();
                     }
                 }
@@ -230,5 +230,6 @@ namespace Library
             }
             return new DataContext(clients, catalogs, notifications, events, inventories);
         }
+
     }
 }

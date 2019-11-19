@@ -8,7 +8,7 @@ namespace Library
 {
     public class JSON : ISerialization
     {
-        public void Serialize(IEnumerable<Client> data, string path2File)
+        public void Serialize(List<Client> data, string path2File)
         {
             string json = JsonConvert.SerializeObject(data,
                                                       Formatting.Indented,
@@ -20,7 +20,7 @@ namespace Library
             File.WriteAllText(path2File, json);
         }
 
-        public void Serialize(IEnumerable<Catalog> data, string path2File)
+        public void Serialize(Dictionary<string, Catalog> data, string path2File)
         {
             string json = JsonConvert.SerializeObject(data,
                                                       Formatting.Indented,
@@ -32,7 +32,7 @@ namespace Library
             File.WriteAllText(path2File, json);
         }
 
-        public void Serialize(IEnumerable<Event> data, string path2File)
+        public void Serialize(ObservableCollection<Event> data, string path2File)
         {
             string json = JsonConvert.SerializeObject(data,
                                                       Formatting.Indented,
@@ -44,7 +44,7 @@ namespace Library
             File.WriteAllText(path2File, json);
         }
 
-        public void Serialize(IEnumerable<Inventory> data, string path2File)
+        public void Serialize(List<Inventory> data, string path2File)
         {
             string json = JsonConvert.SerializeObject(data,
                                                       Formatting.Indented,
@@ -56,7 +56,7 @@ namespace Library
             File.WriteAllText(path2File, json);
         }
 
-        public void Serialize(IEnumerable<string> data, string path2File)
+        public void Serialize(List<string> data, string path2File)
         {
             string json = JsonConvert.SerializeObject(data,
                                                       Formatting.Indented,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Library;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,10 +35,10 @@ namespace LibraryTest
             books.Add(c3.ID, c3);
 
             CSV csv = new CSV();
-            csv.Serialize(books.Values, "books.csv");
+            csv.Serialize(books, "books.csv");
             string result = File.ReadAllText("books.csv");
             //Console.WriteLine(result);
-            Assert.AreEqual("1;Krzyzacy;Henryk Sienkiewicz\n2;Kroniki Czarnej Kompanii;Glen Cook\n3;Pan Tadeusz;Adam Mickiewicz\n", result);
+            Assert.AreEqual("1;1;Krzyzacy;Henryk Sienkiewicz\n2;2;Kroniki Czarnej Kompanii;Glen Cook\n3;3;Pan Tadeusz;Adam Mickiewicz\n", result);
         }
         [TestMethod]
         public void SerializeInventoriesTest()
@@ -81,7 +82,7 @@ namespace LibraryTest
             Inventory i1 = new Inventory(c1, 10);
             Inventory i2 = new Inventory(c2, 7);
             Inventory i3 = new Inventory(c3, 33);
-            List<Event> events = new List<Event>();
+            ObservableCollection<Event> events = new ObservableCollection<Event>();
             events.Add(new Rent("event1", new Client("1", "Jakub", "Nowak"), i1, new System.DateTime(), new System.DateTime(2020, 1, 1)));
             events.Add(new Purchase("event2", i2, new DateTime(), 5));
             events.Add(new Return("event3", new Client("2", "Krzesimir", "Mniejszy"), i1, new System.DateTime(2022, 2, 2)));
@@ -90,7 +91,14 @@ namespace LibraryTest
             csv.Serialize(events, "events.csv");
             string result = File.ReadAllText("events.csv");
             Console.WriteLine(result);
-            Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
+            Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00;5\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
+        }
+        [TestMethod]
+        public void DeserializeTest()
+        {
+            CSV csv = new CSV();
+            DataContext dc = csv.Deserialize("clients.csv", "catalogs.csv", "events.csv", "inventories.csv", "notifications.csv");
+            
         }
     }
 }
