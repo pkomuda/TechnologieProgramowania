@@ -28,7 +28,13 @@ namespace Library
             LastName = lastName;
             RentedCatalogs = new List<Catalog>();
         }
-
+        public Client(string id, string firstName, string lastName, List<Catalog> rentedCatalogs)
+        {
+            ID = id;
+            FirstName = firstName;
+            LastName = lastName;
+            RentedCatalogs = rentedCatalogs;
+        }
         public void PayPenalty()
         {
             Penalty = 0;

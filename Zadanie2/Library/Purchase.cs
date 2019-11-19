@@ -22,7 +22,7 @@ namespace Library
 
         public override string ToString()
         {
-            return "Purchase;" + base.ToString() + ";" + Inventory.Catalog.ID + ";" + Date;
+            return "Purchase;" + base.ToString() + ";" + Inventory.Catalog.ID + ";" + Date + ";" + Amount;
         }
     }
 }

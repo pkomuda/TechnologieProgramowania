@@ -25,5 +25,18 @@ namespace Library
             };
             Inventories = new List<Inventory>();
         }
+        public DataContext(List<Client> clients, Dictionary<string, Catalog> books, List<string> notifications, ObservableCollection<Event> events, List<Inventory> inventories)
+        {
+            Clients = clients;
+            Books = books;
+            Notifications = notifications;
+            Events = events;
+            Events.CollectionChanged += (sender, e) =>
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add)
+                    Notifications.Add("Added event: " + e.NewItems[0]);
+            };
+            Inventories = inventories;
+        }
     }
 }
