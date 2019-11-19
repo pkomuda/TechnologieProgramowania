@@ -6,11 +6,11 @@ namespace Library
 {
     public class DataContext
     {
-        public List<Client> Clients { get; }
-        public Dictionary<string, Catalog> Books { get; }
-        public ObservableCollection<Event> Events { get; }
-        public List<Inventory> Inventories { get; }
-        public List<string> Notifications { get; }
+        public List<Client> Clients { get; set; }
+        public Dictionary<string, Catalog> Books { get; set; }
+        public ObservableCollection<Event> Events { get; set; }
+        public List<Inventory> Inventories { get; set; }
+        public List<string> Notifications { get; set; }
 
         public DataContext()
         {

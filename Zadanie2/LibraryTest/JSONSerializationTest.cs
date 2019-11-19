@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LibraryTest
 {
     [TestClass]
-    public class CSVSerializationTest
+    public class JsonSerializationTest
     {
         [TestMethod]
         public void SerializeClientsTest()
@@ -17,10 +17,10 @@ namespace LibraryTest
             clients.Add(new Client("2", "Krzesimir", "Mniejszy"));
             clients.Add(new Client("3", "Kazimierz", "Wielki"));
 
-            CSV csv = new CSV();
-            csv.Serialize(clients, "clients.csv");
-            string result = File.ReadAllText("clients.csv");
-            Assert.AreEqual("1;Jakub;Nowak;0;\n2;Krzesimir;Mniejszy;0;\n3;Kazimierz;Wielki;0;\n", result);
+            JSON json = new JSON();
+            json.Serialize(clients, "clients.json");
+            string result = File.ReadAllText("clients.json");
+            Assert.AreEqual(@"1;Jakub;Nowak;0;\n2;Krzesimir;Mniejszy;0;\n3;Kazimierz;Wielki;0;\n", result);
         }
         [TestMethod]
         public void SerializeCatalogsTest()
@@ -33,9 +33,9 @@ namespace LibraryTest
             books.Add(c2.ID, c2);
             books.Add(c3.ID, c3);
 
-            CSV csv = new CSV();
-            csv.Serialize(books.Values, "books.csv");
-            string result = File.ReadAllText("books.csv");
+            JSON json = new JSON();
+            json.Serialize(books.Values, "books.json");
+            string result = File.ReadAllText("books.json");
             //Console.WriteLine(result);
             Assert.AreEqual("1;Krzyzacy;Henryk Sienkiewicz\n2;Kroniki Czarnej Kompanii;Glen Cook\n3;Pan Tadeusz;Adam Mickiewicz\n", result);
         }
@@ -53,9 +53,9 @@ namespace LibraryTest
             inventories.Add(new Inventory(books[c1.ID], 10));
             inventories.Add(new Inventory(books[c2.ID], 5));
             inventories.Add(new Inventory(books[c3.ID], 7));
-            CSV csv = new CSV();
-            csv.Serialize(inventories, "inventories.csv");
-            string result = File.ReadAllText("inventories.csv");
+            JSON json = new JSON();
+            json.Serialize(inventories, "inventories.json");
+            string result = File.ReadAllText("inventories.json");
             //Console.WriteLine(result);
             Assert.AreEqual("1;10\n2;5\n3;7\n", result);
         }
@@ -66,9 +66,9 @@ namespace LibraryTest
             notifications.Add("TestNotifications1");
             notifications.Add("TestNotifications2");
             notifications.Add("TestNotifications3");
-            CSV csv = new CSV();
-            csv.Serialize(notifications, "notifications.csv");
-            string result = File.ReadAllText("notifications.csv");
+            JSON json = new JSON();
+            json.Serialize(notifications, "notifications.json");
+            string result = File.ReadAllText("notifications.json");
             //Console.WriteLine(result);
             Assert.AreEqual("TestNotifications1\n"+"TestNotifications2\n"+"TestNotifications3\n", result);
         }
@@ -86,9 +86,9 @@ namespace LibraryTest
             events.Add(new Purchase("event2", i2, new DateTime(), 5));
             events.Add(new Return("event3", new Client("2", "Krzesimir", "Mniejszy"), i1, new System.DateTime(2022, 2, 2)));
             events.Add(new Discard("event4", i3, new DateTime()));
-            CSV csv = new CSV();
-            csv.Serialize(events, "events.csv");
-            string result = File.ReadAllText("events.csv");
+            JSON json = new JSON();
+            json.Serialize(events, "events.json");
+            string result = File.ReadAllText("events.json");
             Console.WriteLine(result);
             Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
         }
