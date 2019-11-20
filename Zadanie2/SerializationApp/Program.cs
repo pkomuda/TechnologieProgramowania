@@ -21,15 +21,17 @@ namespace SerializationApp
                     case '1':
                     {
                         Console.Clear();
-                        DataRepository dataRepository = new DataRepository();
-                        dataRepository.FillData = new GraphFill();
+                        DataContext dataContext = new DataContext();
+                        DataFill graphFill = new GraphFill();
+                        graphFill.Fill(dataContext);
                         JSON json = new JSON();
-                        json.Serialize(dataRepository.GetClientList(), "clients.json");
-                        json.Serialize(dataRepository.GetCatalogDictionary(), "books.json");
-                        json.Serialize(dataRepository.GetEventCollection(), "events.json");
-                        json.Serialize(dataRepository.GetInventoryList(), "inventories.json");
-                        json.Serialize(dataRepository.GetNotifications(), "notifications.json");
-                        Console.WriteLine("Press any key to continue");
+                        json.Serialize(dataContext.Clients, "clients.json");
+                        json.Serialize(dataContext.Books, "books.json");
+                        json.Serialize(dataContext.Events, "events.json");
+                        json.Serialize(dataContext.Inventories, "inventories.json");
+                        json.Serialize(dataContext.Notifications, "notifications.json");
+                        Console.WriteLine("Serialization successful\n" +
+                                          "Press any key to continue");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -57,7 +59,8 @@ namespace SerializationApp
                         csv.Serialize(dataRepository.GetEventCollection(), "events.csv");
                         csv.Serialize(dataRepository.GetInventoryList(), "inventories.csv");
                         csv.Serialize(dataRepository.GetNotifications(), "notifications.csv");
-                        Console.WriteLine("Press any key to continue");
+                        Console.WriteLine("Serialization successful\n" +
+                                          "Press any key to continue");
                         Console.ReadKey();
                         Console.Clear();
                         break;

@@ -11,6 +11,13 @@ namespace Library
         public string LastName { get; set; }
         public int Penalty { get; set; }
         public List<Catalog> RentedCatalogs { get; }
+        [JsonIgnore]
+        public static List<string> IDs = new List<string>();
+        
+        ~Client()
+        {
+            IDs.Remove(ID);
+        }
 
         public Client(string firstName, string lastName)
         {
@@ -18,15 +25,19 @@ namespace Library
             FirstName = firstName;
             LastName = lastName;
             RentedCatalogs = new List<Catalog>();
+            IDs.Add(ID);
         }
 
         [JsonConstructor]
         public Client(string id, string firstName, string lastName)
         {
+            if (IDs.Contains(id))
+                return;
             ID = id;
             FirstName = firstName;
             LastName = lastName;
             RentedCatalogs = new List<Catalog>();
+            IDs.Add(ID);
         }
         public Client(string id, string firstName, string lastName, List<Catalog> rentedCatalogs)
         {
@@ -34,6 +45,7 @@ namespace Library
             FirstName = firstName;
             LastName = lastName;
             RentedCatalogs = rentedCatalogs;
+            IDs.Add(ID);
         }
         public void PayPenalty()
         {

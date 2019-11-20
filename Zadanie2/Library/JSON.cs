@@ -81,16 +81,13 @@ namespace Library
             dataContext.Clients = clientsList;
             
             string catalogsJson = File.ReadAllText(catalogs);
-            Dictionary<string, Catalog> catalogsEnumerable = JsonConvert.DeserializeObject<Dictionary<string, Catalog>>(catalogsJson,
-                                                                                                          new JsonSerializerSettings
-                                                                                                          {
-                                                                                                              PreserveReferencesHandling = PreserveReferencesHandling.All, 
-                                                                                                              TypeNameHandling = TypeNameHandling.All
-                                                                                                          });
-//            Dictionary<string, Catalog> catalogsDictionary = new Dictionary<string, Catalog>();
-//            foreach (Catalog catalog in catalogsEnumerable)
-//                catalogsDictionary.Add(catalog.ID, catalog);
-            dataContext.Books = catalogsEnumerable;
+            Dictionary<string, Catalog> catalogsDictionary = JsonConvert.DeserializeObject<Dictionary<string, Catalog>>(catalogsJson,
+                                                                                                                        new JsonSerializerSettings
+                                                                                                                        {
+                                                                                                                            PreserveReferencesHandling = PreserveReferencesHandling.All, 
+                                                                                                                            TypeNameHandling = TypeNameHandling.All
+                                                                                                                        });
+            dataContext.Books = catalogsDictionary;
             
             string eventsJson = File.ReadAllText(events);
             ObservableCollection<Event> eventsCollection = JsonConvert.DeserializeObject<ObservableCollection<Event>>(eventsJson,
@@ -99,12 +96,12 @@ namespace Library
                                                                                                                           PreserveReferencesHandling = PreserveReferencesHandling.All, 
                                                                                                                           TypeNameHandling = TypeNameHandling.All
                                                                                                                       });
+            dataContext.Events = eventsCollection;
             dataContext.Events.CollectionChanged += (sender, e) =>
             {
                 if (e.Action == NotifyCollectionChangedAction.Add)
                     dataContext.Notifications.Add("Added event: " + e.NewItems[0]);
             };
-            dataContext.Events = eventsCollection;
             
             string inventoriesJson = File.ReadAllText(inventories);
             List<Inventory> inventoriesList = JsonConvert.DeserializeObject<List<Inventory>>(inventoriesJson,
