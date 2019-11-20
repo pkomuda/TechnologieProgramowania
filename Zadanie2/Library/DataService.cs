@@ -6,12 +6,16 @@ namespace Library
 {
     public class DataService
     {
-        [JsonProperty]
         private DataRepository dataRepository;
 
         public DataService()
         {
             dataRepository = new DataRepository();
+        }
+
+        public DataService(DataRepository dataRepository)
+        {
+            this.dataRepository = dataRepository;
         }
 
         public void AddClient(string id, string firstName, string lastName)

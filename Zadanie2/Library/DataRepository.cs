@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace Library
 {
     public class DataRepository 
     {
-        [JsonProperty]
         private DataContext DataContext { get; }
         private DataFill _FillData;
         public DataFill FillData { get { return _FillData; }
@@ -207,6 +207,26 @@ namespace Library
         }
         #endregion
 
+        public List<Client> GetClientList()
+        {
+            return DataContext.Clients;
+        }
+
+        public Dictionary<string, Catalog> GetCatalogDictionary()
+        {
+            return DataContext.Books;
+        }
+
+        public ObservableCollection<Event> GetEventCollection()
+        {
+            return DataContext.Events;
+        }
+
+        public List<Inventory> GetInventoryList()
+        {
+            return DataContext.Inventories;
+        }
+        
         public override string ToString()
         {
             string str = "Clients:\n";
