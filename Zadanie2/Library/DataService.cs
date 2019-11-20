@@ -238,5 +238,10 @@ namespace Library
                 notifications += s + "\n";
             return notifications;
         }
+        override
+        public string ToString()
+        {
+            return dataRepository.ToString();
+        }
     }
 }

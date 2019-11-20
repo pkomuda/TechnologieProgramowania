@@ -41,8 +41,8 @@ namespace SerializationApp
                         Console.Clear();
                         JSON json = new JSON();
                         DataContext temp = json.Deserialize("clients.json", "books.json", "events.json", "inventories.json", "notifications.json");
-                        DataRepository dataRepository = new DataRepository(temp);
-                        Console.WriteLine(dataRepository);
+                        DataService dataService = new DataService(new DataRepository(temp));
+                        Console.WriteLine(dataService);
                         Console.WriteLine("\nPress any key to continue");
                         Console.ReadKey();
                         Console.Clear();
@@ -70,8 +70,8 @@ namespace SerializationApp
                         Console.Clear();
                         CSV csv = new CSV();
                         DataContext temp = csv.Deserialize("clients.csv", "books.csv", "events.csv", "inventories.csv", "notifications.csv");
-                        DataRepository dataRepository = new DataRepository(temp);
-                        Console.WriteLine(dataRepository);
+                        DataService dataService = new DataService(new DataRepository(temp));
+                        Console.WriteLine(dataService);
                         Console.WriteLine("\nPress any key to continue");
                         Console.ReadKey();
                         Console.Clear();
