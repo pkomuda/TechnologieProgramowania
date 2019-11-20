@@ -17,6 +17,12 @@ namespace Library
 
         public DataRepository()
         {
+            Client.IDs.Clear();
+            Catalog.IDs.Clear();
+            Discard.IDs.Clear();
+            Purchase.IDs.Clear();
+            Rent.IDs.Clear();
+            Return.IDs.Clear();
             DataContext = new DataContext();
         }
         public DataRepository(DataContext dataContext)

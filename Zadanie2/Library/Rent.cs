@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Library
@@ -8,6 +9,7 @@ namespace Library
         public Client Client { get; }
         public Inventory Inventory { get; }
         public DateTime ReturnDate { get; set; }
+        public static List<string> IDs = new List<string>();
 
         public Rent(Client client, Inventory inventory, DateTime borrowDate, DateTime returnDate)
         {
@@ -15,14 +17,23 @@ namespace Library
             Inventory = inventory;
             Date = borrowDate;
             ReturnDate = returnDate;
+            IDs.Add(ID);
         }
         [JsonConstructor]
         public Rent(string id, Client client, Inventory inventory, DateTime borrowDate, DateTime returnDate) : base(id)
         {
+            if (IDs.Contains(id))
+                return;
             Client = client;
             Inventory = inventory;
             Date = borrowDate;
             ReturnDate = returnDate;
+            IDs.Add(ID);
+        }
+
+        ~Rent()
+        {
+            IDs.Remove(ID);
         }
 
         public override string ToString()

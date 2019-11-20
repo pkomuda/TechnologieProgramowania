@@ -200,8 +200,8 @@ namespace LibraryTest
         [TestMethod]
         public void AddInventoryTest()
         {
-            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             DataRepository repo = new DataRepository();
+            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             repo.AddCatalog(c1);
 
             Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
@@ -212,8 +212,8 @@ namespace LibraryTest
         [TestMethod]
         public void GetInventoryTest()
         {
-            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             DataRepository repo = new DataRepository();
+            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             repo.AddCatalog(c1);
 
             Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
@@ -224,8 +224,8 @@ namespace LibraryTest
         [TestMethod]
         public void UpdateInventoryTest()
         {
-            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             DataRepository repo = new DataRepository();
+            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             repo.AddCatalog(c1);
 
             Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
@@ -238,8 +238,8 @@ namespace LibraryTest
         [TestMethod]
         public void DeleteInventoryTest()
         {
-            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             DataRepository repo = new DataRepository();
+            Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             repo.AddCatalog(c1);
 
             Inventory i1 = new Inventory(repo.GetCatalog(c1.ID), 5);
@@ -251,10 +251,10 @@ namespace LibraryTest
         [TestMethod]
         public void GetAllInventoriesTest()
         {
+            DataRepository repo = new DataRepository();
             Catalog c1 = new Catalog("1", "Ojciec Chrzestny", "Mario Putzo");
             Catalog c2 = new Catalog("2", "Basnie braci Grimm", "Bracia Grimm");
-
-            DataRepository repo = new DataRepository();
+            
             repo.AddCatalog(c1);
             repo.AddCatalog(c2);
 

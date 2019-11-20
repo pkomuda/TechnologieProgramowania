@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,7 +12,7 @@ namespace LibraryTest
     [TestClass]
     public class JsonSerializationTest
     {
-        [TestMethod]
+      [TestMethod]
         public void SerializeClientsTest()
         {
             List<Client> clients = new List<Client>();
@@ -21,7 +23,50 @@ namespace LibraryTest
             JSON json = new JSON();
             json.Serialize(clients, "clients.json");
             string result = File.ReadAllText("clients.json");
-//            Assert.AreEqual(@"1;Jakub;Nowak;0;\n2;Krzesimir;Mniejszy;0;\n3;Kazimierz;Wielki;0;\n", result);
+            #region ClientsAssertion
+            Assert.AreEqual(@"{
+  ""$id"": ""1"",
+  ""$type"": ""System.Collections.Generic.List`1[[Library.Client, Library]], mscorlib"",
+  ""$values"": [
+    {
+      ""$id"": ""2"",
+      ""$type"": ""Library.Client, Library"",
+      ""ID"": ""1"",
+      ""FirstName"": ""Jakub"",
+      ""LastName"": ""Nowak"",
+      ""Penalty"": 0,
+      ""RentedCatalogs"": {
+        ""$type"": ""System.Collections.Generic.List`1[[Library.Catalog, Library]], mscorlib"",
+        ""$values"": []
+      }
+    },
+    {
+      ""$id"": ""3"",
+      ""$type"": ""Library.Client, Library"",
+      ""ID"": ""2"",
+      ""FirstName"": ""Krzesimir"",
+      ""LastName"": ""Mniejszy"",
+      ""Penalty"": 0,
+      ""RentedCatalogs"": {
+        ""$type"": ""System.Collections.Generic.List`1[[Library.Catalog, Library]], mscorlib"",
+        ""$values"": []
+      }
+    },
+    {
+      ""$id"": ""4"",
+      ""$type"": ""Library.Client, Library"",
+      ""ID"": ""3"",
+      ""FirstName"": ""Kazimierz"",
+      ""LastName"": ""Wielki"",
+      ""Penalty"": 0,
+      ""RentedCatalogs"": {
+        ""$type"": ""System.Collections.Generic.List`1[[Library.Catalog, Library]], mscorlib"",
+        ""$values"": []
+      }
+    }
+  ]
+}", result);
+            #endregion
         }
         
         [TestMethod]
@@ -38,8 +83,33 @@ namespace LibraryTest
             JSON json = new JSON();
             json.Serialize(books, "books.json");
             string result = File.ReadAllText("books.json");
-            Console.WriteLine(result);
-//            Assert.AreEqual("1;Krzyzacy;Henryk Sienkiewicz\n2;Kroniki Czarnej Kompanii;Glen Cook\n3;Pan Tadeusz;Adam Mickiewicz\n", result);
+            #region CatalogsAssertion
+            Assert.AreEqual(@"{
+  ""$id"": ""1"",
+  ""$type"": ""System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Library.Catalog, Library]], mscorlib"",
+  ""1"": {
+    ""$id"": ""2"",
+    ""$type"": ""Library.Catalog, Library"",
+    ""ID"": ""1"",
+    ""Title"": ""Krzyzacy"",
+    ""Author"": ""Henryk Sienkiewicz""
+  },
+  ""2"": {
+    ""$id"": ""3"",
+    ""$type"": ""Library.Catalog, Library"",
+    ""ID"": ""2"",
+    ""Title"": ""Kroniki Czarnej Kompanii"",
+    ""Author"": ""Glen Cook""
+  },
+  ""3"": {
+    ""$id"": ""4"",
+    ""$type"": ""Library.Catalog, Library"",
+    ""ID"": ""3"",
+    ""Title"": ""Pan Tadeusz"",
+    ""Author"": ""Adam Mickiewicz""
+  }
+}", result);
+            #endregion
         }
         
         [TestMethod]
@@ -59,8 +129,50 @@ namespace LibraryTest
             JSON json = new JSON();
             json.Serialize(inventories, "inventories.json");
             string result = File.ReadAllText("inventories.json");
-            //Console.WriteLine(result);
-//            Assert.AreEqual("1;10\n2;5\n3;7\n", result);
+//            #region InventoriesAssertion
+//            Assert.AreEqual(@"{
+//  ""$id"": ""1"",
+//  ""$type"": ""System.Collections.Generic.List`1[[Library.Inventory, Library]], mscorlib"",
+//  ""$values"": [
+//    {
+//      ""$id"": ""2"",
+//      ""$type"": ""Library.Inventory, Library"",
+//      ""Catalog"": {
+//        ""$id"": ""3"",
+//        ""$type"": ""Library.Catalog, Library"",
+//        ""ID"": ""1"",
+//        ""Title"": ""Krzyzacy"",
+//        ""Author"": ""Henryk Sienkiewicz""
+//      },
+//      ""Amount"": 10
+//    },
+//    {
+//      ""$id"": ""4"",
+//      ""$type"": ""Library.Inventory, Library"",
+//      ""Catalog"": {
+//        ""$id"": ""5"",
+//        ""$type"": ""Library.Catalog, Library"",
+//        ""ID"": ""2"",
+//        ""Title"": ""Kroniki Czarnej Kompanii"",
+//        ""Author"": ""Glen Cook""
+//      },
+//      ""Amount"": 5
+//    },
+//    {
+//      ""$id"": ""6"",
+//      ""$type"": ""Library.Inventory, Library"",
+//      ""Catalog"": {
+//        ""$id"": ""7"",
+//        ""$type"": ""Library.Catalog, Library"",
+//        ""ID"": ""3"",
+//        ""Title"": ""Pan Tadeusz"",
+//        ""Author"": ""Adam Mickiewicz""
+//      },
+//      ""Amount"": 7
+//    }
+//  ]
+//}", result);
+//            #endregion
         }
         
         [TestMethod]
@@ -73,8 +185,9 @@ namespace LibraryTest
             JSON json = new JSON();
             json.Serialize(notifications, "notifications.json");
             string result = File.ReadAllText("notifications.json");
-            //Console.WriteLine(result);
-//            Assert.AreEqual("TestNotifications1\n"+"TestNotifications2\n"+"TestNotifications3\n", result);
+            Assert.AreEqual("{\r\n  \"$id\": \"1\",\r\n  \"$type\": \"System.Collections.Generic.List`1[[System.String, m" +
+                            "scorlib]], mscorlib\",\r\n  \"$values\": [\r\n    \"TestNotifications1\",\r\n    \"TestNotif" +
+                            "ications2\",\r\n    \"TestNotifications3\"\r\n  ]\r\n}", result);
         }
         
         [TestMethod]
@@ -94,8 +207,37 @@ namespace LibraryTest
             JSON json = new JSON();
             json.Serialize(events, "events.json");
             string result = File.ReadAllText("events.json");
-            Console.WriteLine(result);
-//            Assert.AreEqual("Rent;event1;1;1;01.01.0001 00:00:00;01.01.2020 00:00:00\n" + "Purchase;event2;2;01.01.0001 00:00:00\n" + "Return;event3;2;1;02.02.2022 00:00:00\n" + "Discard;event4;3;01.01.0001 00:00:00\n", result);
+//            #region EventsAssertion
+//            Assert.AreEqual("{\r\n  \"$id\": \"1\",\r\n  \"$type\": \"System.Collections.ObjectModel.ObservableCollection" +
+//    "`1[[Library.Event, Library]], System\",\r\n  \"$values\": [\r\n    {\r\n      \"$id\": \"2\"," +
+//    "\r\n      \"$type\": \"Library.Rent, Library\",\r\n      \"Client\": {\r\n        \"$id\": \"3\"" +
+//    ",\r\n        \"$type\": \"Library.Client, Library\",\r\n        \"ID\": null,\r\n        \"Fi" +
+//    "rstName\": null,\r\n        \"LastName\": null,\r\n        \"Penalty\": 0,\r\n        \"Rent" +
+//    "edCatalogs\": null\r\n      },\r\n      \"Inventory\": {\r\n        \"$id\": \"4\",\r\n        " +
+//    "\"$type\": \"Library.Inventory, Library\",\r\n        \"Catalog\": {\r\n          \"$id\": \"" +
+//    "5\",\r\n          \"$type\": \"Library.Catalog, Library\",\r\n          \"ID\": \"1\",\r\n     " +
+//    "     \"Title\": \"Krzyzacy\",\r\n          \"Author\": \"Henryk Sienkiewicz\"\r\n        },\r" +
+//    "\n        \"Amount\": 10\r\n      },\r\n      \"ReturnDate\": \"2020-01-01T00:00:00\",\r\n   " +
+//    "   \"ID\": \"event1\",\r\n      \"Date\": \"0001-01-01T00:00:00\"\r\n    },\r\n    {\r\n      \"$" +
+//    "id\": \"6\",\r\n      \"$type\": \"Library.Purchase, Library\",\r\n      \"Inventory\": {\r\n  " +
+//    "      \"$id\": \"7\",\r\n        \"$type\": \"Library.Inventory, Library\",\r\n        \"Cata" +
+//    "log\": {\r\n          \"$id\": \"8\",\r\n          \"$type\": \"Library.Catalog, Library\",\r\n" +
+//    "          \"ID\": \"2\",\r\n          \"Title\": \"Kroniki Czarnej Kompanii\",\r\n          " +
+//    "\"Author\": \"Glen Cook\"\r\n        },\r\n        \"Amount\": 7\r\n      },\r\n      \"Amount\"" +
+//    ": 5,\r\n      \"ID\": \"event2\",\r\n      \"Date\": \"0001-01-01T00:00:00\"\r\n    },\r\n    {\r" +
+//    "\n      \"$id\": \"9\",\r\n      \"$type\": \"Library.Return, Library\",\r\n      \"Client\": {" +
+//    "\r\n        \"$id\": \"10\",\r\n        \"$type\": \"Library.Client, Library\",\r\n        \"ID" +
+//    "\": null,\r\n        \"FirstName\": null,\r\n        \"LastName\": null,\r\n        \"Penalt" +
+//    "y\": 0,\r\n        \"RentedCatalogs\": null\r\n      },\r\n      \"Inventory\": {\r\n        " +
+//    "\"$ref\": \"4\"\r\n      },\r\n      \"ID\": \"event3\",\r\n      \"Date\": \"2022-02-02T00:00:00" +
+//    "\"\r\n    },\r\n    {\r\n      \"$id\": \"11\",\r\n      \"$type\": \"Library.Discard, Library\"," +
+//    "\r\n      \"Inventory\": {\r\n        \"$id\": \"12\",\r\n        \"$type\": \"Library.Inventor" +
+//    "y, Library\",\r\n        \"Catalog\": {\r\n          \"$id\": \"13\",\r\n          \"$type\": \"" +
+//    "Library.Catalog, Library\",\r\n          \"ID\": \"3\",\r\n          \"Title\": \"Pan Tadeus" +
+//    "z\",\r\n          \"Author\": \"Adam Mickiewicz\"\r\n        },\r\n        \"Amount\": 33\r\n  " +
+//    "    },\r\n      \"ID\": \"event4\",\r\n      \"Date\": \"0001-01-01T00:00:00\"\r\n    }\r\n  ]\r\n" +
+//    "}", result);
+//            #endregion
         }
 
         [TestMethod]
@@ -107,6 +249,11 @@ namespace LibraryTest
                 "events.json",
                 "inventories.json",
                 "notifications.json"));
+//            File.Delete("clients.json");
+//            File.Delete("books.json");
+//            File.Delete("events.json");
+//            File.Delete("inventories.json");
+//            File.Delete("notifications.json");
             Console.WriteLine(dataRepository);
         }
     }
