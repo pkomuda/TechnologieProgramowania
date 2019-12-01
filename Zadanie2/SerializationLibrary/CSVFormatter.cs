@@ -28,6 +28,7 @@ namespace SerializationLibrary
         }
 
         private string Data = "";
+        private List<string> SaveIT = new List<string>();
         public override void Serialize(Stream serializationStream, object graph)
         {
             if (graph is ISerializable data)
@@ -41,7 +42,7 @@ namespace SerializationLibrary
                 {
                     WriteMember(item.Name, item.Value);
                 }
-                List<string> SaveIT = new List<string>();
+
                 SaveIT.Add(Data + "\n");
                 Data = "";
                 while (this.m_objectQueue.Count != 0) //Contains a Queue of the objects left to serialize.
@@ -51,12 +52,14 @@ namespace SerializationLibrary
 
                 if (serializationStream != null)
                 {
-                    using (StreamWriter streamWriter = new StreamWriter(serializationStream))
+                    using (StreamWriter _stream = new StreamWriter(serializationStream))
                     {
                         foreach (string s in SaveIT)
                         {
-                            streamWriter.Write(s);
-                        }    
+                            Console.WriteLine("Zapisuję: " + s + "\n");
+                            byte[] _content = Encoding.ASCII.GetBytes(s);
+                            _stream.Write(s, 0, _content.Length);
+                        }
                     }
                 }
             }
@@ -88,7 +91,7 @@ namespace SerializationLibrary
 
         protected override void WriteDateTime(DateTime val, string name)
         {
-            Data += name + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";"; 
+            Data += name + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
         }
 
         protected override void WriteDecimal(decimal val, string name)
@@ -121,13 +124,12 @@ namespace SerializationLibrary
             if (memberType.Equals(typeof(String)))
             {
                 Data += name + ";" + obj.GetType() + ";" + (string)obj + ";";
-
             }
             else
             {
                 if (null != obj)
                 {
-                    Data += ";" + name + ";" + obj.GetType() + ";" + IDGenerator.GetId(obj, out bool firstTime).ToString();
+                    Data += name + ";" + obj.GetType() + ";" + IDGenerator.GetId(obj, out bool firstTime).ToString();
                     if (firstTime)
                     {
                         this.m_objectQueue.Enqueue(obj);
@@ -135,10 +137,9 @@ namespace SerializationLibrary
                 }
                 else
                 {
-                    Data += ";" + name + ";null;0";
+                    Data += name + ";null;0";
                 }
             }
-
         }
 
         protected override void WriteSByte(sbyte val, string name)

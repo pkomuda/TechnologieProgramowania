@@ -21,7 +21,7 @@ namespace SerializationLibrary
         {
             CSVFormatter formatter = new CSVFormatter();
             File.Delete(FileName);
-            using (Stream stream = File.Open(this.FileName, FileMode.Create, FileAccess.ReadWrite))
+            using (Stream stream = File.Open(this.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 formatter.Serialize(stream, this.ObjectToSerialize);
             }

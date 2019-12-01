@@ -16,7 +16,7 @@ namespace SerializationLibraryTest
             a.ObjectB = b;
             b.ObjectC = c;
             c.ObjectA = a;
-            CSVSerialization<C> csv = new CSVSerialization<C>("pliczek.csv",c);
+            CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv",a);
             csv.serialize();
         
         }
