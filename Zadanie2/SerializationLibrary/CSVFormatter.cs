@@ -35,7 +35,7 @@ namespace SerializationLibrary
             {
                 SerializationInfo info = new SerializationInfo(graph.GetType(), new FormatterConverter());
                 Binder.BindToName(graph.GetType(), out string assemblyName, out string typeName);
-                Data += assemblyName + ";" + typeName + ";" + this.IDGenerator.GetId(graph, out bool firstTime);
+                Data += assemblyName + ";" + typeName + ";" + this.IDGenerator.GetId(graph, out bool firstTime) + ";";
                 data.GetObjectData(info, Context);
 
                 foreach (SerializationEntry item in info)
