@@ -21,7 +21,7 @@ namespace SerializationLibrary
 
         public override string ToString()
         {
-            return "C: " + this.Name + " Date: " + this.Date.ToString(new CultureInfo("pl-PL")) + " Number: " + this.Number;
+            return "C: " + this.Name + " Date: " + this.Date.ToString(CultureInfo.InvariantCulture) + " Number: " + this.Number;
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
