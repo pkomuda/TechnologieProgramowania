@@ -12,5 +12,12 @@ namespace SerializationLibrary
             Assembly assembly = Assembly.Load(assemblyName);
             return assembly.GetType(typeName);
         }
+        public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
+        {
+            Assembly assembly = serializedType.Assembly;
+            assemblyName = assembly.FullName;
+            typeName = serializedType.FullName;
+
+        }
     }
 }
