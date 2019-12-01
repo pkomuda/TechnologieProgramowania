@@ -56,7 +56,6 @@ namespace SerializationLibrary
                     {
                         foreach (string s in SaveIT)
                         {
-                            Console.WriteLine("Zapisuję: " + s + "\n");
                             byte[] _content = Encoding.ASCII.GetBytes(s);
                             _stream.Write(s, 0, _content.Length);
                         }
