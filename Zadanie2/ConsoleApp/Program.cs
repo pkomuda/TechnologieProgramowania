@@ -7,9 +7,9 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            TestClass hello = new TestClass();
-            Console.WriteLine(hello.testIt());
-            Console.ReadKey();
+            //A a = new A("test", 1.23F, new DateTime(2019, 12, 1));
+            //Console.WriteLine(a.ToString());
+            //Console.ReadKey();
         }
     }
 }

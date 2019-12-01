@@ -9,8 +9,7 @@ namespace SerializationLibraryTest
         [TestMethod]
         public void TestMethod1()
         {
-            TestClass test = new TestClass();
-            Assert.AreEqual(test.testIt(), "Hello!");
+            
         }
     }
 }
