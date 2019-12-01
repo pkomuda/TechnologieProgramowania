@@ -27,7 +27,7 @@ namespace SerializationLibrary
             info.AddValue("Name", Name);
             info.AddValue("Number", Number);
             info.AddValue("Date", Date);
-            info.AddValue("ObjectB", ObjectB, typeof(A));
+            info.AddValue("ObjectB", ObjectB, typeof(B));
         }
     }
 }

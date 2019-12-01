@@ -34,7 +34,7 @@ namespace SerializationLibrary
             {
                 SerializationInfo info = new SerializationInfo(graph.GetType(), new FormatterConverter());
                 Binder.BindToName(graph.GetType(), out string assemblyName, out string typeName);
-                Data += assemblyName + "|" + typeName + "|" + this.IDGenerator.GetId(graph, out bool firstTime);
+                Data += assemblyName + ";" + typeName + ";" + this.IDGenerator.GetId(graph, out bool firstTime);
                 data.GetObjectData(info, Context);
 
                 foreach (SerializationEntry item in info)
@@ -88,7 +88,7 @@ namespace SerializationLibrary
 
         protected override void WriteDateTime(DateTime val, string name)
         {
-            Data += name + "|" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + "|"; 
+            Data += name + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";"; 
         }
 
         protected override void WriteDecimal(decimal val, string name)
@@ -120,14 +120,14 @@ namespace SerializationLibrary
         {
             if (memberType.Equals(typeof(String)))
             {
-                Data += name + "|" + obj.GetType() + "|" + (string)obj + "|";
+                Data += name + ";" + obj.GetType() + ";" + (string)obj + ";";
 
             }
             else
             {
                 if (null != obj)
                 {
-                    Data += "|" + name + "|" + obj.GetType() + "|" + IDGenerator.GetId(obj, out bool firstTime).ToString();
+                    Data += ";" + name + ";" + obj.GetType() + ";" + IDGenerator.GetId(obj, out bool firstTime).ToString();
                     if (firstTime)
                     {
                         this.m_objectQueue.Enqueue(obj);
@@ -135,7 +135,7 @@ namespace SerializationLibrary
                 }
                 else
                 {
-                    Data += "|" + name + "|null|0";
+                    Data += ";" + name + ";null;0";
                 }
             }
 
@@ -148,7 +148,7 @@ namespace SerializationLibrary
 
         protected override void WriteSingle(float val, string name)
         {
-            this.Data += name + "|" + val.ToString("0.00", CultureInfo.InvariantCulture) + "|";
+            this.Data += name + ";" + val.ToString("0.00", CultureInfo.InvariantCulture) + ";";
         }
 
         protected override void WriteTimeSpan(TimeSpan val, string name)

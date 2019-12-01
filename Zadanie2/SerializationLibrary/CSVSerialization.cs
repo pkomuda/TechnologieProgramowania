@@ -23,9 +23,7 @@ namespace SerializationLibrary
             File.Delete(FileName);
             using (Stream stream = File.Open(this.FileName, FileMode.Create, FileAccess.ReadWrite))
             {
-                Console.WriteLine("CSVSerialization przed");
                 formatter.Serialize(stream, this.ObjectToSerialize);
-                Console.WriteLine("CSVSerialization po");
             }
         }
 
