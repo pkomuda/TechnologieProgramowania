@@ -25,7 +25,10 @@ namespace SerializationLibrary
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            throw new System.NotImplementedException();
+            info.AddValue("Name", Name);
+            info.AddValue("Number", Number);
+            info.AddValue("Date", Date);
+            info.AddValue("ObjectA", ObjectA, typeof(A));
         }
     }
 }
