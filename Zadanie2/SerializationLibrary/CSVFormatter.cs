@@ -24,7 +24,89 @@ namespace SerializationLibrary
 
         public override object Deserialize(Stream serializationStream)
         {
-            throw new NotImplementedException();
+            object deserializedObject = null;
+            Dictionary<long, object> deserializedObjects = new Dictionary<long, object>();
+            Dictionary<object, SerializationInfo> data = new Dictionary<object, SerializationInfo>();
+            Dictionary<SerializationInfo, List<Tuple<string, Type, long>>> allObjects = new Dictionary<SerializationInfo, List<Tuple<string, Type, long>>>();
+
+            using (StreamReader streamReader = new StreamReader(serializationStream))
+            {
+                string line;
+                string[] splitValues;
+                long refID;
+                Type objectType;
+                SerializationInfo info;
+                Object tmpObject;
+                string[] properties;
+
+                while (!streamReader.EndOfStream)
+                {
+                    line = streamReader.ReadLine();
+                    Console.WriteLine("line: " + line);
+                    splitValues = line.Split(';');
+                    for (int i = 0; i < 13; i++)
+                        Console.WriteLine("splitValues[" + i + "]: " + splitValues[i]);
+
+                    refID = long.Parse(splitValues[2]);
+                    objectType = Binder.BindToType(splitValues[0], splitValues[1]);
+                    info = new SerializationInfo(objectType, new FormatterConverter());
+                    tmpObject = FormatterServices.GetUninitializedObject(objectType); //Creates a new instance of the specified object type.
+
+                    if (deserializedObject == null)
+                        deserializedObject = tmpObject;
+
+                    data.Add(tmpObject, info);
+                    deserializedObjects.Add(refID, tmpObject);
+
+                    properties = streamReader.ReadLine().Split(';');
+                    foreach (string property in properties)
+                    {
+                        string[] parts = property.Split('=');
+
+                        Console.WriteLine("property: " + property);
+                        Console.WriteLine("Parts:[0] " + parts[0]);
+                        Console.WriteLine("Parts:[1] " + parts[1]);
+                        Console.WriteLine("Parts:[2] " + parts[2]);
+                        if (parts[2].StartsWith("&"))
+                        {
+                            /* if (!pendingObjects.ContainsKey(serializationInfo))
+                             {
+                                 pendingObjects.Add(serializationInfo, new List<Tuple<string, Type, long>>());
+                             }
+                             if (parts[2].StartsWith("&-1"))
+                             {
+                                 Type type = Type.GetType(parts[0]);
+                                 serializationInfo.AddValue(parts[1], null, type);
+                             }
+                             else
+                             {
+                                 pendingObjects[serializationInfo].Add(new Tuple<string, Type, long>(parts[1], Type.GetType(parts[0]), long.Parse(parts[2].Substring(1))));
+                             }*/
+                        }
+                        else
+                        {
+                            // Type type = Type.GetType(parts[0]);
+                            // serializationInfo.AddValue(parts[1], Convert.ChangeType(parts[2], type), type);
+                        }
+                    }
+
+                }
+
+                /*  foreach (var pair in pendingObjects)
+                  {
+                      SerializationInfo serializationInfo = pair.Key;
+                      foreach (var tuple in pair.Value)
+                      {
+                          serializationInfo.AddValue(tuple.Item1, deserializedObjects[tuple.Item3], tuple.Item2);
+                      }
+                  }
+
+                  foreach (var pair in deserializationData)
+                  {
+                      pair.Key.GetType().GetConstructor(new Type[] { typeof(SerializationInfo), typeof(StreamingContext) }).Invoke(pair.Key, new object[] { pair.Value, Context });
+                  }*/
+            }
+            return deserializedObject;
         }
 
         private string Data = "";
