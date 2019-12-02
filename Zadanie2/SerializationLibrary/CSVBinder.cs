@@ -14,8 +14,7 @@ namespace SerializationLibrary
         }
         public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
         {
-            Assembly assembly = serializedType.Assembly;
-            assemblyName = assembly.FullName;
+            assemblyName = serializedType.Assembly.FullName;
             typeName = serializedType.FullName;
 
         }
