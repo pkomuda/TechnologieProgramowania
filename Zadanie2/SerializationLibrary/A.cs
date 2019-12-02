@@ -18,6 +18,13 @@ namespace SerializationLibrary
             Date = date;
             ObjectB = objectB;
         }
+        public A(SerializationInfo info, StreamingContext context)
+        {
+            Name = (string)info.GetValue("Name", typeof(string));
+            Number = (float)info.GetValue("Number", typeof(float));
+            Date = (DateTime)info.GetValue("Date", typeof(DateTime));
+            ObjectB = (B)info.GetValue("ObjectB", typeof(B));
+        }
         public override string ToString()
         {
             return "A: " + this.Name + " Date: " + this.Date.ToString(CultureInfo.InvariantCulture) +" Number: " + this.Number;
