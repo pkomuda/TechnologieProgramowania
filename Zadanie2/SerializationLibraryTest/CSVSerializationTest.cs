@@ -24,6 +24,19 @@ namespace SerializationLibraryTest
                 "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.B;2;Name;System.String;B;Number;3.65;Date;10/01/2019;ObjectC;SerializationLibrary.C;3" + "\n" +
                 "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.C;3;Name;System.String;C;Number;5.37;Date;01/02/2020;ObjectA;SerializationLibrary.A;1" + "\n", result);
         }
+        [TestMethod]
+        public void DeserializeTest()
+        {
+            A a = new A("A", 1.1f, new DateTime(2019, 12, 1), null);
+            B b = new B("B", 3.65f, new DateTime(2019, 10, 1), null);
+            C c = new C("C", 5.37f, new DateTime(2020, 1, 2), null);
+            a.ObjectB = b;
+            b.ObjectC = c;
+            c.ObjectA = a;
+            CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv", a);
+            A a2 = csv.deserialize();
+
+        }
     }
 }
 
