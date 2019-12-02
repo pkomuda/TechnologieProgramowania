@@ -44,7 +44,7 @@ namespace SerializationLibrary
                     line = streamReader.ReadLine();
                     Console.WriteLine("line: " + line);
                     splitValues = line.Split(';');
-                    for (int i = 0; i < 13; i++)
+                    for (int i = 0; i < 15; i++)
                         Console.WriteLine("splitValues[" + i + "]: " + splitValues[i]);
 
                     refID = long.Parse(splitValues[2]);
