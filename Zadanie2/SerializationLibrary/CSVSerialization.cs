@@ -10,27 +10,32 @@ namespace SerializationLibrary
     {
         private string FileName;
         private T ObjectToSerialize;
+        private CSVFormatter Formatter;
 
         public CSVSerialization(string fileName, T objectToSerialize)
         {
             this.FileName = fileName;
             this.ObjectToSerialize = objectToSerialize;
+            this.Formatter = new CSVFormatter();
         }
 
         public void serialize()
-        {
-            CSVFormatter formatter = new CSVFormatter();
+        {   
             File.Delete(FileName);
             using (Stream stream = File.Open(this.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                formatter.Serialize(stream, this.ObjectToSerialize);
+                Formatter.Serialize(stream, this.ObjectToSerialize);
             }
         }
 
-        //public T deserialize()
-        //{
-            //TO DO
-        //    return null;
-       // }
+        public T deserialize()
+        {
+            T deserializedObject;
+            using (Stream stream = File.Open(this.FileName, FileMode.Open, FileAccess.Read))
+            {
+                deserializedObject = (T) Formatter.Deserialize(stream);
+            }
+            return deserializedObject;
+        }
     }
 }
