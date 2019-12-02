@@ -172,7 +172,7 @@ namespace SerializationLibrary
 
         protected override void WriteDateTime(DateTime val, string name)
         {
-            Data += name + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
+            Data += name + ";" + val.GetType() + ";"  + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
         }
 
         protected override void WriteDecimal(decimal val, string name)
@@ -230,7 +230,7 @@ namespace SerializationLibrary
 
         protected override void WriteSingle(float val, string name)
         {
-            this.Data += name + ";" + val.ToString("0.00", CultureInfo.InvariantCulture) + ";";
+            this.Data += name + ";" + val.GetType() + ";" + val.ToString("0.00", CultureInfo.InvariantCulture) + ";";
         }
 
         protected override void WriteTimeSpan(TimeSpan val, string name)

@@ -20,9 +20,9 @@ namespace SerializationLibraryTest
             CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv",a);
             csv.serialize();
             string result = File.ReadAllText("pliczek.csv");
-            Assert.AreEqual("SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.A;1;Name;System.String;A;Number;1.10;Date;12/01/2019;ObjectB;SerializationLibrary.B;2" + "\n" +
-                "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.B;2;Name;System.String;B;Number;3.65;Date;10/01/2019;ObjectC;SerializationLibrary.C;3" + "\n" +
-                "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.C;3;Name;System.String;C;Number;5.37;Date;01/02/2020;ObjectA;SerializationLibrary.A;1" + "\n", result);
+            Assert.AreEqual("SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.A;1;Name;System.String;A;Number;System.Single;1.10;Date;System.DateTime;12/01/2019;ObjectB;SerializationLibrary.B;2" + "\n" +
+                "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.B;2;Name;System.String;B;Number;System.Single;3.65;Date;System.DateTime;10/01/2019;ObjectC;SerializationLibrary.C;3" + "\n" +
+                "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.C;3;Name;System.String;C;Number;System.Single;5.37;Date;System.DateTime;01/02/2020;ObjectA;SerializationLibrary.A;1" + "\n", result);
         }
         [TestMethod]
         public void DeserializeTest()
