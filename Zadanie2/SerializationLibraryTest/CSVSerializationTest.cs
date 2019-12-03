@@ -17,7 +17,7 @@ namespace SerializationLibraryTest
             a.ObjectB = b;
             b.ObjectC = c;
             c.ObjectA = a;
-            CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv",a);
+            CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv", a);
             csv.serialize();
             string result = File.ReadAllText("pliczek.csv");
             Assert.AreEqual("SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.A;1;Name;System.String;A;Number;System.Single;1.10;Date;System.DateTime;12/01/2019;ObjectB;SerializationLibrary.B;2" + "\n" +
@@ -39,4 +39,3 @@ namespace SerializationLibraryTest
         }
     }
 }
-

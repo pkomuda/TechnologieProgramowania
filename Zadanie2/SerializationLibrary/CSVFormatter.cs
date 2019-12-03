@@ -172,7 +172,7 @@ namespace SerializationLibrary
 
         protected override void WriteDateTime(DateTime val, string name)
         {
-            Data += name + ";" + val.GetType() + ";"  + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
+            Data += name + ";" + val.GetType() + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
         }
 
         protected override void WriteDecimal(decimal val, string name)

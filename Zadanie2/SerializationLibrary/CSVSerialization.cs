@@ -20,7 +20,7 @@ namespace SerializationLibrary
         }
 
         public void serialize()
-        {   
+        {
             File.Delete(FileName);
             using (Stream stream = File.Open(this.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
@@ -33,7 +33,7 @@ namespace SerializationLibrary
             T deserializedObject;
             using (Stream stream = File.Open(this.FileName, FileMode.Open, FileAccess.Read))
             {
-                deserializedObject = (T) Formatter.Deserialize(stream);
+                deserializedObject = (T)Formatter.Deserialize(stream);
             }
             return deserializedObject;
         }

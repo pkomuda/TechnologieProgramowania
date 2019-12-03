@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{026A4060-83DC-4DAF-8C31-34B68D4BCA6D}</ProjectGuid>
+    <ProjectGuid>{9A8EAB87-085B-45CF-B22B-744D31BEAD9E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ConsoleApp</RootNamespace>
     <AssemblyName>ConsoleApp</AssemblyName>
@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SerializationLibrary\SerializationLibrary.csproj">
-      <Project>{a89ef0f2-a6e6-451d-859c-42a8cdac37f3}</Project>
+      <Project>{6a89ef0f-f1b6-4477-8de9-5fb93ae30a8c}</Project>
       <Name>SerializationLibrary</Name>
     </ProjectReference>
   </ItemGroup>
