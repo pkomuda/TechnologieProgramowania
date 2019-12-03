@@ -58,6 +58,9 @@ namespace SerializationLibraryTest
             JSONSerialization<A> json = new JSONSerialization<A>("plik.json", a);
             A a2 = json.deserialize();
             Console.WriteLine(a2);
+            Console.WriteLine(a2.ObjectB);
+            Console.WriteLine(a2.ObjectB.ObjectC);
+            Console.WriteLine(a2.ObjectB.ObjectC.ObjectA);
         }
     }
 }

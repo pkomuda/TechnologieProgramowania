@@ -35,7 +35,10 @@ namespace SerializationLibraryTest
             c.ObjectA = a;
             CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv", a);
             A a2 = csv.deserialize();
-
+            Console.WriteLine(a2);
+            Console.WriteLine(a2.ObjectB);
+            Console.WriteLine(a2.ObjectB.ObjectC);
+            Console.WriteLine(a2.ObjectB.ObjectC.ObjectA);
         }
     }
 }
