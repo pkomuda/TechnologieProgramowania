@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6A89EF0F-F1B6-4477-8DE9-5FB93AE30A8C}</ProjectGuid>
+    <ProjectGuid>{A89EF0F2-A6E6-451D-859C-42A8CDAC37F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SerializationLibrary</RootNamespace>

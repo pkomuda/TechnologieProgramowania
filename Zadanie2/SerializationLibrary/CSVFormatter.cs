@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -25,87 +26,8 @@ namespace SerializationLibrary
         public override object Deserialize(Stream serializationStream)
         {
             object deserializedObject = null;
-            Dictionary<long, object> deserializedObjects = new Dictionary<long, object>();
-            Dictionary<object, SerializationInfo> data = new Dictionary<object, SerializationInfo>();
-            Dictionary<SerializationInfo, List<Tuple<string, Type, long>>> allObjects = new Dictionary<SerializationInfo, List<Tuple<string, Type, long>>>();
 
-            using (StreamReader streamReader = new StreamReader(serializationStream))
-            {
-                string line;
-                string[] splitValues;
-                long refID;
-                Type objectType;
-                SerializationInfo info;
-                Object tmpObject;
-                string[] properties;
 
-                while (!streamReader.EndOfStream)
-                {
-                    line = streamReader.ReadLine();
-                    Console.WriteLine("line: " + line);
-                    splitValues = line.Split(';');
-                    for (int i = 0; i < 15; i++)
-                        Console.WriteLine("splitValues[" + i + "]: " + splitValues[i]);
-
-                    refID = long.Parse(splitValues[2]);
-                    objectType = Binder.BindToType(splitValues[0], splitValues[1]);
-                    info = new SerializationInfo(objectType, new FormatterConverter());
-                    tmpObject = FormatterServices.GetUninitializedObject(objectType); //Creates a new instance of the specified object type.
-
-                    if (deserializedObject == null)
-                        deserializedObject = tmpObject;
-
-                    data.Add(tmpObject, info);
-                    deserializedObjects.Add(refID, tmpObject);
-
-                    properties = streamReader.ReadLine().Split(';');
-                    foreach (string property in properties)
-                    {
-                        string[] parts = property.Split('=');
-
-                        Console.WriteLine("property: " + property);
-                        Console.WriteLine("Parts:[0] " + parts[0]);
-                        Console.WriteLine("Parts:[1] " + parts[1]);
-                        Console.WriteLine("Parts:[2] " + parts[2]);
-                        if (parts[2].StartsWith("&"))
-                        {
-                            /* if (!pendingObjects.ContainsKey(serializationInfo))
-                             {
-                                 pendingObjects.Add(serializationInfo, new List<Tuple<string, Type, long>>());
-                             }
-                             if (parts[2].StartsWith("&-1"))
-                             {
-                                 Type type = Type.GetType(parts[0]);
-                                 serializationInfo.AddValue(parts[1], null, type);
-                             }
-                             else
-                             {
-                                 pendingObjects[serializationInfo].Add(new Tuple<string, Type, long>(parts[1], Type.GetType(parts[0]), long.Parse(parts[2].Substring(1))));
-                             }*/
-                        }
-                        else
-                        {
-                            // Type type = Type.GetType(parts[0]);
-                            // serializationInfo.AddValue(parts[1], Convert.ChangeType(parts[2], type), type);
-                        }
-                    }
-
-                }
-
-                /*  foreach (var pair in pendingObjects)
-                  {
-                      SerializationInfo serializationInfo = pair.Key;
-                      foreach (var tuple in pair.Value)
-                      {
-                          serializationInfo.AddValue(tuple.Item1, deserializedObjects[tuple.Item3], tuple.Item2);
-                      }
-                  }
-
-                  foreach (var pair in deserializationData)
-                  {
-                      pair.Key.GetType().GetConstructor(new Type[] { typeof(SerializationInfo), typeof(StreamingContext) }).Invoke(pair.Key, new object[] { pair.Value, Context });
-                  }*/
-            }
             return deserializedObject;
         }
 
@@ -117,7 +39,7 @@ namespace SerializationLibrary
             {
                 SerializationInfo info = new SerializationInfo(graph.GetType(), new FormatterConverter());
                 Binder.BindToName(graph.GetType(), out string assemblyName, out string typeName);
-                Data += assemblyName + ";" + typeName + ";" + this.IDGenerator.GetId(graph, out bool firstTime) + ";";
+                Data += assemblyName + ";" + typeName + ";" + this.IDGenerator.GetId(graph, out bool firstTime) + ";\n";
                 data.GetObjectData(info, Context);
 
                 foreach (SerializationEntry item in info)
@@ -172,7 +94,7 @@ namespace SerializationLibrary
 
         protected override void WriteDateTime(DateTime val, string name)
         {
-            Data += name + ";" + val.GetType() + ";" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
+            Data += val.GetType() + "|" + name + "|" + val.ToString("d", DateTimeFormatInfo.InvariantInfo) + ";";
         }
 
         protected override void WriteDecimal(decimal val, string name)
@@ -204,13 +126,13 @@ namespace SerializationLibrary
         {
             if (memberType.Equals(typeof(String)))
             {
-                Data += name + ";" + obj.GetType() + ";" + (string)obj + ";";
+                Data += obj.GetType() + "|" + name + "|" + (string)obj + ";";
             }
             else
             {
                 if (null != obj)
                 {
-                    Data += name + ";" + obj.GetType() + ";" + IDGenerator.GetId(obj, out bool firstTime).ToString();
+                    Data += obj.GetType() + "|" + name + "|ref" + IDGenerator.GetId(obj, out bool firstTime).ToString() + ";";
                     if (firstTime)
                     {
                         this.m_objectQueue.Enqueue(obj);
@@ -218,7 +140,7 @@ namespace SerializationLibrary
                 }
                 else
                 {
-                    Data += name + ";null;0";
+                    Data += name + "|null|ref0";
                 }
             }
         }
@@ -230,7 +152,7 @@ namespace SerializationLibrary
 
         protected override void WriteSingle(float val, string name)
         {
-            this.Data += name + ";" + val.GetType() + ";" + val.ToString("0.00", CultureInfo.InvariantCulture) + ";";
+            this.Data += val.GetType() + "|" + name + "|" + val.ToString("0.00", CultureInfo.InvariantCulture) + ";";
         }
 
         protected override void WriteTimeSpan(TimeSpan val, string name)
