@@ -20,9 +20,9 @@ namespace SerializationLibraryTest
             CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv", a);
             csv.serialize();
             string result = File.ReadAllText("pliczek.csv");
-            Assert.AreEqual("" + "\n" +
+            Assert.AreEqual(
                 "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.A;1;" + "\n" +
-                "System.String|Name|A;System.Single|Number|1.10;System.DateTime|Date|12/01/2019;SerializationLibrary.B|ObjectB|ref2;" + "\n" +
+                "System.String|Name|A;System.Single|Number|1.1;System.DateTime|Date|12/01/2019;SerializationLibrary.B|ObjectB|ref2;" + "\n" +
                 "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.B;2;" + "\n" +
                 "System.String|Name|B;System.Single|Number|3.65;System.DateTime|Date|10/01/2019;SerializationLibrary.C|ObjectC|ref3;" + "\n" +
                 "SerializationLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;SerializationLibrary.C;3;" + "\n" +
@@ -31,14 +31,16 @@ namespace SerializationLibraryTest
         [TestMethod]
         public void DeserializeTest()
         {
-            /* A a = new A("A", 1.1f, new DateTime(2019, 12, 1), null);
+             A a = new A("A", 1.1f, new DateTime(2019, 12, 1), null);
              B b = new B("B", 3.65f, new DateTime(2019, 10, 1), null);
              C c = new C("C", 5.37f, new DateTime(2020, 1, 2), null);
              a.ObjectB = b;
              b.ObjectC = c;
              c.ObjectA = a;
+            Console.WriteLine(a.ToString());
              CSVSerialization<A> csv = new CSVSerialization<A>("pliczek.csv", a);
-             A a2 = csv.deserialize();*/
+             A a2 = csv.deserialize();
+            Console.WriteLine(a2.ToString());
 
         }
     }
