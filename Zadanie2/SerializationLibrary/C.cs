@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace SerializationLibrary
 {
@@ -11,6 +12,7 @@ namespace SerializationLibrary
         public DateTime Date { get; set; }
         public A ObjectA { get; set; }
 
+        [JsonConstructor]
         public C(string name, float number, DateTime date, A objectA)
         {
             Name = name;
