@@ -26,9 +26,8 @@ namespace SerializationLibrary
         public override object Deserialize(Stream serializationStream)
         {
             object deserializedObject = null;
-            Dictionary<long, object> deserializedObjects = new Dictionary<long, object>();
-            Dictionary<object, SerializationInfo> objectSerializationInfo = new Dictionary<object, SerializationInfo>();
-            Dictionary<SerializationInfo, List<NameTypeID>> waitingObjects = new Dictionary<SerializationInfo, List<NameTypeID>>();
+            Dictionary<long, ObjectSerializationInfo> objectsInfo = new Dictionary<long, ObjectSerializationInfo>();
+            Dictionary<SerializationInfo, List<NameTypeID>> otherObjects = new Dictionary<SerializationInfo, List<NameTypeID>>();
 
 
             using (StreamReader streamReader = new StreamReader(serializationStream))
@@ -48,8 +47,7 @@ namespace SerializationLibrary
                     if (deserializedObject == null)
                         deserializedObject = tempObject;
 
-                    objectSerializationInfo.Add(tempObject, sInfo);
-                    deserializedObjects.Add(long.Parse(objectValues[2]), tempObject);
+                    objectsInfo.Add(long.Parse(objectValues[2]), new ObjectSerializationInfo(tempObject, sInfo));
                     char[] a = { ';' };
                     string[] properties = streamReader.ReadLine().Split(a, StringSplitOptions.RemoveEmptyEntries);
                     foreach (string property in properties)
@@ -57,9 +55,9 @@ namespace SerializationLibrary
                         string[] tmp = property.Split('|');
                         if (tmp[2].StartsWith("ref"))
                         {
-                            if (!waitingObjects.ContainsKey(sInfo))
+                            if (!otherObjects.ContainsKey(sInfo))
                             {
-                                waitingObjects.Add(sInfo, new List<NameTypeID>());
+                                otherObjects.Add(sInfo, new List<NameTypeID>());
                             }
                             if (tmp[2] == "ref0")
                             {
@@ -67,7 +65,7 @@ namespace SerializationLibrary
                             }
                             else
                             {
-                                waitingObjects[sInfo].Add(new NameTypeID(tmp[1], Type.GetType(tmp[0]), long.Parse(tmp[2].Substring(3))));
+                                otherObjects[sInfo].Add(new NameTypeID(tmp[1], Type.GetType(tmp[0]), long.Parse(tmp[2].Substring(3))));
                             }
                         }
                         else
@@ -77,23 +75,21 @@ namespace SerializationLibrary
                     }
 
                 }
-                foreach (KeyValuePair<SerializationInfo, List<NameTypeID>> keyValuePairWaitingObjects in waitingObjects)
+                foreach (KeyValuePair<SerializationInfo, List<NameTypeID>> keyValuePairWaitingObjects in otherObjects)
                 {
                     SerializationInfo serializationInfo = keyValuePairWaitingObjects.Key;
                     foreach (NameTypeID three in keyValuePairWaitingObjects.Value)
                     {
-                        Console.WriteLine("1: " + three.Name);
-                        Console.WriteLine("2: " + three.Type);
-                        Console.WriteLine("3: " + three.ID);
-                        serializationInfo.AddValue(three.Name, deserializedObjects[three.ID], three.Type);
+                        serializationInfo.AddValue(three.Name, objectsInfo[three.ID].Obj, three.Type);
                     }
                 }
 
-                foreach (KeyValuePair<object, SerializationInfo> keyValuePair in objectSerializationInfo)
+                foreach (KeyValuePair<long, ObjectSerializationInfo> keyValuePair in objectsInfo)
                 {
-                    keyValuePair.Key.GetType().GetConstructor(
-                                                                 new Type[] { typeof(SerializationInfo), typeof(StreamingContext) }
-                                                             ).Invoke(keyValuePair.Key, new object[] { keyValuePair.Value, Context });
+                    keyValuePair.Value.Obj.GetType().GetConstructor(
+                                                                new Type[] { typeof(SerializationInfo), typeof(StreamingContext) }
+                                                            ).Invoke(keyValuePair.Value.Obj, new object[] { keyValuePair.Value.serializationInfo, Context });
+
                 }
             }
 
@@ -111,7 +107,16 @@ namespace SerializationLibrary
                 this.ID = id;
             }
         }
-
+        class ObjectSerializationInfo
+        {
+            public Object Obj { set; get; }
+            public SerializationInfo serializationInfo { get; set; }
+            public ObjectSerializationInfo(Object obj, SerializationInfo serializationinfo)
+            {
+                this.Obj = obj;
+                this.serializationInfo = serializationinfo;
+            }
+        }
         private string Data = "";
         private List<string> SaveIT = new List<string>();
         public override void Serialize(Stream serializationStream, object graph)
