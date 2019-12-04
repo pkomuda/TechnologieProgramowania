@@ -28,7 +28,7 @@ namespace SerializationLibrary
             object deserializedObject = null;
             Dictionary<long, object> deserializedObjects = new Dictionary<long, object>();
             Dictionary<object, SerializationInfo> objectSerializationInfo = new Dictionary<object, SerializationInfo>();
-            Dictionary<SerializationInfo, List<Tuple<string, Type, long>>> waitingObjects = new Dictionary<SerializationInfo, List<Tuple<string, Type, long>>>();
+            Dictionary<SerializationInfo, List<NameTypeID>> waitingObjects = new Dictionary<SerializationInfo, List<NameTypeID>>();
 
 
             using (StreamReader streamReader = new StreamReader(serializationStream))
@@ -59,7 +59,7 @@ namespace SerializationLibrary
                         {
                             if (!waitingObjects.ContainsKey(sInfo))
                             {
-                                waitingObjects.Add(sInfo, new List<Tuple<string, Type, long>>());
+                                waitingObjects.Add(sInfo, new List<NameTypeID>());
                             }
                             if (tmp[2] == "ref0")
                             {
@@ -67,7 +67,7 @@ namespace SerializationLibrary
                             }
                             else
                             {
-                                waitingObjects[sInfo].Add(new Tuple<string, Type, long>(tmp[1], Type.GetType(tmp[0]), long.Parse(tmp[2].Substring(3))));
+                                waitingObjects[sInfo].Add(new NameTypeID(tmp[1], Type.GetType(tmp[0]), long.Parse(tmp[2].Substring(3))));
                             }
                         }
                         else
@@ -77,12 +77,15 @@ namespace SerializationLibrary
                     }
 
                 }
-                foreach (KeyValuePair<SerializationInfo, List<Tuple<string, Type, long>>> keyValuePairWaitingObjects in waitingObjects)
+                foreach (KeyValuePair<SerializationInfo, List<NameTypeID>> keyValuePairWaitingObjects in waitingObjects)
                 {
                     SerializationInfo serializationInfo = keyValuePairWaitingObjects.Key;
-                    foreach (Tuple<string, Type, long> tuple in keyValuePairWaitingObjects.Value)
+                    foreach (NameTypeID three in keyValuePairWaitingObjects.Value)
                     {
-                        serializationInfo.AddValue(tuple.Item1, deserializedObjects[tuple.Item3], tuple.Item2);
+                        Console.WriteLine("1: " + three.Name);
+                        Console.WriteLine("2: " + three.Type);
+                        Console.WriteLine("3: " + three.ID);
+                        serializationInfo.AddValue(three.Name, deserializedObjects[three.ID], three.Type);
                     }
                 }
 
@@ -95,6 +98,18 @@ namespace SerializationLibrary
             }
 
             return deserializedObject;
+        }
+        class NameTypeID
+        {
+            public string Name { get; }
+            public Type Type { get; }
+            public long ID { get; }
+            public NameTypeID(string name, Type type, long id)
+            {
+                this.Name = name;
+                this.Type = type;
+                this.ID = id;
+            }
         }
 
         private string Data = "";
