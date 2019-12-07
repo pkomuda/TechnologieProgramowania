@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatabaseLibrary
 {
@@ -11,35 +9,92 @@ namespace DatabaseLibrary
     {
         public static List<Product> GetProductsByName(string namePart)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> products = db.GetTable<Product>();
+                List<Product> result = (from product in products
+                                        where product.Name.Contains(namePart)
+                                        select product).ToList();
+                return result;
+            }
         }
         public static List<Product> GetProductsByVendorName(string vendorName)
         {
-            return null;
+             using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+             {
+                 Table <ProductVendor> vendors = db.GetTable<ProductVendor>();
+                 List<Product> result = (from vendor in vendors
+                                         where vendor.Vendor.Name.Equals(vendorName)
+                                         select vendor.Product).ToList();
+                 return result;
+             }
         }
         public static List<string> GetProductNamesByVendorName(string vendorName)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<ProductVendor> vendors = db.GetTable<ProductVendor>();
+                List<String> result = (from vendor in vendors
+                                        where vendor.Vendor.Name.Equals(vendorName)
+                                        select vendor.Product.Name).ToList();
+                return result;
+            }
         }
         public static string GetProductVendorByProductName(string productName)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<ProductVendor> vendors = db.GetTable<ProductVendor>();
+                String result = (from vendor in vendors
+                                 where vendor.Product.Name.Equals(productName)
+                                 select vendor.Vendor.Name).ToString();
+                return result;
+            }
         }
         public static List<Product> GetProductsWithNRecentReviews(int howManyReviews)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> products = db.GetTable<Product>();
+                List<Product> result = (from product in products
+                                        where product.ProductReview.Count == howManyReviews
+                                        select product).ToList();
+                return result;
+            }
         }
         public static List<Product> GetNRecentlyReviewedProducts(int howManyProducts)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                List<Product> result = (from product in db.Product
+                                        join review in db.ProductReview on product.ProductID equals review.ProductID
+                                        orderby review.ReviewDate descending
+                                        select product).Take(howManyProducts).ToList();
+                return result;
+            }
         }
         public static List<Product> GetNProductsFromCategory(string categoryName, int n)
         {
-            return null;
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> products = db.GetTable<Product>();
+                List<Product> result = (from product in products
+                                        orderby product.ProductSubcategory.Name.Equals(categoryName) //w poleceniu jest coś o ProductCategory, ale tak chyba też można?
+                                        select product).Take(n).ToList();
+                return result;
+            }
         }
         public static int GetTotalStandardCostByCategory(ProductCategory category)
         {
-            return 0;
+            //to samo pytanie co wyżej
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> products = db.GetTable<Product>(); ;
+                int result = (int) (from product in products
+                                  where product.ProductSubcategory.ProductCategory.ProductCategoryID.Equals(category.ProductCategoryID)
+                                  select product.StandardCost).ToList().Sum();
+                return result;
+            }
         }
 
     }
