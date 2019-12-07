@@ -47,7 +47,7 @@ namespace DatabaseLibrary
                 Table<ProductVendor> vendors = db.GetTable<ProductVendor>();
                 String result = (from vendor in vendors
                                  where vendor.Product.Name.Equals(productName)
-                                 select vendor.Vendor.Name).ToString();
+                                 select vendor.Vendor.Name).First();
                 return result;
             }
         }
@@ -89,11 +89,18 @@ namespace DatabaseLibrary
             //to samo pytanie co wyżej
             using (LINQToSQLDataContext db = new LINQToSQLDataContext())
             {
-                Table<Product> products = db.GetTable<Product>(); ;
-                int result = (int) (from product in products
-                                  where product.ProductSubcategory.ProductCategory.ProductCategoryID.Equals(category.ProductCategoryID)
-                                  select product.StandardCost).ToList().Sum();
-                return result;
+                 Table<Product> products = db.GetTable<Product>(); ;
+                 int result = (int) (from product in products
+                                   where product.ProductSubcategory.ProductCategory.Name.Equals(category.Name)
+                                   select product.StandardCost).ToList().Sum();
+                 return result;
+                //A może tak?
+                /*int result = System.Convert.ToInt16((from p in db.Product
+                                 join s in db.ProductSubcategory on p.ProductSubcategoryID equals s.ProductSubcategoryID
+                                 join c in db.ProductCategory on s.ProductCategoryID equals c.ProductCategoryID
+                                 where c.Name.Equals(category.Name)
+                                 select p.ListPrice));
+                return result;*/
             }
         }
 
