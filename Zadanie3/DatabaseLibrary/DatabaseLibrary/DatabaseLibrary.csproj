@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LINQExtension.cs" />
     <Compile Include="LinqService.cs" />
     <Compile Include="LINQToSQL.designer.cs">
       <AutoGen>True</AutoGen>
