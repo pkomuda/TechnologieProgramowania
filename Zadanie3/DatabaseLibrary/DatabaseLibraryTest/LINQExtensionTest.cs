@@ -1,5 +1,6 @@
 ﻿using DatabaseLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -62,6 +63,42 @@ namespace DatabaseLibraryTest
                 Assert.AreEqual(4, result.ElementAt(0).ProductID);
                 Assert.AreEqual(316, result.ElementAt(1).ProductID);
                 Assert.AreEqual(317, result.ElementAt(2).ProductID);
+            }
+        }
+
+        [TestMethod]
+        public void GetProductAndVendorNamesDeclarativeTest()
+        {
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> productTable = db.GetTable<Product>();
+                List<Product> allProducts = (from product in productTable
+                                             select product).ToList();
+                string result = allProducts.GetProductAndVendorNamesDeclarative();
+                Assert.AreEqual(460, result.Split(new[] { Environment.NewLine },
+                                                  StringSplitOptions.None).Length);
+                Assert.AreEqual("Adjustable Race - Litware, Inc.", result.Split(new[] { Environment.NewLine },
+                                                                   StringSplitOptions.None).First());
+                Assert.AreEqual("Chain - Varsity Sport Co.", result.Split(new[] { Environment.NewLine },
+                                                             StringSplitOptions.None).Last());
+            }
+        }
+
+        [TestMethod]
+        public void GetProductAndVendorNamesImperativeTest()
+        {
+            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
+            {
+                Table<Product> productTable = db.GetTable<Product>();
+                List<Product> allProducts = (from product in productTable
+                                             select product).ToList();
+                //string result = allProducts.GetProductAndVendorNamesImperative();
+                Assert.AreEqual(460, result.Split(new[] { Environment.NewLine },
+                                                  StringSplitOptions.None).Length);
+                Assert.AreEqual("Adjustable Race - Litware, Inc.", result.Split(new[] { Environment.NewLine },
+                                                                   StringSplitOptions.None).First());
+                Assert.AreEqual("Chain - Varsity Sport Co.", result.Split(new[] { Environment.NewLine },
+                                                             StringSplitOptions.None).Last());
             }
         }
     }
