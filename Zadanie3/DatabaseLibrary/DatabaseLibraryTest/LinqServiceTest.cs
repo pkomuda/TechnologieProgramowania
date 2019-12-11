@@ -36,8 +36,8 @@ namespace DatabaseLibraryTest
         [TestMethod]
         public void GetProductsWithNRecentReviewsTest()
         {
-            List<Product> products = LinqService.GetProductsWithNRecentReviews(2);
-            Assert.AreEqual(1, products.Count);
+            List<Product> products = LinqService.GetProductsWithNRecentReviews(0);
+            Assert.AreEqual(501, products.Count);
 
         }
         [TestMethod]
@@ -60,10 +60,10 @@ namespace DatabaseLibraryTest
         public void GetTotalStandardCostByCategoryTest()
         {
             ProductCategory category = new ProductCategory();
+            category.ProductCategoryID = 1;
             category.Name = "Bikes";
             int total = LinqService.GetTotalStandardCostByCategory(category);
-            System.Console.WriteLine(total); 
-           // Assert.AreEqual(total, 92092);
+            Assert.AreEqual(total, 92092);
         }
     }
 }

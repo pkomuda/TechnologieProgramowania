@@ -79,28 +79,21 @@ namespace DatabaseLibrary
             {
                 Table<Product> products = db.GetTable<Product>();
                 List<Product> result = (from product in products
-                                        orderby product.ProductSubcategory.Name.Equals(categoryName) //w poleceniu jest coś o ProductCategory, ale tak chyba też można?
+                                        orderby product.ProductSubcategory.Name.Equals(categoryName)
                                         select product).Take(n).ToList();
                 return result;
             }
         }
         public static int GetTotalStandardCostByCategory(ProductCategory category)
         {
-            //to samo pytanie co wyżej
             using (LINQToSQLDataContext db = new LINQToSQLDataContext())
             {
                  Table<Product> products = db.GetTable<Product>(); ;
                  int result = (int) (from product in products
-                                   where product.ProductSubcategory.ProductCategory.Name.Equals(category.Name)
-                                   select product.StandardCost).ToList().Sum();
+                                     where (product.ProductSubcategory.ProductCategory.ProductCategoryID.Equals(category.ProductCategoryID)
+                                     && product.ProductSubcategory.ProductCategory.Name.Equals(category.Name))
+                                     select product.StandardCost).ToList().Sum();
                  return result;
-                //A może tak?
-                /*int result = System.Convert.ToInt16((from p in db.Product
-                                 join s in db.ProductSubcategory on p.ProductSubcategoryID equals s.ProductSubcategoryID
-                                 join c in db.ProductCategory on s.ProductCategoryID equals c.ProductCategoryID
-                                 where c.Name.Equals(category.Name)
-                                 select p.ListPrice));
-                return result;*/
             }
         }
 

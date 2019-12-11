@@ -31,16 +31,37 @@ namespace DatabaseLibraryTest
         {
             List<MyProduct> myProductsAll = new List<MyProduct>();
             FillMyProducts(myProductsAll);
-            List<MyProduct> myProducts = MyProductService.GetMyProductsByName("Ball", myProductsAll);
-            
+
+            List<MyProduct> myProducts = myProductsAll.GetMyProductsByName("Ball");
             Assert.AreEqual(3, myProducts.Count);
             foreach (MyProduct myProduct in myProducts)
             {
+                Console.WriteLine(myProduct.Name);
                 Assert.IsTrue(myProduct.Name.Contains("Ball"));
                 Assert.IsTrue(myProduct.CountryOfOrigin == "Poland"
                     || myProduct.CountryOfOrigin == "Germany"
                     || myProduct.CountryOfOrigin == "USA");
             }
+        }
+
+        [TestMethod]
+        public void GetMyProductsByVendorNameTest()
+        {
+            List<MyProduct> myProductsAll = new List<MyProduct>();
+            FillMyProducts(myProductsAll);
+
+            List<MyProduct> myProducts = myProductsAll.GetMyProductsByVendorName("Training Systems");
+            Assert.AreEqual(3, myProducts.Count);
+        }
+
+        [TestMethod]
+        public void GetMyProductsBy()
+        {
+            List<MyProduct> myProductsAll = new List<MyProduct>();
+            FillMyProducts(myProductsAll);
+
+            List<MyProduct> myProducts = myProductsAll.GetMyProductsWithNRecentReviews(0);
+            Assert.AreEqual(100, myProducts.Count);
         }
     }
 }
