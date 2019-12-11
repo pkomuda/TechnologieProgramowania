@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace DatabaseLibrary
+﻿namespace DatabaseLibrary
 {
     public class MyProduct : Product
     {
@@ -17,6 +14,11 @@ namespace DatabaseLibrary
                 }
             }
             this.CountryOfOrigin = countryOfOrigin;
+        }
+
+        public override string ToString()
+        {
+            return Name + "; " + CountryOfOrigin;
         }
     }
 }
