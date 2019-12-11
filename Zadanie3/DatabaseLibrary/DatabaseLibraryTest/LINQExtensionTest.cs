@@ -17,7 +17,7 @@ namespace DatabaseLibraryTest
             {
                 Table<Product> productTable = db.GetTable<Product>();
                 List<Product> allProducts = (from product in productTable
-                                        select product).ToList();
+                                             select product).ToList();
                 Assert.AreEqual(209, allProducts.GetProductsWithNoCategoryDeclarative().Count);
             }
         }
@@ -29,7 +29,7 @@ namespace DatabaseLibraryTest
             {
                 Table<Product> productTable = db.GetTable<Product>();
                 List<Product> allProducts = (from product in productTable
-                                        select product).ToList();
+                                             select product).ToList();
                 Assert.AreEqual(209, allProducts.GetProductsWithNoCategoryImperative().Count);
             }
         }
@@ -41,7 +41,7 @@ namespace DatabaseLibraryTest
             {
                 Table<Product> productTable = db.GetTable<Product>();
                 List<Product> allProducts = (from product in productTable
-                                     select product).ToList();
+                                             select product).ToList();
                 List<Product> result = allProducts.GetNProductsOnPageDeclarative(3, 2);
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual(4, result.ElementAt(0).ProductID);
@@ -67,40 +67,20 @@ namespace DatabaseLibraryTest
         }
 
         [TestMethod]
-        public void GetProductAndVendorNamesDeclarativeTest()
+        public void GetProductAndVendorNamesTest()
         {
             using (LINQToSQLDataContext db = new LINQToSQLDataContext())
             {
                 Table<Product> productTable = db.GetTable<Product>();
                 List<Product> allProducts = (from product in productTable
                                              select product).ToList();
-                string result = allProducts.GetProductAndVendorNamesDeclarative();
+                string result = allProducts.GetProductAndVendorNames();
                 Assert.AreEqual(460, result.Split(new[] { Environment.NewLine },
                                                   StringSplitOptions.None).Length);
                 Assert.AreEqual("Adjustable Race - Litware, Inc.", result.Split(new[] { Environment.NewLine },
                                                                    StringSplitOptions.None).First());
                 Assert.AreEqual("Chain - Varsity Sport Co.", result.Split(new[] { Environment.NewLine },
                                                              StringSplitOptions.None).Last());
-            }
-        }
-
-        [TestMethod]
-        public void GetProductAndVendorNamesImperativeTest()
-        {
-            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
-            {
-                Table<Product> productTable = db.GetTable<Product>();
-                List<Product> allProducts = (from product in productTable
-                                             select product).ToList();
-                /*
-                string result = allProducts.GetProductAndVendorNamesImperative();
-                Assert.AreEqual(460, result.Split(new[] { Environment.NewLine },
-                                                  StringSplitOptions.None).Length);
-                Assert.AreEqual("Adjustable Race - Litware, Inc.", result.Split(new[] { Environment.NewLine },
-                                                                   StringSplitOptions.None).First());
-                Assert.AreEqual("Chain - Varsity Sport Co.", result.Split(new[] { Environment.NewLine },
-                                                             StringSplitOptions.None).Last());
-                */
             }
         }
     }

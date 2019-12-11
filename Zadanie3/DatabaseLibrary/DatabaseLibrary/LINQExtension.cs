@@ -31,7 +31,7 @@ namespace DatabaseLibrary
             return products.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
         }
 
-        public static string GetProductAndVendorNamesDeclarative(this List<Product> products)
+        public static string GetProductAndVendorNames(this List<Product> products)
         {
             using (LINQToSQLDataContext db = new LINQToSQLDataContext())
             {
@@ -50,26 +50,6 @@ namespace DatabaseLibrary
 
                 return String.Join(Environment.NewLine, (from q in query
                                                          select q.ProductName + " - " + q.VendorName).ToList());
-            }
-        }
-
-        public static void GetProductAndVendorNamesImperative(this List<Product> products)
-        {
-            using (LINQToSQLDataContext db = new LINQToSQLDataContext())
-            {
-                Table<ProductVendor> productVendorTable = db.GetTable<ProductVendor>();
-                List<ProductVendor> productVendorAll = (from productVendor in productVendorTable
-                                                        select productVendor).ToList();
-
-                Expression<Func<object>> fn = () => from p in products
-                                                    from pv in productVendorAll
-                                                    where p.ProductID == pv.ProductID
-                                                    select new
-                                                    {
-                                                        ProductName = p.Name,
-                                                        VendorName = pv.Vendor.Name
-                                                    };
-                Console.WriteLine(fn.Body);
             }
         }
     }
