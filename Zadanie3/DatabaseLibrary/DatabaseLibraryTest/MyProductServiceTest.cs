@@ -36,7 +36,6 @@ namespace DatabaseLibraryTest
             Assert.AreEqual(3, myProducts.Count);
             foreach (MyProduct myProduct in myProducts)
             {
-                Console.WriteLine(myProduct.Name);
                 Assert.IsTrue(myProduct.Name.Contains("Ball"));
                 Assert.IsTrue(myProduct.CountryOfOrigin == "Poland"
                     || myProduct.CountryOfOrigin == "Germany"
@@ -52,16 +51,28 @@ namespace DatabaseLibraryTest
 
             List<MyProduct> myProducts = myProductsAll.GetMyProductsByVendorName("Training Systems");
             Assert.AreEqual(3, myProducts.Count);
+            foreach (MyProduct myProduct in myProducts)
+            {
+                Assert.IsTrue(myProduct.CountryOfOrigin == "Poland"
+                    || myProduct.CountryOfOrigin == "Germany"
+                    || myProduct.CountryOfOrigin == "USA");
+            }
         }
 
         [TestMethod]
-        public void GetMyProductsBy()
+        public void GetMyProductsWithNRecentReviews()
         {
             List<MyProduct> myProductsAll = new List<MyProduct>();
             FillMyProducts(myProductsAll);
 
             List<MyProduct> myProducts = myProductsAll.GetMyProductsWithNRecentReviews(0);
             Assert.AreEqual(100, myProducts.Count);
+            foreach (MyProduct myProduct in myProducts)
+            {
+                Assert.IsTrue(myProduct.CountryOfOrigin == "Poland"
+                    || myProduct.CountryOfOrigin == "Germany"
+                    || myProduct.CountryOfOrigin == "USA");
+            }
         }
     }
 }

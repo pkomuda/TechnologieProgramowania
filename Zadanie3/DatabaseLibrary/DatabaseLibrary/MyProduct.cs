@@ -4,21 +4,13 @@
     {
         public string CountryOfOrigin { get; set; }
 
-        public MyProduct(Product product, string countryOfOrigin)
+        public MyProduct(Product product, string countryOfOrigin) : base()
         {
             foreach (var property in product.GetType().GetProperties())
             {
-                if (property.CanWrite)
-                {
-                    property.SetValue(this, property.GetValue(product));
-                }
+                property.SetValue(this, property.GetValue(product));
             }
             this.CountryOfOrigin = countryOfOrigin;
-        }
-
-        public override string ToString()
-        {
-            return Name + "; " + CountryOfOrigin;
         }
     }
 }
