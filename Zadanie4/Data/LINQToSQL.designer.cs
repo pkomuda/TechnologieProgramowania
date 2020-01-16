@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Model
+namespace Data
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -108,7 +108,7 @@ namespace Model
     #endregion
 		
 		public LINQToSQLDataContext() : 
-				base(global::Model.Properties.Settings.Default.AdventureWorks2014ConnectionString, mappingSource)
+				base(global::Data.Properties.Settings.Default.AdventureWorks2014ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

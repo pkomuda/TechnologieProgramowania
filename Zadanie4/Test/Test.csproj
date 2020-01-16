@@ -56,9 +56,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{d510c06c-75ac-47a7-9d70-07bc9feb0407}</Project>
-      <Name>Model</Name>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{3D990B5A-757D-479C-B554-B066D46FA09B}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{56c3e7bb-bd64-4b81-a4ad-b5db60da8cf5}</Project>
+      <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
