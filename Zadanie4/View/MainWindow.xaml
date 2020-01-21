@@ -6,20 +6,21 @@
         xmlns:local="clr-namespace:View"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
-        <ListView ItemsSource="{Binding Products}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+        <ListView ItemsSource="{Binding Departments}" SelectedItem="{Binding Department}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="250">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{Binding ProductID}" />
-                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding DepartmentID}" Width="50"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Command="{Binding DeleteDepartmentCommand}" Margin="290,502,447,34">Remove</Button>
     </Grid>
 </Window>
