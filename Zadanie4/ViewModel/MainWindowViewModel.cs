@@ -15,22 +15,18 @@ namespace ViewModel
             set
             {
                 m_DepartmentRepository = value;
-                Task.Run(() =>
-                {
-                    Departments = new ObservableCollection<Department>(value.GetAllDepartments());
-                });
+                Departments = new ObservableCollection<Department>(value.GetAllDepartments());
             }
         }
 
         private ObservableCollection<Department> m_Departments;
         public ObservableCollection<Department> Departments
         {
-            //get { return m_Departments; }
-            get { return new ObservableCollection<Department>(new DepartmentRepository().GetAllDepartments()); }
+            get { return m_Departments; }
             set
             {
                 m_Departments = value;
-                //RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -44,7 +40,7 @@ namespace ViewModel
             set
             {
                 m_Department = value;
-                //RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -55,6 +51,7 @@ namespace ViewModel
 
         public MainWindowViewModel()
         {
+            DepartmentRepository = new DepartmentRepository();
             AddDepartmentCommand = new RelayCommand(AddDepartment);
             DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
         }
