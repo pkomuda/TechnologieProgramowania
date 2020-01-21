@@ -5,10 +5,10 @@ namespace View
     class UpdateDepartmentWindow : IWindow
     {
         public event VoidHandler OnClose;
-        private DepartmentView _window;
+        private UpdateWindow _window;
         public UpdateDepartmentWindow()
         {
-            _window = new DepartmentView();
+            _window = new UpdateWindow();
         }
         public void BindViewModel<T>(T viewModel) where T : ViewModelBase
         {
