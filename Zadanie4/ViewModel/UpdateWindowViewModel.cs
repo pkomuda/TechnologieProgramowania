@@ -69,5 +69,8 @@ namespace ViewModel
             DepartmentRepository = departmentRepository;
             Department = department;
         }
+        public UpdateWindowViewModel()
+        {
+        }
     }
 }

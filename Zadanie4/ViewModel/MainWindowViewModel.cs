@@ -74,7 +74,7 @@ namespace ViewModel
             }
         }
 
-        public IWindowResolver WindowResolver { get; private set; }
+        public IWindowResolver WindowResolver { get; set; }
         public ICommand AddDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
         public ICommand UpdateWindowCommand { get; private set; }
@@ -111,9 +111,9 @@ namespace ViewModel
 
         public void UpdateWindow()
         {
-            IWindow window = WindowResolver.GetWindow();
-            window.BindViewModel(new UpdateWindowViewModel(DepartmentRepository, Department));
-            window.Show();
+             IWindow window = WindowResolver.GetWindow();
+             window.BindViewModel(new UpdateWindowViewModel(DepartmentRepository, Department));
+             window.Show();
         }
     }
 }

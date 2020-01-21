@@ -14,12 +14,16 @@
     </Window.DataContext>
 
     <Grid>
-        <Label Content="Department name" Margin="274,41,387,488"/>
-        <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"/>
-        <Label Content="Department group name" Margin="274,86,354,439" RenderTransformOrigin="0.912,2.443"/>
-        <TextBox Text="{Binding GroupName, Mode=TwoWay}" Margin="462,87,184,455" RenderTransformOrigin="0.016,-4.12"/>
-        <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
-        <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
-        <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="756*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Department name" Margin="237,41,387.333,487.667" Grid.Column="1"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="425,41,183.333,501.667" RenderTransformOrigin="1.796,4.365" Grid.Column="1"/>
+        <Label Content="Department group name" Margin="237,86,354.333,438.667" RenderTransformOrigin="0.912,2.443" Grid.Column="1"/>
+        <TextBox Text="{Binding GroupName, Mode=TwoWay}" Margin="425,87,183.333,454.667" RenderTransformOrigin="0.016,-4.12" Grid.Column="1"/>
+        <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="581,87,40.333,451.667" RenderTransformOrigin="0.859,6.371" Grid.Column="1"/>
+        <Label Content="Department modified date" Margin="237,135,335.333,389.667" RenderTransformOrigin="0.912,2.443" Grid.Column="1"/>
+        <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="425,135,184.333,400.667" RenderTransformOrigin="1.465,1.955" Grid.Column="1"/>
     </Grid>
 </Window>
