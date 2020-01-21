@@ -2,9 +2,9 @@
 
 namespace View
 {
-    public partial class MainWindow : Window
+    public partial class UpdateWindow : Window
     {
-        public MainWindow()
+        public UpdateWindow()
         {
             InitializeComponent();
         }

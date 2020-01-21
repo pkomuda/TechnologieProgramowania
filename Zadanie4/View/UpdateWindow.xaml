@@ -1,4 +1,4 @@
-﻿<Window x:Class="View.MainWindow"
+﻿<Window x:Class="View.UpdateWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,21 +7,13 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Department list" Height="600" Width="800">
+        Title="Update department" Height="600" Width="800">
 
     <Window.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:UpdateWindowViewModel/>
     </Window.DataContext>
 
     <Grid>
-        <ListView ItemsSource="{Binding Departments}" SelectedItem="{Binding Department}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="250">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding DepartmentID}" Width="50"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
         <Label Content="Department name" Margin="274,41,387,488"/>
         <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"/>
         <Label Content="Department group name" Margin="274,86,354,439" RenderTransformOrigin="0.912,2.443"/>
@@ -29,9 +21,5 @@
         <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
         <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
         <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
-
-        <Button Content="Update department" Command="{Binding UpdateWindowCommand}" Margin="274,433,370,103" RenderTransformOrigin="1.378,-2.076"/>
-        
-        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="274,496,370,40" RenderTransformOrigin="1.652,4.318"/>
     </Grid>
 </Window>
