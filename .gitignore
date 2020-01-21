@@ -268,6 +268,11 @@ Zadanie3/DatabaseLibrary/DatabaseLibrary/LINQToSQL.designer.cs
 Zadanie3/DatabaseLibrary/DatabaseLibrary/Properties/Settings.Designer.cs
 Zadanie3/DatabaseLibrary/DatabaseLibrary/Properties/Settings.settings
 
-Zadanie4/Data/LINQToSQL.dbml
-Zadanie4/Data/LINQToSQL.dbml.layout
-Zadanie4/Data/LINQToSQL.designer.cs
+
+./Zadanie4/Data/app.config
+./Zadanie4/Data/LINQToSQL.dbml
+./Zadanie4/Data/LINQToSQL.dbml.layout
+./Zadanie4/Data/LINQToSQL.designer.cs
+./Zadanie4/Data/Properties/Settings.Designer.cs
+./Zadanie4/Data/Properties/Settings.settings
+
