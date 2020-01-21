@@ -50,5 +50,24 @@ namespace Test
             _vm.DeleteDepartmentCommand.Execute(null);
             Assert.AreEqual(15, _vm.DepartmentRepository.GetAllDepartments().ToList().Count);
         }
+        [TestMethod]
+        public void UpdateDepartmentTest()
+        {
+            MainWindowViewModel _vm = new MainWindowViewModel();
+            _vm.Name = "_test";
+            _vm.GroupName = "_test2";
+            _vm.ModifiedDate = DateTime.Now;
+            _vm.AddDepartmentCommand.Execute(null);
+
+            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
+            _vm.Name = "_test";
+            _vm.GroupName = "_test2Edit";
+            _vm.ModifiedDate = DateTime.Now;
+            _vm.UpdateWindowCommand.Execute(null);
+            Assert.AreEqual("_test2Edit", _vm.DepartmentRepository.GetDepartmentByName("_test").GroupName);
+
+            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
+            _vm.DeleteDepartmentCommand.Execute(null);
+        }
     }
 }
