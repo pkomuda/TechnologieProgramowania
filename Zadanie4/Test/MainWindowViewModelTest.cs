@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ViewModel;
 using Service;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Test
 {
@@ -9,7 +11,7 @@ namespace Test
     public class MainWindowViewModelTest
     {
         [TestMethod]
-        public void ConstructorTestMethod()
+        public void ConstructorTest()
         {
             MainWindowViewModel _vm = new MainWindowViewModel();
             Assert.IsNotNull(_vm.ModifiedDate);
@@ -33,6 +35,20 @@ namespace Test
             Assert.AreNotSame(_vm.DepartmentRepository, repo);
             _vm.DepartmentRepository = repo;
             Assert.AreSame(_vm.DepartmentRepository, repo);
+        }
+        [TestMethod]
+        public void AddAndDeleteDepartmentTest()
+        {
+            MainWindowViewModel _vm = new MainWindowViewModel();
+            _vm.Name = "_test";
+            _vm.GroupName = "_test2";
+            _vm.ModifiedDate = DateTime.Now;
+            _vm.AddDepartmentCommand.Execute(null);
+            Assert.AreEqual(16, _vm.DepartmentRepository.GetAllDepartments().ToList().Count);
+
+            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
+            _vm.DeleteDepartmentCommand.Execute(null);
+            Assert.AreEqual(15, _vm.DepartmentRepository.GetAllDepartments().ToList().Count);
         }
     }
 }
