@@ -108,7 +108,7 @@ namespace DatabaseLibrary
     #endregion
 		
 		public LINQToSQLDataContext() : 
-				base(global::DatabaseLibrary.Properties.Settings.Default.AdventureWorks2014ConnectionString1, mappingSource)
+				base(global::DatabaseLibrary.Properties.Settings.Default.AdventureWorks2014ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

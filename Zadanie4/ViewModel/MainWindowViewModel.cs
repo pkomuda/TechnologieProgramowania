@@ -1,6 +1,7 @@
 ﻿using Data;
 using Service;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -74,6 +75,10 @@ namespace ViewModel
             {
                 m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
             });
+        }
+        public RelayCommand RefreshDataCommand
+        {
+            get; private set;
         }
     }
 }
