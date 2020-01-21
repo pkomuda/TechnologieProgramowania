@@ -22,5 +22,26 @@
             </ListView.View>
         </ListView>
         <Button Command="{Binding DeleteDepartmentCommand}" Margin="290,502,447,34">Remove</Button>
+        <TextBlock Grid.Column="0" Margin="254,18,489.333,528.667" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.223"/>
+                    <TranslateTransform X="-0.074" Y="0.166"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>Name:</TextBlock>
+        <TextBox Text="{Binding Name}" Margin="312,16,387.333,528.667" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.223"/>
+                    <TranslateTransform X="-0.081" Y="-0.093"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Button  Content="Add department" HorizontalAlignment="Center" Command="{Binding AddDepartmentCommand}" Margin="279,53,402.333,484.667" RenderTransformOrigin="0.5,0.5" Width="112" />
+
     </Grid>
 </Window>

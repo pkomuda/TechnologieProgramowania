@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System;
 
 namespace ViewModel
 {
@@ -62,19 +63,23 @@ namespace ViewModel
             Department department = new Department
             {
                 Name = Name,
+                ModifiedDate = DateTime.Now,
+                GroupName = "TestGroupName",
             };
-            Task.Run(() =>
-            {
+            //Task.Run(() =>
+           // {
                 m_DepartmentRepository.AddDepartment(department);
-            });
+            // });
+            DepartmentRepository = new DepartmentRepository();
         }
         
         public void DeleteDepartment()
         {
-            Task.Run(() =>
-            {
+            //Task.Run(() =>
+            //{
                 m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
-            });
+          //  });
+            DepartmentRepository = new DepartmentRepository();
         }
         public RelayCommand RefreshDataCommand
         {

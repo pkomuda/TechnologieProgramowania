@@ -60,6 +60,7 @@ namespace Service
         public void DeleteDepartmentByID(short departmentID)
         {
             Department temp = GetDepartmentByID(departmentID);
+            dataContext.GetTable<EmployeeDepartmentHistory>().DeleteAllOnSubmit(dataContext.GetTable<EmployeeDepartmentHistory>().Where(history => history.DepartmentID.Equals(departmentID)));
             dataContext.GetTable<Department>().DeleteOnSubmit(temp);
             dataContext.SubmitChanges();
         }
