@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
@@ -21,27 +22,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Command="{Binding DeleteDepartmentCommand}" Margin="290,502,447,34">Remove</Button>
-        <TextBlock Grid.Column="0" Margin="254,18,489.333,528.667" RenderTransformOrigin="0.5,0.5">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.223"/>
-                    <TranslateTransform X="-0.074" Y="0.166"/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>Name:</TextBlock>
-        <TextBox Text="{Binding Name}" Margin="312,16,387.333,528.667" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.223"/>
-                    <TranslateTransform X="-0.081" Y="-0.093"/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-        <Button  Content="Add department" HorizontalAlignment="Center" Command="{Binding AddDepartmentCommand}" Margin="279,53,402.333,484.667" RenderTransformOrigin="0.5,0.5" Width="112" />
+        <Label Content="Department name" Margin="274,41,387,488"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"/>
+        <Label Content="Department group name" Margin="274,86,354,439" RenderTransformOrigin="0.912,2.443"/>
+        <TextBox Text="{Binding GroupName, Mode=TwoWay}" Margin="462,87,184,455" RenderTransformOrigin="0.016,-4.12"/>
+        <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
+        <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
+        <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
 
+        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="290,502,354,34"/>
     </Grid>
 </Window>

@@ -8,31 +8,35 @@ namespace Service
     public class DepartmentRepository
     {
         private LINQToSQLDataContext dataContext;
+        private Table<Department> departments;
+        private Table<EmployeeDepartmentHistory> employeeDepartments;
 
         public DepartmentRepository()
         {
             dataContext = new LINQToSQLDataContext();
+            departments = dataContext.GetTable<Department>();
+            employeeDepartments = dataContext.GetTable<EmployeeDepartmentHistory>();
         }
 
         public void AddDepartment(Department department)
         {
-            dataContext.GetTable<Department>().InsertOnSubmit(department);
+            departments.InsertOnSubmit(department);
             dataContext.SubmitChanges();
         }
 
         public Department GetDepartmentByID(short departmentID)
         {
-            return dataContext.GetTable<Department>().First(department => department.DepartmentID.Equals(departmentID));
+            return departments.First(department => department.DepartmentID.Equals(departmentID));
         }
 
         public Department GetDepartmentByName(string name)
         {
-            return dataContext.GetTable<Department>().First(department => department.Name.Equals(name));
+            return departments.First(department => department.Name.Equals(name));
         }
 
         public IEnumerable<Department> GetAllDepartments()
         {
-            return dataContext.GetTable<Department>();
+            return departments;
         }
 
         public void UpdateDepartmentByID(short departmentID, Department department)
@@ -60,15 +64,23 @@ namespace Service
         public void DeleteDepartmentByID(short departmentID)
         {
             Department temp = GetDepartmentByID(departmentID);
-            dataContext.GetTable<EmployeeDepartmentHistory>().DeleteAllOnSubmit(dataContext.GetTable<EmployeeDepartmentHistory>().Where(history => history.DepartmentID.Equals(departmentID)));
-            dataContext.GetTable<Department>().DeleteOnSubmit(temp);
+            var query = from e in employeeDepartments
+                        where e.DepartmentID == departmentID
+                        select e;
+            employeeDepartments.DeleteAllOnSubmit(query);
+            departments.DeleteOnSubmit(temp);
             dataContext.SubmitChanges();
         }
 
         public void DeleteDepartmentByName(string name)
         {
             Department temp = GetDepartmentByName(name);
-            dataContext.GetTable<Department>().DeleteOnSubmit(temp);
+            var query = from e in employeeDepartments
+                        join d in departments on e.DepartmentID equals d.DepartmentID
+                        where d.Name == name
+                        select e;
+            employeeDepartments.DeleteAllOnSubmit(query);
+            departments.DeleteOnSubmit(temp);
             dataContext.SubmitChanges();
         }
     }

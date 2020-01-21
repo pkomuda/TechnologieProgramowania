@@ -13,11 +13,16 @@ namespace View
         {
             InitializeComponent();
         }
-        /*protected override void OnInitialized(EventArgs e)
+
+        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            base.OnInitialized(e);
-            MainWindowViewModel _vm = (MainWindowViewModel)DataContext;
-            //_vm.ViewModelHelper = new ViewModelHelper();
-        }*/
+
+        }
+        /*protected override void OnInitialized(EventArgs e)
+{
+   base.OnInitialized(e);
+   MainWindowViewModel _vm = (MainWindowViewModel)DataContext;
+   //_vm.ViewModelHelper = new ViewModelHelper();
+}*/
     }
 }
