@@ -1,23 +1,21 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
+using System;
 using ViewModel;
 
 namespace View
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
-        /*protected override void OnInitialized(EventArgs e)
+        protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            MainWindowViewModel _vm = (MainWindowViewModel)DataContext;
-            //_vm.ViewModelHelper = new ViewModelHelper();
-        }*/
+            MainWindowViewModel mwvm = (MainWindowViewModel) DataContext;
+            //mwvm.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
+            mwvm.WindowResolver = new UpdateDepartmentWindowResolver();
+        }
     }
 }

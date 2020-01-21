@@ -74,8 +74,10 @@ namespace ViewModel
             }
         }
 
+        public IWindowResolver WindowResolver { get; set; }
         public ICommand AddDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
+        public ICommand UpdateWindowCommand { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -83,6 +85,7 @@ namespace ViewModel
             ModifiedDate = DateTime.Now;
             AddDepartmentCommand = new RelayCommand(AddDepartment);
             DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
+            UpdateWindowCommand = new RelayCommand(UpdateWindow);
         }
 
         public void AddDepartment()
@@ -104,6 +107,13 @@ namespace ViewModel
         {
             m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
             Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+        }
+
+        public void UpdateWindow()
+        {
+             IWindow window = WindowResolver.GetWindow();
+             window.BindViewModel(new UpdateWindowViewModel(DepartmentRepository, Department));
+             window.Show();
         }
     }
 }
