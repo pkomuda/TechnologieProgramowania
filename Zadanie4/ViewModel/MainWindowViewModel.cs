@@ -96,7 +96,7 @@ namespace ViewModel
                 GroupName = GroupName,
                 ModifiedDate = ModifiedDate
             };
-            m_DepartmentRepository.AddDepartment(department);
+            DepartmentRepository.AddDepartment(department);
             Name = "";
             GroupName = "";
             ModifiedDate = DateTime.Now;
@@ -105,7 +105,7 @@ namespace ViewModel
 
         public void DeleteDepartment()
         {
-            m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+            DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
             Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
         }
 
