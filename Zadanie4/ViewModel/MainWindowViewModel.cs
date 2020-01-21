@@ -1,8 +1,6 @@
 ﻿using Data;
 using Service;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,82 +8,75 @@ namespace ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ProductRepository ProductRepository = new ProductRepository();
-        public List<Product> Products
-         {
-             get
-             {
-                 return ProductRepository.GetAllProducts().ToList();
-             }
-         }
-        public MainWindowViewModel()
+        private DepartmentRepository m_DepartmentRepository;
+        public DepartmentRepository DepartmentRepository
         {
-            AddProductCommand = new RelayCommand(AddProduct);
-            DeleteProductCommand = new RelayCommand(DeleteProduct);
-        }
-        private Product m_Product;
-        public Product Product
-        {
-            get
-            {
-                return m_Product;
-            }
+            get { return m_DepartmentRepository; }
             set
             {
-                m_Product = value;
-                //RaisePropertyChanged();
-            }
-        }
-        /*
-        private ObservableCollection<Product> m_Products;
-        public ObservableCollection<Product> Products
-        {
-            get { return m_Products; }
-            set
-            {
-                m_Products = value;
-                //RaisePropertyChanged();
-            }
-        }
-        private ProductRepository m_ProductRepository;
-        public ProductRepository ProductRepository
-        {
-            get { return m_ProductRepository; }
-            set
-            {
-                m_ProductRepository = value;
-
+                m_DepartmentRepository = value;
                 Task.Run(() =>
                 {
-                    Products = new ObservableCollection<Product>(value.GetAllProducts());
+                    Departments = new ObservableCollection<Department>(value.GetAllDepartments());
                 });
             }
         }
-        */
-        public string Name { get; set; }
-        public void AddProduct()
+
+        private ObservableCollection<Department> m_Departments;
+        public ObservableCollection<Department> Departments
         {
-            Product product = new Product
+            //get { return m_Departments; }
+            get { return new ObservableCollection<Department>(new DepartmentRepository().GetAllDepartments()); }
+            set
+            {
+                m_Departments = value;
+                //RaisePropertyChanged();
+            }
+        }
+
+        private Department m_Department;
+        public Department Department
+        {
+            get
+            {
+                return m_Department;
+            }
+            set
+            {
+                m_Department = value;
+                //RaisePropertyChanged();
+            }
+        }
+
+        public string Name { get; set; }
+
+        public ICommand AddDepartmentCommand { get; private set; }
+        public ICommand DeleteDepartmentCommand { get; private set; }
+
+        public MainWindowViewModel()
+        {
+            AddDepartmentCommand = new RelayCommand(AddDepartment);
+            DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
+        }
+
+        public void AddDepartment()
+        {
+            Department department = new Department
             {
                 Name = Name,
             };
-
             Task.Run(() =>
             {
-                //m_ProductRepository.AddProduct(product);
-
+                m_DepartmentRepository.AddDepartment(department);
             });
-
         }
-        public RelayCommand AddProductCommand
+        
+        public void DeleteDepartment()
         {
-            get; private set;
-        }
-
-        public ICommand DeleteProductCommand { get; private set; }
-        public void DeleteProduct()
-        {
-            ProductRepository.DeleteProductByID(Product.ProductID);
+            Task.Run(() =>
+            {
+                m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+            });
         }
     }
 }

@@ -13,14 +13,14 @@
     </Window.DataContext>
 
     <Grid>
-        <ListView ItemsSource="{Binding Products}" SelectedItem="{Binding Product}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="250">
+        <ListView ItemsSource="{Binding Departments}" SelectedItem="{Binding Department}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="250">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ProductID}" Width="50"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding DepartmentID}" Width="50"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Command="{Binding DeleteProductCommand}" Margin="290,502,447,34">Remove</Button>
+        <Button Command="{Binding DeleteDepartmentCommand}" Margin="290,502,447,34">Remove</Button>
     </Grid>
 </Window>
