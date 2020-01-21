@@ -53,21 +53,22 @@ namespace Test
         [TestMethod]
         public void UpdateDepartmentTest()
         {
-            MainWindowViewModel _vm = new MainWindowViewModel();
+           /* MainWindowViewModel _vm = new MainWindowViewModel();
             _vm.Name = "_test";
             _vm.GroupName = "_test2";
             _vm.ModifiedDate = DateTime.Now;
             _vm.AddDepartmentCommand.Execute(null);
 
-            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
-            _vm.Name = "_test";
-            _vm.GroupName = "_test2Edit";
-            _vm.ModifiedDate = DateTime.Now;
-            _vm.UpdateWindowCommand.Execute(null);
+            UpdateWindowViewModel _vm2 = new UpdateWindowViewModel();
+            _vm2.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
+            _vm2.Name = "_test";
+            _vm2.GroupName = "_test2Edit";
+            _vm2.ModifiedDate = DateTime.Now;
+            _vm2.Execute(null); //Tu będzie linijka z commend update
             Assert.AreEqual("_test2Edit", _vm.DepartmentRepository.GetDepartmentByName("_test").GroupName);
 
             _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_test");
-            _vm.DeleteDepartmentCommand.Execute(null);
+            _vm.DeleteDepartmentCommand.Execute(null);*/
         }
     }
 }
