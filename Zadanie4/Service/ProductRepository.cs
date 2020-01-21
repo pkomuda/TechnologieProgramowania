@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using Data;
 
@@ -59,6 +60,7 @@ namespace Service
         public void DeleteProductByID(int productID)
         {
             Product temp = GetProductByID(productID);
+            dataContext.GetTable<BillOfMaterials>().DeleteAllOnSubmit(dataContext.GetTable<BillOfMaterials>().Where(bill => bill.ComponentID.Equals(productID)));
             dataContext.GetTable<Product>().DeleteOnSubmit(temp);
             dataContext.SubmitChanges();
         }
@@ -67,7 +69,7 @@ namespace Service
         {
             Product temp = GetProductByName(name);
             dataContext.GetTable<Product>().DeleteOnSubmit(temp);
-            dataContext.SubmitChanges();
+            dataContext.SubmitChanges(ConflictMode.ContinueOnConflict);
         }
     }
 }

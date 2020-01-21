@@ -2,23 +2,26 @@
 using Service;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        //private ProductRepository ProductRepository = new ProductRepository();
-         /*public List<Product> Products
+        private ProductRepository ProductRepository = new ProductRepository();
+        public List<Product> Products
          {
              get
              {
                  return ProductRepository.GetAllProducts().ToList();
              }
-         }*/
+         }
         public MainWindowViewModel()
         {
             AddProductCommand = new RelayCommand(AddProduct);
+            DeleteProductCommand = new RelayCommand(DeleteProduct);
         }
         private Product m_Product;
         public Product Product
@@ -33,6 +36,7 @@ namespace ViewModel
                 //RaisePropertyChanged();
             }
         }
+        /*
         private ObservableCollection<Product> m_Products;
         public ObservableCollection<Product> Products
         {
@@ -57,6 +61,7 @@ namespace ViewModel
                 });
             }
         }
+        */
         public string Name { get; set; }
         public void AddProduct()
         {
@@ -67,7 +72,7 @@ namespace ViewModel
 
             Task.Run(() =>
             {
-                m_ProductRepository.AddProduct(product);
+                //m_ProductRepository.AddProduct(product);
 
             });
 
@@ -75,6 +80,12 @@ namespace ViewModel
         public RelayCommand AddProductCommand
         {
             get; private set;
+        }
+
+        public ICommand DeleteProductCommand { get; private set; }
+        public void DeleteProduct()
+        {
+            ProductRepository.DeleteProductByID(Product.ProductID);
         }
     }
 }
