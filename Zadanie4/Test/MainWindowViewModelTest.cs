@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ViewModel;
+using Service;
 
 namespace Test
 {
@@ -22,6 +23,16 @@ namespace Test
             Assert.IsTrue(_vm.AddDepartmentCommand.CanExecute(null));
             Assert.IsTrue(_vm.DeleteDepartmentCommand.CanExecute(null));
             Assert.IsTrue(_vm.UpdateWindowCommand.CanExecute(null));
+        }
+        [TestMethod]
+        public void DataRepositoryTest()
+        {
+            DepartmentRepository repo = new DepartmentRepository();
+            MainWindowViewModel _vm = new MainWindowViewModel();
+            Assert.IsNotNull(_vm.DepartmentRepository);
+            Assert.AreNotSame(_vm.DepartmentRepository, repo);
+            _vm.DepartmentRepository = repo;
+            Assert.AreSame(_vm.DepartmentRepository, repo);
         }
     }
 }
