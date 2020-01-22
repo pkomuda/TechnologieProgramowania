@@ -120,7 +120,7 @@ namespace ViewModel
                     GroupName = "";
                     ModifiedDate = DateTime.Now;
                     Refresh();
-                    ShowPopupWindow("Department was updated successfully.");
+                    ShowPopupWindow("Department updated successfully.");
                 }
                 catch(Exception e)
                 {
@@ -137,8 +137,11 @@ namespace ViewModel
                 {
                     DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
                     Department = null;
+                    Name = "";
+                    GroupName = "";
+                    ModifiedDate = DateTime.Now;
                     Refresh();
-                    ShowPopupWindow("Department was deleted successfully.");
+                    ShowPopupWindow("Department deleted successfully.");
                 }
                 catch(Exception e)
                 {

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using ViewModel;
 
 namespace View
 {
@@ -7,6 +9,14 @@ namespace View
         public UpdateWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            AddWindowViewModel mwvm = (AddWindowViewModel) DataContext;
+            mwvm.WindowResolver = new UpdateDepartmentWindowResolver();
+            mwvm.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
