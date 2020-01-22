@@ -105,7 +105,7 @@ namespace ViewModel
         public void UpdateDepartment()
         {
             Task.Run(() =>
-            {            
+            {
                 Department temp = new Department
                 {
                     Name = Name,
