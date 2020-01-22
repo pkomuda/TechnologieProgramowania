@@ -87,7 +87,6 @@ namespace ViewModel
             AddDepartmentCommand = new RelayCommand(AddDepartment);
             DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
             UpdateWindowCommand = new RelayCommand(UpdateWindow);
-            DisplayTextCommand = new RelayCommand(ShowPopupWindow, () => !string.IsNullOrEmpty("test"));
         }
 
         public void AddDepartment()
@@ -98,12 +97,19 @@ namespace ViewModel
                 GroupName = GroupName,
                 ModifiedDate = ModifiedDate
             };
-            m_DepartmentRepository.AddDepartment(department);
-            Name = "";
-            GroupName = "";
-            ModifiedDate = DateTime.Now;
-            Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
-            ShowPopupWindow();
+            try
+            {
+                m_DepartmentRepository.AddDepartment(department);
+                Name = "";
+                GroupName = "";
+                ModifiedDate = DateTime.Now;
+                Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+                ShowPopupWindow("Department was added correctly.");
+            }
+            catch(Exception e)
+            {
+                ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
+            }
         }
 
         public void DeleteDepartment()
@@ -119,9 +125,9 @@ namespace ViewModel
              window.Show();
         }
         public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
-        private void ShowPopupWindow()
+        private void ShowPopupWindow(string text)
         {
-            MessageBoxShowDelegate("Department was added correctly.");
+            MessageBoxShowDelegate(text);
         }
     }
 }
