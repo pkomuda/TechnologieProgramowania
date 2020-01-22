@@ -9,6 +9,11 @@ namespace ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private void Refresh()
+        {
+            Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+        }
+
         private DepartmentRepository m_DepartmentRepository;
         public DepartmentRepository DepartmentRepository
         {
@@ -37,12 +42,14 @@ namespace ViewModel
             get { return m_Department; }
             set
             {
+                if (value != null)
+                {
+                    Name = value.Name;
+                    GroupName = value.GroupName;
+                    ModifiedDate = value.ModifiedDate;
+                }
                 m_Department = value;
-                Name = value.Name;
-                GroupName = value.GroupName;
-                ModifiedDate = value.ModifiedDate;
                 RaisePropertyChanged();
-                
             }
         }
 
@@ -82,23 +89,23 @@ namespace ViewModel
         public IWindowResolver WindowResolver { get; set; }
         public ICommand UpdateDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
-        public ICommand UpdateWindowCommand { get; private set; }
-        public ICommand RefreshCommand { get; private set; }
+        public ICommand AddWindowCommand { get; private set; }
+        public ICommand RefreshWindowCommand { get; private set; }
 
         public MainWindowViewModel()
         {
             DepartmentRepository = new DepartmentRepository();
             ModifiedDate = DateTime.Now;
-            UpdateDepartmentCommand = new RelayCommand(UpdateDepartment);
-            DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
-            UpdateWindowCommand = new RelayCommand(UpdateWindow);
-            RefreshCommand = new RelayCommand(RefreshWindow);
+            UpdateDepartmentCommand = new Command(UpdateDepartment);
+            DeleteDepartmentCommand = new Command(DeleteDepartment);
+            AddWindowCommand = new Command(AddWindow);
+            RefreshWindowCommand = new Command(RefreshWindow);
         }
 
         public void UpdateDepartment()
         {
             Task.Run(() =>
-                {            
+            {            
                 Department temp = new Department
                 {
                     Name = Name,
@@ -107,16 +114,17 @@ namespace ViewModel
                 };
                 try
                 {
-                        DepartmentRepository.UpdateDepartmentByID(Department.DepartmentID, temp);
+                    DepartmentRepository.UpdateDepartmentByID(Department.DepartmentID, temp);
+                    Department = null;
                     Name = "";
                     GroupName = "";
                     ModifiedDate = DateTime.Now;
                     Refresh();
-                    ShowPopupWindow("Department was added correctly.");
+                    ShowPopupWindow("Department was updated successfully.");
                 }
                 catch(Exception e)
                 {
-                    ShowPopupWindow("Updating department was failed.\nERROR: " + e.Message);
+                    ShowPopupWindow("Updating department failed.\nERROR: " + e.Message);
                 }
             });
         }
@@ -127,21 +135,22 @@ namespace ViewModel
             { 
                 try
                 {
-                    m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+                    DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+                    Department = null;
                     Refresh();
-                    ShowPopupWindow("Department was deleted correctly.");
+                    ShowPopupWindow("Department was deleted successfully.");
                 }
                 catch(Exception e)
                 {
-                    ShowPopupWindow("Deleting department was failed.\nERROR: " + e.Message);
+                    ShowPopupWindow("Deleting department failed.\nERROR: " + e.Message);
                 }
           });
         }
 
-        public void UpdateWindow()
+        public void AddWindow()
         {
             IWindow window = WindowResolver.GetWindow();
-            window.BindViewModel(new UpdateWindowViewModel());
+            window.BindViewModel(new AddWindowViewModel());
             window.Show();
         }
 
@@ -159,17 +168,11 @@ namespace ViewModel
                 }
             });
         }
+
         public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
         public void ShowPopupWindow(string text)
         {
             MessageBoxShowDelegate(text);
         }
-
-        private void Refresh()
-        {
-            Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
-        }
-
-
     }
 }

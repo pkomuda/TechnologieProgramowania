@@ -25,7 +25,7 @@
         </ListView>
 
         <Label Content="Department name" Margin="274,41,387,488"/>
-        <TextBox  Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"  >
+        <TextBox  Margin="462,41,72,502" RenderTransformOrigin="1.796,4.365"  >
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="Default">
                     <Binding.ValidationRules>
@@ -36,7 +36,7 @@
         </TextBox>
             
         <Label Content="Department group name" Margin="274,86,354,439" RenderTransformOrigin="0.912,2.443"/>
-        <TextBox  Margin="462,87,184,455" RenderTransformOrigin="0.016,-4.12" >
+        <TextBox  Margin="462,87,72,455" RenderTransformOrigin="0.016,-4.12" >
             <TextBox.Text>
                 <Binding Path="GroupName" UpdateSourceTrigger="Default">
                     <Binding.ValidationRules>
@@ -46,14 +46,14 @@
             </TextBox.Text>
         </TextBox>
 
-        <Button Content="Update department" Command="{Binding UpdateDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
+        <Button Content="Update department" Command="{Binding UpdateDepartmentCommand}" Margin="288,202,356,337" RenderTransformOrigin="0.859,6.371"/>
         <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
-        <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
+        <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,72,401" RenderTransformOrigin="1.465,1.955"/>
 
-        <Button Content="Add department" Command="{Binding UpdateWindowCommand}" Margin="274,386,370,149" RenderTransformOrigin="1.378,-2.076"/>
+        <Button Content="Add department" Command="{Binding AddWindowCommand}" Margin="288,389,356,146" RenderTransformOrigin="1.378,-2.076"/>
         
-        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="274,452,370,84" RenderTransformOrigin="1.652,4.318"/>
+        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="290,450,356,85" RenderTransformOrigin="1.652,4.318"/>
 
-        <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="274,512,370,23" RenderTransformOrigin="1.652,4.318"/>
+        <Button Content="Refresh" Command="{Binding RefreshWindowCommand}" Margin="290,510,356,25" RenderTransformOrigin="1.652,4.318"/>
     </Grid>
 </Window>

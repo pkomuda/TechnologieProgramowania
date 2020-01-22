@@ -2,11 +2,11 @@
 
 namespace View
 {
-    class UpdateDepartmentWindow : IWindow
+    class AddDepartmentWindow : IWindow
     {
         public event VoidHandler OnClose;
         private UpdateWindow _window;
-        public UpdateDepartmentWindow()
+        public AddDepartmentWindow()
         {
             _window = new UpdateWindow();
         }

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace ViewModel
 {
-    public class UpdateWindowViewModel : ViewModelBase
+    public class AddWindowViewModel : ViewModelBase
     {
         private DepartmentRepository m_DepartmentRepository;
         public DepartmentRepository DepartmentRepository
@@ -68,11 +68,11 @@ namespace ViewModel
         public ICommand AddDepartmentCommand { get; private set; }
         public ICommand ListCommand { get; private set; }
 
-        public UpdateWindowViewModel()
+        public AddWindowViewModel()
         {
             DepartmentRepository = new DepartmentRepository();
             ModifiedDate = DateTime.Now;
-            AddDepartmentCommand = new RelayCommand(AddDepartment);
+            AddDepartmentCommand = new Command(AddDepartment);
         }
         
         public void AddDepartment()

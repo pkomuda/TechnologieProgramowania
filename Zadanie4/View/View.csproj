@@ -59,7 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Valiidators\NameValidator.cs" />
-    <Page Include="UpdateWindow.xaml">
+    <Page Include="AddWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -71,10 +71,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UpdateDepartmentWindow.cs" />
+    <Compile Include="AddDepartmentWindow.cs" />
     <Compile Include="UpdateDepartmentWindowResolver.cs" />
-    <Compile Include="UpdateWindow.xaml.cs">
-      <DependentUpon>UpdateWindow.xaml</DependentUpon>
+    <Compile Include="AddWindow.xaml.cs">
+      <DependentUpon>AddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

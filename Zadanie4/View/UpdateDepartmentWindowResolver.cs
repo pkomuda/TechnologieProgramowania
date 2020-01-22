@@ -7,7 +7,7 @@ namespace View
     {
         public IWindow GetWindow()
         {
-            return new UpdateDepartmentWindow();
+            return new AddDepartmentWindow();
         }
     }
 }

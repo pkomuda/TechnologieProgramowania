@@ -3,23 +3,23 @@ using System.Windows.Input;
 
 namespace ViewModel
 {
-    public class RelayCommand : ICommand
+    public class Command : ICommand
     {
 
         #region constructors
         /// <summary>
-        /// Initializes a new instance of the <see cref="RelayCommand"/>  class that can always execute.
+        /// Initializes a new instance of the <see cref="Command"/>  class that can always execute.
         /// </summary>
         /// <param name="execute">The execution logic encapsulated by the <paramref name="execute"/> delegate. </param>
         /// <exception cref="T:System.ArgumentNullException">If the <paramref name="execute"/> argument is null.</exception>
-        public RelayCommand(Action execute) : this(execute, null) { }
+        public Command(Action execute) : this(execute, null) { }
         /// <summary>
         /// Initializes a new instance of the RelayCommand class.
         /// </summary>
         /// <param name="canExecute">The execution status logic encapsulated by the <paramref name="canExecute"/> delegate.
         /// </param>
         /// <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public Command(Action execute, Func<bool> canExecute)
         {
             this.m_Execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.m_CanExecute = canExecute;

@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowResolver.cs" />
-    <Compile Include="UpdateWindowViewModel.cs" />
+    <Compile Include="AddWindowViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
