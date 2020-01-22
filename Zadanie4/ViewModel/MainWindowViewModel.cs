@@ -114,8 +114,16 @@ namespace ViewModel
 
         public void DeleteDepartment()
         {
-            m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
-            Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+            try
+            {
+                m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+                Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+                ShowPopupWindow("Department was deleted correctly.");
+            }
+            catch(Exception e)
+            {
+                ShowPopupWindow("Deleting department was failed.\nERROR: " + e.Message);
+            }
         }
 
         public void UpdateWindow()
