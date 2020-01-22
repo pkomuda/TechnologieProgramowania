@@ -50,9 +50,10 @@
         <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
         <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
 
-        <Button Content="Update department" Command="{Binding UpdateWindowCommand}" Margin="274,433,370,103" RenderTransformOrigin="1.378,-2.076"/>
-         
-        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="274,496,370,40" RenderTransformOrigin="1.652,4.318"/>
+        <Button Content="Add department" Command="{Binding UpdateWindowCommand}" Margin="274,386,370,149" RenderTransformOrigin="1.378,-2.076"/>
+        
+        <Button Content="Remove department" Command="{Binding DeleteDepartmentCommand}" Margin="274,452,370,84" RenderTransformOrigin="1.652,4.318"/>
 
+        <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="274,512,370,23" RenderTransformOrigin="1.652,4.318"/>
     </Grid>
 </Window>
