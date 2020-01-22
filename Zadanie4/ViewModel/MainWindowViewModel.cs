@@ -78,6 +78,7 @@ namespace ViewModel
         public ICommand AddDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
         public ICommand UpdateWindowCommand { get; private set; }
+        public ICommand DisplayTextCommand { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -86,6 +87,7 @@ namespace ViewModel
             AddDepartmentCommand = new RelayCommand(AddDepartment);
             DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
             UpdateWindowCommand = new RelayCommand(UpdateWindow);
+            DisplayTextCommand = new RelayCommand(ShowPopupWindow, () => !string.IsNullOrEmpty("test"));
         }
 
         public void AddDepartment()
@@ -101,6 +103,7 @@ namespace ViewModel
             GroupName = "";
             ModifiedDate = DateTime.Now;
             Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+            ShowPopupWindow();
         }
 
         public void DeleteDepartment()
@@ -114,6 +117,11 @@ namespace ViewModel
              IWindow window = WindowResolver.GetWindow();
              window.BindViewModel(new UpdateWindowViewModel(DepartmentRepository, Department));
              window.Show();
+        }
+        public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
+        private void ShowPopupWindow()
+        {
+            MessageBoxShowDelegate("Department was added correctly.");
         }
     }
 }

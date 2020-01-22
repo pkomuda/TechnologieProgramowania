@@ -16,6 +16,7 @@ namespace View
             MainWindowViewModel mwvm = (MainWindowViewModel) DataContext;
             //mwvm.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
             mwvm.WindowResolver = new UpdateDepartmentWindowResolver();
+            mwvm.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
