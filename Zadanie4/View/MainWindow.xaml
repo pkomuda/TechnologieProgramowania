@@ -46,7 +46,7 @@
             </TextBox.Text>
         </TextBox>
 
-        <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
+        <Button Content="Update department" Command="{Binding UpdateDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
         <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
         <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>
 

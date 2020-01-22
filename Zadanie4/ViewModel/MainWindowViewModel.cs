@@ -38,7 +38,11 @@ namespace ViewModel
             set
             {
                 m_Department = value;
+                Name = value.Name;
+                GroupName = value.GroupName;
+                ModifiedDate = value.ModifiedDate;
                 RaisePropertyChanged();
+                
             }
         }
 
@@ -76,7 +80,7 @@ namespace ViewModel
         }
 
         public IWindowResolver WindowResolver { get; set; }
-        public ICommand AddDepartmentCommand { get; private set; }
+        public ICommand UpdateDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
         public ICommand UpdateWindowCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
@@ -85,17 +89,17 @@ namespace ViewModel
         {
             DepartmentRepository = new DepartmentRepository();
             ModifiedDate = DateTime.Now;
-            AddDepartmentCommand = new RelayCommand(AddDepartment);
+            UpdateDepartmentCommand = new RelayCommand(UpdateDepartment);
             DeleteDepartmentCommand = new RelayCommand(DeleteDepartment);
             UpdateWindowCommand = new RelayCommand(UpdateWindow);
             RefreshCommand = new RelayCommand(RefreshWindow);
         }
 
-        public void AddDepartment()
+        public void UpdateDepartment()
         {
             Task.Run(() =>
                 {            
-                Department department = new Department
+                Department temp = new Department
                 {
                     Name = Name,
                     GroupName = GroupName,
@@ -103,7 +107,7 @@ namespace ViewModel
                 };
                 try
                 {
-                    m_DepartmentRepository.AddDepartment(department);
+                        DepartmentRepository.UpdateDepartmentByID(Department.DepartmentID, temp);
                     Name = "";
                     GroupName = "";
                     ModifiedDate = DateTime.Now;
@@ -112,7 +116,7 @@ namespace ViewModel
                 }
                 catch(Exception e)
                 {
-                    ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
+                    ShowPopupWindow("Updating department was failed.\nERROR: " + e.Message);
                 }
             });
         }
