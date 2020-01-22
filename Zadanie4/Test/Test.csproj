@@ -52,6 +52,7 @@
     <Compile Include="DepartmentRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainWindowViewModelTest.cs" />
+    <Compile Include="AddWindowViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

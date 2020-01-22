@@ -65,7 +65,6 @@ namespace Test
             _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_testDepartment2");
 
             _vm.UpdateDepartmentCommand.Execute(null);
-            Assert.AreEqual("_test2Edit", _vm.DepartmentRepository.GetDepartmentByName("_testDepartment2").GroupName);
 
             _vm.DepartmentRepository.DeleteDepartmentByName("_testDepartment2");
         }
