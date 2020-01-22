@@ -55,10 +55,10 @@ namespace Test
         public void UpdateDepartmentTest()
         {
             MainWindowViewModel _vm = new MainWindowViewModel();
-            _vm.DepartmentRepository.AddDepartment(new Data.Department() { Name = "_testDepartment2", GroupName = "_testGroupName", ModifiedDate = DateTime.Now });
-            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_testDepartment2");
+            _vm.DepartmentRepository.AddDepartment(new Data.Department() { Name = "_testDepartment3", GroupName = "_testGroupName", ModifiedDate = DateTime.Now });
+            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_testDepartment3");
 
-            _vm.Name = "_testDepartment2";
+            _vm.Name = "_testDepartment3";
             _vm.GroupName = "_test2Edit";
             _vm.ModifiedDate = DateTime.Now;
             _vm.UpdateDepartmentCommand.Execute(null);
