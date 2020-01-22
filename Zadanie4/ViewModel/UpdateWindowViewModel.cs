@@ -65,35 +65,28 @@ namespace ViewModel
             }
         }
 
-        public ICommand UpdateDepartmentCommand { get; private set; }
+        public ICommand AddDepartmentCommand { get; private set; }
+        public ICommand ListCommand { get; private set; }
 
-        public UpdateWindowViewModel() { }
-        public UpdateWindowViewModel(DepartmentRepository departmentRepository, Department department)
+        public UpdateWindowViewModel()
         {
-            DepartmentRepository = departmentRepository;
-            Department = department;
-            Name = department.Name;
-            GroupName = department.GroupName;
-            ModifiedDate = department.ModifiedDate;
-            Console.WriteLine(Name);
-            Console.WriteLine(GroupName);
-            Console.WriteLine(ModifiedDate);
-            UpdateDepartmentCommand = new RelayCommand(UpdateDepartment);
+            DepartmentRepository = new DepartmentRepository();
+            ModifiedDate = DateTime.Now;
+            AddDepartmentCommand = new RelayCommand(AddDepartment);
         }
         
-        public void UpdateDepartment()
+        public void AddDepartment()
         {
             Department temp = new Department
             {
-                DepartmentID = Department.DepartmentID,
                 Name = Name,
                 GroupName = GroupName,
                 ModifiedDate = ModifiedDate
             };
-            Console.WriteLine(Name);
-            Console.WriteLine(GroupName);
-            Console.WriteLine(ModifiedDate);
-            DepartmentRepository.UpdateDepartmentByID(Department.DepartmentID, temp);
+            DepartmentRepository.AddDepartment(temp);
+            Name = "";
+            GroupName = "";
+            ModifiedDate = DateTime.Now;
         }
     }
 }

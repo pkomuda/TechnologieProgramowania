@@ -25,6 +25,6 @@
         <Label Content="Department modified date" Margin="237,135,335.333,389.667" RenderTransformOrigin="0.912,2.443" Grid.Column="1"/>
         <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="425,135,184.333,400.667" RenderTransformOrigin="1.465,1.955" Grid.Column="1"/>
 
-        <Button Content="OK" Command="{Binding UpdateDepartmentCommand}" Margin="349,215,273,324" RenderTransformOrigin="0.859,6.371" Grid.Column="1"/>
+        <Button Content="OK" Command="{Binding AddDepartmentCommand}" Margin="349,215,273,324" RenderTransformOrigin="0.859,6.371" Grid.Column="1"/>
     </Grid>
 </Window>
