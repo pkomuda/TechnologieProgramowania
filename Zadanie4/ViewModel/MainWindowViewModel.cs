@@ -153,7 +153,6 @@ namespace ViewModel
         public void AddWindow()
         {
             IWindow window = WindowResolver.GetWindow();
-            window.BindViewModel(new AddWindowViewModel());
             window.Show();
         }
 

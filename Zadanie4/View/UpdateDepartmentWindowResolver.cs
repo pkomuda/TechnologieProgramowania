@@ -1,5 +1,4 @@
-﻿using System;
-using ViewModel;
+﻿using ViewModel;
 
 namespace View
 {

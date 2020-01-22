@@ -1,9 +1,6 @@
 ﻿using Data;
 using Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -11,15 +8,7 @@ namespace ViewModel
 {
     public class AddWindowViewModel : ViewModelBase
     {
-        private DepartmentRepository m_DepartmentRepository;
-        public DepartmentRepository DepartmentRepository
-        {
-            get { return m_DepartmentRepository; }
-            set
-            {
-                m_DepartmentRepository = value;
-            }
-        }
+        public DepartmentRepository DepartmentRepository { get; set; }
 
         private Department m_Department;
         public Department Department
@@ -78,24 +67,27 @@ namespace ViewModel
         
         public void AddDepartment()
         {
-            try
+            Task.Run(() =>
             {
-                Department temp = new Department
+                try
                 {
-                    Name = Name,
-                    GroupName = GroupName,
-                    ModifiedDate = ModifiedDate
-                };
-                DepartmentRepository.AddDepartment(temp);
-                Name = "";
-                GroupName = "";
-                ModifiedDate = DateTime.Now;
-                ShowPopupWindow("Department added successfully.");
-            }
-            catch (Exception e)
-            {
-                ShowPopupWindow("Adding department failed.\nERROR: " + e.Message);
-            }
+                    Department temp = new Department
+                    {
+                        Name = Name,
+                        GroupName = GroupName,
+                        ModifiedDate = ModifiedDate
+                    };
+                    DepartmentRepository.AddDepartment(temp);
+                    Name = "";
+                    GroupName = "";
+                    ModifiedDate = DateTime.Now;
+                    ShowPopupWindow("Department added successfully.");
+                }
+                catch (Exception e)
+                {
+                    ShowPopupWindow("Adding department failed.\nERROR: " + e.Message);
+                }
+            });
         }
 
         public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
