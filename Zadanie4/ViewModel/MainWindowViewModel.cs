@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System;
 using Data;
 using Service;
+using System.Threading.Tasks;
 
 namespace ViewModel
 {
@@ -91,39 +92,45 @@ namespace ViewModel
 
         public void AddDepartment()
         {
-            Department department = new Department
-            {
-                Name = Name,
-                GroupName = GroupName,
-                ModifiedDate = ModifiedDate
-            };
-            try
-            {
-                m_DepartmentRepository.AddDepartment(department);
-                Name = "";
-                GroupName = "";
-                ModifiedDate = DateTime.Now;
-                Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
-                ShowPopupWindow("Department was added correctly.");
-            }
-            catch(Exception e)
-            {
-                ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
-            }
+            Task.Run(() =>
+                {            
+                Department department = new Department
+                {
+                    Name = Name,
+                    GroupName = GroupName,
+                    ModifiedDate = ModifiedDate
+                };
+                try
+                {
+                    m_DepartmentRepository.AddDepartment(department);
+                    Name = "";
+                    GroupName = "";
+                    ModifiedDate = DateTime.Now;
+                    Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+                    ShowPopupWindow("Department was added correctly.");
+                }
+                catch(Exception e)
+                {
+                    ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
+                }
+            });
         }
 
         public void DeleteDepartment()
         {
-            try
-            {
-                m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
-                Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
-                ShowPopupWindow("Department was deleted correctly.");
-            }
-            catch(Exception e)
-            {
-                ShowPopupWindow("Deleting department was failed.\nERROR: " + e.Message);
-            }
+            Task.Run(() =>
+            { 
+                try
+                {
+                    m_DepartmentRepository.DeleteDepartmentByID(Department.DepartmentID);
+                    Departments = new ObservableCollection<Department>(DepartmentRepository.GetAllDepartments());
+                    ShowPopupWindow("Department was deleted correctly.");
+                }
+                catch(Exception e)
+                {
+                    ShowPopupWindow("Deleting department was failed.\nERROR: " + e.Message);
+                }
+          });
         }
 
         public void UpdateWindow()
