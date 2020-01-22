@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:View"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
+        xmlns:validators="clr-namespace:View.Valiidators"
         mc:Ignorable="d"
         Title="Department list" Height="600" Width="800">
 
@@ -22,10 +23,29 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
         <Label Content="Department name" Margin="274,41,387,488"/>
-        <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"/>
+        <TextBox  Margin="462,41,184,502" RenderTransformOrigin="1.796,4.365"  >
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="Default">
+                    <Binding.ValidationRules>
+                         <validators:NameValidator ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+            
         <Label Content="Department group name" Margin="274,86,354,439" RenderTransformOrigin="0.912,2.443"/>
-        <TextBox Text="{Binding GroupName, Mode=TwoWay}" Margin="462,87,184,455" RenderTransformOrigin="0.016,-4.12"/>
+        <TextBox  Margin="462,87,184,455" RenderTransformOrigin="0.016,-4.12" >
+            <TextBox.Text>
+                <Binding Path="GroupName" UpdateSourceTrigger="Default">
+                    <Binding.ValidationRules>
+                        <validators:NameValidator ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
         <Button Content="Add department" Command="{Binding AddDepartmentCommand}" Margin="618,87,40,452" RenderTransformOrigin="0.859,6.371"/>
         <Label Content="Department modified date" Margin="274,135,335,390" RenderTransformOrigin="0.912,2.443"/>
         <DatePicker SelectedDate="{Binding ModifiedDate, Mode=TwoWay}" Margin="462,135,184,401" RenderTransformOrigin="1.465,1.955"/>

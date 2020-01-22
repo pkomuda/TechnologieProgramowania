@@ -112,7 +112,6 @@ namespace ViewModel
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine("siema");
                     ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
                 }
             });
