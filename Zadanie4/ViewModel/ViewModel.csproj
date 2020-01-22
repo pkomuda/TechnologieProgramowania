@@ -44,10 +44,10 @@
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowResolver.cs" />
     <Compile Include="AddWindowViewModel.cs" />
-    <Compile Include="ViewModelBase.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

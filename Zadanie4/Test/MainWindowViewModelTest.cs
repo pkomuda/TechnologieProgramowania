@@ -61,12 +61,7 @@ namespace Test
             _vm.Name = "_testDepartment2";
             _vm.GroupName = "_test2Edit";
             _vm.ModifiedDate = DateTime.Now;
-
-            _vm.Department = _vm.DepartmentRepository.GetDepartmentByName("_testDepartment2");
-
             _vm.UpdateDepartmentCommand.Execute(null);
-
-            _vm.DepartmentRepository.DeleteDepartmentByName("_testDepartment2");
         }
         [TestMethod]
         public void ShowPopupWindowTest()

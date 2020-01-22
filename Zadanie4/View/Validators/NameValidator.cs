@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace View.Valiidators
+namespace View.Validators
 {
     public class NameValidator : ValidationRule
     {
@@ -16,6 +16,5 @@ namespace View.Valiidators
                 return new ValidationResult(false, "value is not suitable for database");
             return ValidationResult.ValidResult;
         }
-
     }
 }
