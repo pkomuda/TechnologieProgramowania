@@ -79,7 +79,6 @@ namespace ViewModel
         public ICommand AddDepartmentCommand { get; private set; }
         public ICommand DeleteDepartmentCommand { get; private set; }
         public ICommand UpdateWindowCommand { get; private set; }
-        public ICommand DisplayTextCommand { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -111,6 +110,7 @@ namespace ViewModel
                 }
                 catch(Exception e)
                 {
+                        Console.WriteLine("siema");
                     ShowPopupWindow("Adding department was failed.\nERROR: " + e.Message);
                 }
             });
@@ -140,7 +140,7 @@ namespace ViewModel
              window.Show();
         }
         public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
-        private void ShowPopupWindow(string text)
+        public void ShowPopupWindow(string text)
         {
             MessageBoxShowDelegate(text);
         }
